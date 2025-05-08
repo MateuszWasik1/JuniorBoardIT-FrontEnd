@@ -1,4 +1,4 @@
-# Library-Web
+# JuniorBoardIT-Web
 ## English
 
 ### Instalation:
@@ -14,7 +14,7 @@ Note!\
 For the application to function correctly, it's also necessary to download and run the Back-End repository!
 
 Back-End:\
-https://github.com/MateuszWasik1/Library-BackEnd
+https://github.com/MateuszWasik1/JuniorBoardIT-BackEnd
 
 ### Technologies
 
@@ -43,7 +43,7 @@ UWAGA!\
 W celu poprawnego działania aplikacji należy również pobrać i uruchomić repozytorium dla Back-Endu!
 
 Back-End:\
-https://github.com/MateuszWasik1/Library-BackEnd
+https://github.com/MateuszWasik1/JuniorBoardIT-BackEnd
 
 ### Technologie
 

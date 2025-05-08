@@ -40,25 +40,6 @@ import { UIErrorHandler } from './error-handlers/ui-error-handler/ui-error-handl
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PaginatorComponent } from './components/shared/paginator.component/paginator.component';
-import { featureKeyBooksState } from './components/books-page.component/books-page-state/books-page-state.state';
-import { BooksReducer } from './components/books-page.component/books-page-state/books-page-state.reducer';
-import { BooksEffects } from './components/books-page.component/books-page-state/books-page-state.effects';
-import { BooksPageComponent } from './components/books-page.component/books-page.component';
-import { BookPageComponent } from './components/books-page.component/book-page.component/book-page.component';
-import { AuthorsPageComponent } from './components/authors-page.component/authors-page.component';
-import { featureKeyAuthorsState } from './components/authors-page.component/authors-page-state/authors-page-state.state';
-import { AuthorsReducer } from './components/authors-page.component/authors-page-state/authors-page-state.reducer';
-import { AuthorsEffects } from './components/authors-page.component/authors-page-state/authors-page-state.effects';
-import { AuthorPageComponent } from './components/authors-page.component/author-page.component/author-page.component';
-import { PublishersPageComponent } from './components/publisher-page.component/publishers-page.component';
-import { featureKeyPublishersState } from './components/publisher-page.component/publishers-page-state/publishers-page-state.state';
-import { PublishersReducer } from './components/publisher-page.component/publishers-page-state/publishers-page-state.reducer';
-import { PublishersEffects } from './components/publisher-page.component/publishers-page-state/publishers-page-state.effects';
-import { PublisherPageComponent } from './components/publisher-page.component/publisher-page.component/publisher-page.component';
-import { ReportsPageComponent } from './components/reports-page.component/reports-page.component';
-import { featureKeyReportsState } from './components/reports-page.component/reports-page-state/reports-page-state.state';
-import { ReportsReducer } from './components/reports-page.component/reports-page-state/reports-page-state.reducer';
-import { ReportsEffects } from './components/reports-page.component/reports-page-state/reports-page-state.effects';
 
 @NgModule({
   declarations: [
@@ -68,14 +49,7 @@ import { ReportsEffects } from './components/reports-page.component/reports-page
     UserPageComponent,
     UsersPageComponent,
     UIErrorHandler,
-    PaginatorComponent,
-    BookPageComponent,
-    BooksPageComponent,
-    AuthorPageComponent,
-    AuthorsPageComponent,
-    PublisherPageComponent,
-    PublishersPageComponent,
-    ReportsPageComponent
+    PaginatorComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -111,22 +85,13 @@ import { ReportsEffects } from './components/reports-page.component/reports-page
     StoreModule.forFeature(featureKeyAccountState, AccountReducer),
     StoreModule.forFeature(featureKeyUserState, UserReducer),
     StoreModule.forFeature(featureKeyUsersState, UsersReducer),
-    StoreModule.forFeature(featureKeyBooksState, BooksReducer),
-    StoreModule.forFeature(featureKeyAuthorsState, AuthorsReducer),
-    StoreModule.forFeature(featureKeyPublishersState, PublishersReducer),
-    StoreModule.forFeature(featureKeyReportsState, ReportsReducer),
 
-    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects, BooksEffects, AuthorsEffects, PublishersEffects, ReportsEffects]),
+    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects]),
     BrowserAnimationsModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    // {
-    //   provide: MatPaginatorIntl, deps: [TranslateService],
-    //   useFactory: (translateService: TranslateService) => new PaginatorI18n().GetPaginatorIntl(translateService)
-    // },
-    //{ provide: LOCALE_ID, useValue: 'pl' }
   ],
   bootstrap: [AppComponent]
 })
