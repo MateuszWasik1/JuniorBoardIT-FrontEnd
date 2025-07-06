@@ -31,15 +31,12 @@ import { featureKeyUserState } from './components/user-page.component/user-page-
 import { UserReducer } from './components/user-page.component/user-page-state/user-page-state.reducer';
 import { UserEffects } from './components/user-page.component/user-page-state/user-page-state.effects';
 import { UserPageComponent } from './components/user-page.component/user-page.component';
-import { UsersPageComponent } from './components/users-page.component/users-page.component';
 import { UsersReducer } from './components/users-page.component/users-page-state/users-page-state.reducer';
 import { featureKeyUsersState } from './components/users-page.component/users-page-state/users-page-state.state';
 import { UsersEffects } from './components/users-page.component/users-page-state/users-page-state.effects';
 import { GlobalErrorHandler } from './error-handlers/global-error-handler';
 import { UIErrorHandler } from './error-handlers/ui-error-handler/ui-error-handler.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { PaginatorComponent } from './components/shared/paginator.component/paginator.component';
 
 @NgModule({
   declarations: [
@@ -47,9 +44,7 @@ import { PaginatorComponent } from './components/shared/paginator.component/pagi
     RegisterComponent,
     LoginComponent,
     UserPageComponent,
-    UsersPageComponent,
     UIErrorHandler,
-    PaginatorComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -65,7 +60,6 @@ import { PaginatorComponent } from './components/shared/paginator.component/pagi
     MatInputModule,
     MatDialogModule,
     MatTooltipModule,
-    MatPaginatorModule,
     
     TranslateModule.forRoot({
       loader: {
