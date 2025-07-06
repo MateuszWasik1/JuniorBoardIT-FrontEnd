@@ -1,5 +1,8 @@
 import { ErrorHandler, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -84,6 +87,12 @@ import { PaginatorComponent } from './components/shared/paginator.component/pagi
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    provideAnimationsAsync(),
+        providePrimeNG({ 
+            theme: {
+                preset: Aura
+            }
+        })
   ],
   bootstrap: [AppComponent]
 })
