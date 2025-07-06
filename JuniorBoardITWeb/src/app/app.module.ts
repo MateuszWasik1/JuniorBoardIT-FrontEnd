@@ -15,7 +15,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -30,7 +29,6 @@ import { LoginComponent } from './components/account-page.component/login-page.c
 import { featureKeyUserState } from './components/user-page.component/user-page-state/user-page-state.state';
 import { UserReducer } from './components/user-page.component/user-page-state/user-page-state.reducer';
 import { UserEffects } from './components/user-page.component/user-page-state/user-page-state.effects';
-import { UserPageComponent } from './components/user-page.component/user-page.component';
 import { UsersReducer } from './components/users-page.component/users-page-state/users-page-state.reducer';
 import { featureKeyUsersState } from './components/users-page.component/users-page-state/users-page-state.state';
 import { UsersEffects } from './components/users-page.component/users-page-state/users-page-state.effects';
@@ -43,7 +41,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    UserPageComponent,
     UIErrorHandler,
   ],
   imports: [
@@ -54,7 +51,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     HttpClientModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
