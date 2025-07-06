@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslationService } from 'src/app/services/translate.service';
 import { RegisterUser } from '../account-page-state/account-page-state.actions';
 import { PasswordConsistency, PatternValidator } from 'src/app/validators/forms.validator';
@@ -9,15 +9,16 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss']
+  styleUrls: ['./register-page.component.scss'],
+  standalone: true,
+  imports: [ReactiveFormsModule, MatButtonModule]
 })
-export class RegisterComponent implements OnInit {
-  title = 'Rejestracja - P1 - Mateusz Wąsik';
-  
+export class RegisterComponent implements OnInit {  
   public subscriptions: Subscription[];
 
   public IsPasswordsEqual: boolean = true;

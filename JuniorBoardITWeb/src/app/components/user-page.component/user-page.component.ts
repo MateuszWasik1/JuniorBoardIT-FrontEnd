@@ -2,22 +2,26 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslationService } from 'src/app/services/translate.service';
 import { cleanState, loadUser, loadUserByAdmin, saveUser, saveUserByAdmin } from './user-page-state/user-page-state.actions';
 import { selectErrorMessage, selectUser } from './user-page-state/user-page-state.selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { RolesEnum } from 'src/app/enums/RolesEnum';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.scss']
+  styleUrls: ['./user-page.component.scss'],
+  standalone: true,
+  imports: [MatSelectModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule]
 })
 export class UserPageComponent implements OnInit, OnDestroy {
-  title = 'Użytkownik - P1 - Mateusz Wąsik';
-
   public IsAdminView: boolean = false;
   public roles: any;
   public selectedRole: any;
