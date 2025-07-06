@@ -70,3 +70,12 @@ export class AppComponent {
     this.router.navigate(['login'])
   }
 }
+
+
+// Packages to update:
+    // "chart.js": "^4.1.1",
+    // "guid-typescript": "^1.0.9",
+    // "moment": "^2.29.4",
+    // "ng2-charts": "^4.1.1",
+    // "ngx-cookie-service": "^15.0.0",
+    // "ngx-mat-select-search": "^7.0.2",

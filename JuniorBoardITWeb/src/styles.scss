@@ -2,19 +2,18 @@
 @use '@angular/material' as mat;
 @include mat.core();
 
-$JuniorBoardITWeb-primary: mat.define-palette(mat.$indigo-palette);
-$JuniorBoardITWeb-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$JuniorBoardITWeb-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$JuniorBoardITWeb-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$JuniorBoardITWeb-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$JuniorBoardITWeb-warn: mat.define-palette(mat.$red-palette);
-
-$JuniorBoardITWeb-theme: mat.define-light-theme((
+$JuniorBoardITWeb-theme: mat.m2-define-light-theme((
   color: (
     primary: $JuniorBoardITWeb-primary,
     accent: $JuniorBoardITWeb-accent,
     warn: $JuniorBoardITWeb-warn,
   )
 ));
-
+ 
 @include mat.all-component-themes($JuniorBoardITWeb-theme);
 
 @import "~bootstrap-icons/font/bootstrap-icons.css";
