@@ -18,7 +18,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AccountEffects } from './components/account-page.component/account-page-state/account-page-state.effects';
@@ -31,13 +30,11 @@ import { UsersReducer } from './components/users-page.component/users-page-state
 import { featureKeyUsersState } from './components/users-page.component/users-page-state/users-page-state.state';
 import { UsersEffects } from './components/users-page.component/users-page-state/users-page-state.effects';
 import { GlobalErrorHandler } from './error-handlers/global-error-handler';
-import { UIErrorHandler } from './error-handlers/ui-error-handler/ui-error-handler.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UIErrorHandler,
   ],
   imports: [
     ReactiveFormsModule,
@@ -50,7 +47,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatDialogModule,
     MatTooltipModule,
     
     TranslateModule.forRoot({

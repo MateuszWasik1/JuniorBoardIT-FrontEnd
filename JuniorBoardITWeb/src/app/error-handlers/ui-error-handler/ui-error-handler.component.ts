@@ -1,11 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { TranslationService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-ui-error-handler',
   templateUrl: './ui-error-handler.component.html',
-  styleUrls: ['./ui-error-handler.component.scss']
+  styleUrls: ['./ui-error-handler.component.scss'],
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule]
 })
 export class UIErrorHandler {
   constructor(
