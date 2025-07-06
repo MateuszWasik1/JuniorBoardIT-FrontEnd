@@ -10,13 +10,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { RolesEnum } from 'src/app/enums/RolesEnum';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss'],
   standalone: true,
-  imports: [MatSelectModule, ReactiveFormsModule]
+  imports: [MatSelectModule, ReactiveFormsModule, MatButtonModule]
 })
 export class UserPageComponent implements OnInit, OnDestroy {
   public IsAdminView: boolean = false;
