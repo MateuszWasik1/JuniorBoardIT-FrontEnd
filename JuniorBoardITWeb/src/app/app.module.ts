@@ -24,7 +24,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AccountEffects } from './components/account-page.component/account-page-state/account-page-state.effects';
 import { featureKeyAccountState } from './components/account-page.component/account-page-state/account-page-state.state';
 import { AccountReducer } from './components/account-page.component/account-page-state/account-page-state.reducer';
-import { RegisterComponent } from './components/account-page.component/register-page.component/register-page.component';
 import { featureKeyUserState } from './components/user-page.component/user-page-state/user-page-state.state';
 import { UserReducer } from './components/user-page.component/user-page-state/user-page-state.reducer';
 import { UserEffects } from './components/user-page.component/user-page-state/user-page-state.effects';
@@ -38,7 +37,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
     UIErrorHandler,
   ],
   imports: [
