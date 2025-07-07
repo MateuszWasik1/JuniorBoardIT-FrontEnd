@@ -10,6 +10,11 @@ import { Subscription } from 'rxjs';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { MatButtonModule } from '@angular/material/button';
 
+type FormModel = {
+  UUserName: FormControl<string>;
+  UPassword: FormControl<string>;
+};
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -22,9 +27,9 @@ export class LoginComponent implements OnInit {
 
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  public form = new FormGroup({
-    userName: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+  public form = new FormGroup<FormModel>({
+    UUserName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    UPassword: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
   });
 
   constructor(
@@ -44,19 +49,9 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  public Clear = () => {
-    this.form.get('userName')?.setValue('');
-    this.form.get('password')?.setValue('');
-  };
+  public Clear = () => this.form.reset();
 
-  public Login = () => {
-    let model = {
-      UUserName: this.form.get('userName')?.value,
-      UPassword: this.form.get('password')?.value
-    };
-
-    this.store.dispatch(Login({ user: model }));
-  };
+  public Login = () => this.store.dispatch(Login({ user: this.form.value }));
 
   public GoToRegistration = () => this.router.navigate(['/register']);
 }
