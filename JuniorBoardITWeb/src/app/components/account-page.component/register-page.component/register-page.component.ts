@@ -34,15 +34,15 @@ export class RegisterComponent implements OnInit {
 
   public form = new FormGroup<FormModel>(
     {
-      UUserName: new FormControl('', {
+      UUserName: new FormControl<string>('', {
         validators: [Validators.required, Validators.maxLength(100)],
         nonNullable: true
       }),
-      UEmail: new FormControl('', {
+      UEmail: new FormControl<string>('', {
         validators: [Validators.required, Validators.email, Validators.maxLength(100)],
         nonNullable: true
       }),
-      UPassword: new FormControl('', {
+      UPassword: new FormControl<string>('', {
         validators: [
           Validators.required,
           Validators.minLength(8),
@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
         ],
         nonNullable: true
       }),
-      UPassword2: new FormControl('', {
+      UPassword2: new FormControl<string>('', {
         validators: [
           Validators.required,
           Validators.minLength(8),
@@ -105,7 +105,7 @@ export class RegisterComponent implements OnInit {
 
   public Clear = () => this.form.reset();
 
-  public Save = () => this.store.dispatch(RegisterUser({ user: this.form.value }));
+  public Save = () => this.store.dispatch(RegisterUser({ user: this.form.controls.UEmail.value }));
 
   public GoToLogin = () => this.router.navigate(['/login']);
 }
