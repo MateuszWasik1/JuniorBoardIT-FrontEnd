@@ -1,0 +1,13 @@
+.angular
+.npm
+.cache
+/dist
+/docker
+/jenkins
+/node_modules
+/src/assets
+/tmp
+*.less
+*.yml
+*.json
+*.MD

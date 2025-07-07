@@ -1,34 +1,34 @@
-@if(!hideMenu){
-    <div class="navigation">
-        <div class="left-panel"></div>
-        <nav>
-            @if(IsAdmin){              
-                <a href="users">{{"TopMenu_Users" | translate}}</a>
-            }       
-        </nav>
-        <div class="mobile-navigation">
-            <div class="mobile-navigation-button"> 
-                <span class="bi bi-list" (click)="ToggleMobileMenu()"></span> 
-            </div> 
-            <div class="mobile-menu" [ngClass]="IsMobileMenuActive ? 'mobile-menu-active' : 'mobile-menu-inactive'"> 
-                <div class="mobile-menu-container"> 
-                    @if(IsAdmin){
-                        <a href="users">{{"TopMenu_Users" | translate}}</a>
-                    }
-                </div>
-            </div>
+@if (!hideMenu) {
+  <div class="navigation">
+    <div class="left-panel"></div>
+    <nav>
+      @if (IsAdmin) {
+        <a href="users">{{ 'TopMenu_Users' | translate }}</a>
+      }
+    </nav>
+    <div class="mobile-navigation">
+      <div class="mobile-navigation-button">
+        <span class="bi bi-list" (click)="ToggleMobileMenu()"></span>
+      </div>
+      <div class="mobile-menu" [ngClass]="IsMobileMenuActive ? 'mobile-menu-active' : 'mobile-menu-inactive'">
+        <div class="mobile-menu-container">
+          @if (IsAdmin) {
+            <a href="users">{{ 'TopMenu_Users' | translate }}</a>
+          }
         </div>
-        <div class="side-menu">
-            <div class="user" (click)="GoToUser()"></div>
-            @if(language == 'en'){
-                <div class="pl" (click)="ChangeLanguage('pl')"></div>
-            } @else if(language == 'pl'){
-                <div class="en" (click)="ChangeLanguage('en')"></div>
-            }
-            <div class="logout" (click)="LogOut()"></div>
-        </div>
+      </div>
     </div>
+    <div class="side-menu">
+      <div class="user" (click)="GoToUser()"></div>
+      @if (language == 'en') {
+        <div class="pl" (click)="ChangeLanguage('pl')"></div>
+      } @else if (language == 'pl') {
+        <div class="en" (click)="ChangeLanguage('en')"></div>
+      }
+      <div class="logout" (click)="LogOut()"></div>
+    </div>
+  </div>
 }
 <div [ngClass]="mainClass">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

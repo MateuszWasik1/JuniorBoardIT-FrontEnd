@@ -9,37 +9,37 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    title: "Rejestracja"
+    title: 'Rejestracja'
   },
   {
     path: 'login',
     component: LoginComponent,
-    title: "Logowanie"
+    title: 'Logowanie'
   },
   {
     path: 'user',
     component: UserPageComponent,
-    title: "Użytkownik"
+    title: 'Użytkownik'
   },
   {
     path: 'user/:ugid',
     component: UserPageComponent,
-    title: "Użytkownik"
+    title: 'Użytkownik'
   },
   {
     path: 'users',
     component: UsersPageComponent,
-    title: "Użytkownicy"
+    title: 'Użytkownicy'
   },
   {
     path: '**',
     component: UsersPageComponent,
-    title: "Użytkownicy"
-  },
+    title: 'Użytkownicy'
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule] 
+  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
