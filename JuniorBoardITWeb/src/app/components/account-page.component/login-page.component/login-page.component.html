@@ -12,11 +12,11 @@
           <span>
             {{ translations.Get('Account_Register_UserName') }}
           </span>
-          <input class="form-field" type="text" formControlName="userName" />
+          <input class="form-field" type="text" formControlName="UUserName" />
         </div>
       </div>
     </div>
-    @if (form.get('userName')?.errors?.['required']) {
+    @if (form.controls.UUserName.errors?.['required']) {
       <div class="row error margin-bottom-15">
         {{ translations.Get('Account_Register_Validation_Required') }}
       </div>
@@ -28,11 +28,11 @@
           <span>
             {{ translations.Get('Account_Register_Password') }}
           </span>
-          <input class="form-field" type="password" formControlName="password" />
+          <input class="form-field" type="password" formControlName="UPassword" />
         </div>
       </div>
     </div>
-    @if (form.get('password')?.errors?.['required']) {
+    @if (form.controls.UPassword.errors?.['required']) {
       <div class="error row margin-bottom-15">
         {{ translations.Get('Account_Register_Validation_Required') }}
       </div>

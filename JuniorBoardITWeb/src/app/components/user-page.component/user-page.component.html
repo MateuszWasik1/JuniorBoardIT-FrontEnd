@@ -23,7 +23,7 @@
             <span class="data-input-text"> {{ translations.Get('Users_ID') }}: </span>
           </div>
           <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
-            <input type="text" class="data-input" [placeholder]="translations.Get('Users_ID')" formControlName="uid" />
+            <input type="text" class="data-input" [placeholder]="translations.Get('Users_ID')" formControlName="UID" />
           </div>
         </div>
         <div class="row">
@@ -35,7 +35,7 @@
               type="text"
               class="data-input"
               [placeholder]="translations.Get('Users_GUID')"
-              formControlName="ugid"
+              formControlName="UGID"
             />
           </div>
         </div>
@@ -65,10 +65,10 @@
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_First_Name')"
-            formControlName="uFirstName"
+            formControlName="UFirstName"
           />
         </div>
-        @if (form.get('uFirstName')?.errors?.['maxlength']) {
+        @if (form.controls.UFirstName.errors?.['maxlength']) {
           <div class="row error-input margin-bottom-15">
             {{ translations.Get('User_Error_MaxLength50') }}
           </div>
@@ -83,10 +83,10 @@
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_Last_Name')"
-            formControlName="uLastName"
+            formControlName="ULastName"
           />
         </div>
-        @if (form.get('uLastName')?.errors?.['maxlength']) {
+        @if (form.controls.ULastName.errors?.['maxlength']) {
           <div class="row error-input margin-bottom-15">
             {{ translations.Get('User_Error_MaxLength50') }}
           </div>
@@ -101,10 +101,10 @@
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_User_Name')"
-            formControlName="uUserName"
+            formControlName="UUserName"
           />
         </div>
-        @if (form.get('uUserName')?.errors?.['maxlength']) {
+        @if (form.controls.UUserName.errors?.['maxlength']) {
           <div class="row error-input margin-bottom-15">
             {{ translations.Get('User_Error_MaxLength100') }}
           </div>
@@ -119,20 +119,20 @@
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_Email')"
-            formControlName="uEmail"
+            formControlName="UEmail"
           />
         </div>
-        @if (form.get('uEmail')?.errors?.['required']) {
+        @if (form.controls.UEmail.errors?.['required']) {
           <div class="row error-input margin-bottom-15">
             {{ translations.Get('Account_Register_Validation_Required') }}
           </div>
         }
-        @if (form.get('uEmail')?.errors?.['email']) {
+        @if (form.controls.UEmail.errors?.['email']) {
           <div class="row error-input margin-bottom-15">
             {{ translations.Get('Account_Register_Validation_Email') }}
           </div>
         }
-        @if (form.get('uEmail')?.errors?.['maxlength']) {
+        @if (form.controls.UEmail.errors?.['maxlength']) {
           <div class="row error-input margin-bottom-15">
             {{ translations.Get('User_Error_MaxLength100') }}
           </div>
@@ -147,10 +147,10 @@
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_Phone')"
-            formControlName="uPhone"
+            formControlName="UPhone"
           />
         </div>
-        @if (form.get('uPhone')?.errors?.['maxlength']) {
+        @if (form.controls.UPhone.errors?.['maxlength']) {
           <div class="row error-input margin-bottom-15">
             {{ translations.Get('User_Error_MaxLength100') }}
           </div>
