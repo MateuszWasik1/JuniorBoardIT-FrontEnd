@@ -2,8 +2,7 @@ import { ErrorHandler, Injectable } from '@angular/core';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-    constructor(){ }
+  constructor() {}
 
-    handleError(error: any): void {
-    }
+  handleError(error: any): void {}
 }

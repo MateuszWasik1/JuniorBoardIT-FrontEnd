@@ -17,7 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [ReactiveFormsModule, MatButtonModule]
 })
-
 export class LoginComponent implements OnInit {
   public subscriptions: Subscription[];
 
@@ -25,38 +24,39 @@ export class LoginComponent implements OnInit {
 
   public form = new FormGroup({
     userName: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required])
   });
 
-  constructor(public store: Store<AppState>, 
-    public translations: TranslationService, 
+  constructor(
+    public store: Store<AppState>,
+    public translations: TranslationService,
     public router: Router,
-    public errorHandler: MainUIErrorHandler)
-  {
+    public errorHandler: MainUIErrorHandler
+  ) {
     this.subscriptions = [];
   }
-  
+
   ngOnInit(): void {
     this.subscriptions.push(
-      this.ErrorMessage$.subscribe(error => {
+      this.ErrorMessage$.subscribe((error) => {
         this.errorHandler.HandleException(error);
       })
-    )
+    );
   }
 
   public Clear = () => {
     this.form.get('userName')?.setValue('');
     this.form.get('password')?.setValue('');
-  }
+  };
 
   public Login = () => {
     let model = {
       UUserName: this.form.get('userName')?.value,
-      UPassword: this.form.get('password')?.value,
-    }
-    
+      UPassword: this.form.get('password')?.value
+    };
+
     this.store.dispatch(Login({ user: model }));
-  }
-  
-  public GoToRegistration = () => this.router.navigate(['/register'])
+  };
+
+  public GoToRegistration = () => this.router.navigate(['/register']);
 }

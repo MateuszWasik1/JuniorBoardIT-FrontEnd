@@ -18,71 +18,70 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [ReactiveFormsModule, MatButtonModule]
 })
-export class RegisterComponent implements OnInit {  
+export class RegisterComponent implements OnInit {
   public subscriptions: Subscription[];
 
   public IsPasswordsEqual: boolean = true;
 
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  public form = new FormGroup({
-    userName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    email: new FormControl('', [ Validators.required, Validators.email, Validators.maxLength(100) ]),
-    password: new FormControl('', 
-      [
-        Validators.required, 
+  public form = new FormGroup(
+    {
+      userName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)]),
+      password: new FormControl('', [
+        Validators.required,
         Validators.minLength(8),
-        PatternValidator(new RegExp("(?=.*[0-9])"), {
+        PatternValidator(new RegExp('(?=.*[0-9])'), {
           requiresDigit: true
         }),
-        PatternValidator(new RegExp("(?=.*[A-Z])"), {
+        PatternValidator(new RegExp('(?=.*[A-Z])'), {
           requiresUppercase: true
         }),
-        PatternValidator(new RegExp("(?=.*[a-z])"), {
+        PatternValidator(new RegExp('(?=.*[a-z])'), {
           requiresLowercase: true
         }),
-        PatternValidator(new RegExp("(?=.*[$@^!%*?&])"), {
+        PatternValidator(new RegExp('(?=.*[$@^!%*?&])'), {
           requiresSpecialChars: true
         })
-      ]
-    ),
-    password2: new FormControl('', 
-      [
-        Validators.required, 
+      ]),
+      password2: new FormControl('', [
+        Validators.required,
         Validators.minLength(8),
-        PatternValidator(new RegExp("(?=.*[0-9])"), {
+        PatternValidator(new RegExp('(?=.*[0-9])'), {
           requiresDigit: true
         }),
-        PatternValidator(new RegExp("(?=.*[A-Z])"), {
+        PatternValidator(new RegExp('(?=.*[A-Z])'), {
           requiresUppercase: true
         }),
-        PatternValidator(new RegExp("(?=.*[a-z])"), {
+        PatternValidator(new RegExp('(?=.*[a-z])'), {
           requiresLowercase: true
         }),
-        PatternValidator(new RegExp("(?=.*[$@^!%*?&])"), {
+        PatternValidator(new RegExp('(?=.*[$@^!%*?&])'), {
           requiresSpecialChars: true
         })
-      ]
-    ),
-  }, 
-  {
-    validators: PasswordConsistency
-  });
+      ])
+    },
+    {
+      validators: PasswordConsistency
+    }
+  );
 
-  constructor(public store: Store<AppState>, 
-    public translations: TranslationService, 
+  constructor(
+    public store: Store<AppState>,
+    public translations: TranslationService,
     public router: Router,
-    public errorHandler: MainUIErrorHandler)
-  {
+    public errorHandler: MainUIErrorHandler
+  ) {
     this.subscriptions = [];
   }
-  
+
   ngOnInit(): void {
     this.subscriptions.push(
-      this.ErrorMessage$.subscribe(error => {
+      this.ErrorMessage$.subscribe((error) => {
         this.errorHandler.HandleException(error);
       })
-    )
+    );
   }
 
   public Clear = () => {
@@ -90,17 +89,17 @@ export class RegisterComponent implements OnInit {
     this.form.get('email')?.setValue('');
     this.form.get('password')?.setValue('');
     this.form.get('password2')?.setValue('');
-  }
+  };
 
   public Save = () => {
     let model = {
       UUserName: this.form.get('userName')?.value,
       UEmail: this.form.get('email')?.value,
-      UPassword: this.form.get('password')?.value,
-    }
-    
+      UPassword: this.form.get('password')?.value
+    };
+
     this.store.dispatch(RegisterUser({ user: model }));
-  }
+  };
 
   public GoToLogin = () => this.router.navigate(['/login']);
 }
