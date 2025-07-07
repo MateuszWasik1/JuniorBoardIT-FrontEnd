@@ -11,6 +11,13 @@ import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler
 import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
 import { MatButtonModule } from '@angular/material/button';
 
+type FormModel = {
+  UUserName: FormControl<string>;
+  UEmail: FormControl<string>;
+  UPassword: FormControl<string>;
+  UPassword2: FormControl<string>;
+};
+
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
@@ -25,42 +32,54 @@ export class RegisterComponent implements OnInit {
 
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  public form = new FormGroup(
+  public form = new FormGroup<FormModel>(
     {
-      userName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        PatternValidator(new RegExp('(?=.*[0-9])'), {
-          requiresDigit: true
-        }),
-        PatternValidator(new RegExp('(?=.*[A-Z])'), {
-          requiresUppercase: true
-        }),
-        PatternValidator(new RegExp('(?=.*[a-z])'), {
-          requiresLowercase: true
-        }),
-        PatternValidator(new RegExp('(?=.*[$@^!%*?&])'), {
-          requiresSpecialChars: true
-        })
-      ]),
-      password2: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        PatternValidator(new RegExp('(?=.*[0-9])'), {
-          requiresDigit: true
-        }),
-        PatternValidator(new RegExp('(?=.*[A-Z])'), {
-          requiresUppercase: true
-        }),
-        PatternValidator(new RegExp('(?=.*[a-z])'), {
-          requiresLowercase: true
-        }),
-        PatternValidator(new RegExp('(?=.*[$@^!%*?&])'), {
-          requiresSpecialChars: true
-        })
-      ])
+      UUserName: new FormControl('', {
+        validators: [Validators.required, Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      UEmail: new FormControl('', {
+        validators: [Validators.required, Validators.email, Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      UPassword: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.minLength(8),
+          PatternValidator(new RegExp('(?=.*[0-9])'), {
+            requiresDigit: true
+          }),
+          PatternValidator(new RegExp('(?=.*[A-Z])'), {
+            requiresUppercase: true
+          }),
+          PatternValidator(new RegExp('(?=.*[a-z])'), {
+            requiresLowercase: true
+          }),
+          PatternValidator(new RegExp('(?=.*[$@^!%*?&])'), {
+            requiresSpecialChars: true
+          })
+        ],
+        nonNullable: true
+      }),
+      UPassword2: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.minLength(8),
+          PatternValidator(new RegExp('(?=.*[0-9])'), {
+            requiresDigit: true
+          }),
+          PatternValidator(new RegExp('(?=.*[A-Z])'), {
+            requiresUppercase: true
+          }),
+          PatternValidator(new RegExp('(?=.*[a-z])'), {
+            requiresLowercase: true
+          }),
+          PatternValidator(new RegExp('(?=.*[$@^!%*?&])'), {
+            requiresSpecialChars: true
+          })
+        ],
+        nonNullable: true
+      })
     },
     {
       validators: PasswordConsistency
@@ -84,22 +103,9 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  public Clear = () => {
-    this.form.get('userName')?.setValue('');
-    this.form.get('email')?.setValue('');
-    this.form.get('password')?.setValue('');
-    this.form.get('password2')?.setValue('');
-  };
+  public Clear = () => this.form.reset();
 
-  public Save = () => {
-    let model = {
-      UUserName: this.form.get('userName')?.value,
-      UEmail: this.form.get('email')?.value,
-      UPassword: this.form.get('password')?.value
-    };
-
-    this.store.dispatch(RegisterUser({ user: model }));
-  };
+  public Save = () => this.store.dispatch(RegisterUser({ user: this.form.value }));
 
   public GoToLogin = () => this.router.navigate(['/login']);
 }
