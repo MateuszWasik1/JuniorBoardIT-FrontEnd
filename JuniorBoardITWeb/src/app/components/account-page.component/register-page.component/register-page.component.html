@@ -1,153 +1,159 @@
 <section class="body">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h1 class="page-title center">{{translations.Get('Account_Register')}}</h1>
-        </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <h1 class="page-title center">{{ translations.Get('Account_Register') }}</h1>
     </div>
+  </div>
 
-    <form [formGroup]="form">
-        <div class="row margin-bottom-15">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
-                <div class="form-group">
-                    <span>
-                        {{translations.Get('Account_Register_Email')}}
-                    </span>
-                    <input class="form-field" type="text" formControlName="email">
-                </div>
-            </div>
+  <form [formGroup]="form">
+    <div class="row margin-bottom-15">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
+        <div class="form-group">
+          <span>
+            {{ translations.Get('Account_Register_Email') }}
+          </span>
+          <input class="form-field" type="text" formControlName="email" />
         </div>
-        @if(form.get('email')?.errors?.['email']){
-            <div class="row error margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Email')}}
-            </div>
-        }
-        @if(form.get('email')?.errors?.['required']){
-            <div class="row error margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Required')}}
-            </div>
-        }
-        @if(form.get('email')?.errors?.['maxlength']){
-            <div class="row error margin-bottom-15">
-                {{translations.Get('User_Error_MaxLength100')}}
-            </div>
-        }
-
-        <div class="row margin-bottom-15">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
-                <div class="form-group">
-                    <span>
-                        {{translations.Get('Account_Register_UserName')}}
-                    </span>
-                    <input class="form-field" type="text" formControlName="userName">
-                </div>
-            </div>
-        </div>
-        @if(form.get('userName')?.errors?.['required']){
-            <div class="row error margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Required')}}
-            </div>
-        }
-        @if(form.get('userName')?.errors?.['maxlength']){
-            <div class="row error margin-bottom-15">
-                {{translations.Get('User_Error_MaxLength100')}}
-            </div>
-        }
-
-        <div class="row margin-bottom-15">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
-                <div class="form-group">
-                    <span>
-                        {{translations.Get('Account_Register_Password')}}
-                    </span>
-                    <input class="form-field" type="password" formControlName="password">
-                </div>
-            </div>
-        </div>
-        @if(form.get('password')?.errors?.['minlength']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_MinLength8')}}
-            </div>
-        }
-        @if(form.get('password')?.errors?.['required']){     
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Required')}}
-            </div>
-        }
-        @if(form.get('password')?.errors?.['requiresLowercase']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_LowerCase')}}
-            </div>
-        }
-        @if(form.get('password')?.errors?.['requiresUppercase']){     
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_UpperCase')}}
-            </div>
-        }
-        @if(form.get('password')?.errors?.['requiresDigit']){         
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Digit')}}
-            </div>
-        }
-        @if(form.get('password')?.errors?.['requiresSpecialChars']){            
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_SpecialChar')}}
-            </div>
-        }
-
-        <div class="row margin-bottom-15">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
-                <div class="form-group">
-                    <span>
-                        {{translations.Get('Account_Register_Password_Repeat')}}
-                    </span>
-                    <input class="form-field" type="password" formControlName="password2">
-                </div>
-            </div>
-        </div>
-        @if(form.get('password2')?.errors?.['minlength']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_MinLength8')}}
-            </div>
-        }
-        @if(form.get('password2')?.errors?.['required']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Required')}}
-            </div>
-        }
-        @if(form.get('password2')?.errors?.['requiresLowercase']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_LowerCase')}}
-            </div>
-        }
-        @if(form.get('password2')?.errors?.['requiresUppercase']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_UpperCase')}}
-            </div>
-        }
-        @if(form.get('password2')?.errors?.['requiresDigit']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Digit')}}
-            </div>
-        }
-        @if(form.get('password2')?.errors?.['requiresSpecialChars']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_SpecialChar')}}
-            </div>
-        }
-        @if(form.errors?.['PasswordNoMatch']){
-            <div class="error row margin-bottom-15">
-                {{translations.Get('Account_Register_Validation_Password_Equals')}}
-            </div>
-        }
-    </form>
-
-    <div class="row margin-top-35"> 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <button mat-raised-button class="margin-right-15" (click)="Clear()">{{translations.Get('Account_Register_Reset')}}</button>
-            <button mat-raised-button class="primary-btn" (click)="Save()" [disabled]="form.invalid">{{translations.Get('Account_Register_Send')}}</button>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-15">
-            <button mat-raised-button class="primary-btn" (click)="GoToLogin()">{{translations.Get('Account_Login_Already_Have_Account')}}</button>
-        </div>
+      </div>
     </div>
+    @if (form.get('email')?.errors?.['email']) {
+      <div class="row error margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Email') }}
+      </div>
+    }
+    @if (form.get('email')?.errors?.['required']) {
+      <div class="row error margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Required') }}
+      </div>
+    }
+    @if (form.get('email')?.errors?.['maxlength']) {
+      <div class="row error margin-bottom-15">
+        {{ translations.Get('User_Error_MaxLength100') }}
+      </div>
+    }
+
+    <div class="row margin-bottom-15">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
+        <div class="form-group">
+          <span>
+            {{ translations.Get('Account_Register_UserName') }}
+          </span>
+          <input class="form-field" type="text" formControlName="userName" />
+        </div>
+      </div>
+    </div>
+    @if (form.get('userName')?.errors?.['required']) {
+      <div class="row error margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Required') }}
+      </div>
+    }
+    @if (form.get('userName')?.errors?.['maxlength']) {
+      <div class="row error margin-bottom-15">
+        {{ translations.Get('User_Error_MaxLength100') }}
+      </div>
+    }
+
+    <div class="row margin-bottom-15">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
+        <div class="form-group">
+          <span>
+            {{ translations.Get('Account_Register_Password') }}
+          </span>
+          <input class="form-field" type="password" formControlName="password" />
+        </div>
+      </div>
+    </div>
+    @if (form.get('password')?.errors?.['minlength']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_MinLength8') }}
+      </div>
+    }
+    @if (form.get('password')?.errors?.['required']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Required') }}
+      </div>
+    }
+    @if (form.get('password')?.errors?.['requiresLowercase']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_LowerCase') }}
+      </div>
+    }
+    @if (form.get('password')?.errors?.['requiresUppercase']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_UpperCase') }}
+      </div>
+    }
+    @if (form.get('password')?.errors?.['requiresDigit']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Digit') }}
+      </div>
+    }
+    @if (form.get('password')?.errors?.['requiresSpecialChars']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_SpecialChar') }}
+      </div>
+    }
+
+    <div class="row margin-bottom-15">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 register-form">
+        <div class="form-group">
+          <span>
+            {{ translations.Get('Account_Register_Password_Repeat') }}
+          </span>
+          <input class="form-field" type="password" formControlName="password2" />
+        </div>
+      </div>
+    </div>
+    @if (form.get('password2')?.errors?.['minlength']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_MinLength8') }}
+      </div>
+    }
+    @if (form.get('password2')?.errors?.['required']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Required') }}
+      </div>
+    }
+    @if (form.get('password2')?.errors?.['requiresLowercase']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_LowerCase') }}
+      </div>
+    }
+    @if (form.get('password2')?.errors?.['requiresUppercase']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_UpperCase') }}
+      </div>
+    }
+    @if (form.get('password2')?.errors?.['requiresDigit']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Digit') }}
+      </div>
+    }
+    @if (form.get('password2')?.errors?.['requiresSpecialChars']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_SpecialChar') }}
+      </div>
+    }
+    @if (form.errors?.['PasswordNoMatch']) {
+      <div class="error row margin-bottom-15">
+        {{ translations.Get('Account_Register_Validation_Password_Equals') }}
+      </div>
+    }
+  </form>
+
+  <div class="row margin-top-35">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <button mat-raised-button class="margin-right-15" (click)="Clear()">
+        {{ translations.Get('Account_Register_Reset') }}
+      </button>
+      <button mat-raised-button class="primary-btn" (click)="Save()" [disabled]="form.invalid">
+        {{ translations.Get('Account_Register_Send') }}
+      </button>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-15">
+      <button mat-raised-button class="primary-btn" (click)="GoToLogin()">
+        {{ translations.Get('Account_Login_Already_Have_Account') }}
+      </button>
+    </div>
+  </div>
 </section>

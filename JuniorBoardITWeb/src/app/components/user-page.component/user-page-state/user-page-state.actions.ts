@@ -1,4 +1,4 @@
-import { createAction, props } from '@ngrx/store'
+import { createAction, props } from '@ngrx/store';
 
 export const loadUser = createAction('[User Page] Load User');
 export const loadUserSuccess = createAction('[User Page] Load User Success', props<{ User: any }>());

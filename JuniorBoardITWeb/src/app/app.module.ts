@@ -33,9 +33,7 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -48,7 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatNativeDateModule,
     MatInputModule,
     MatTooltipModule,
-    
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -64,21 +62,21 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     StoreModule.forFeature(featureKeyUsersState, UsersReducer),
 
     EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects]),
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     provideAnimationsAsync(),
-        providePrimeNG({ 
-            theme: {
-                preset: Aura
-            }
-        })
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    })
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { } 
-export function httpTranslateLoader(http: HttpClient){
+export class AppModule {}
+export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

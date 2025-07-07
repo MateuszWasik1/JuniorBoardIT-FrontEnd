@@ -14,7 +14,5 @@ export class UIErrorHandler {
   constructor(
     public translations: TranslationService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  )
-  {
-  }
+  ) {}
 }

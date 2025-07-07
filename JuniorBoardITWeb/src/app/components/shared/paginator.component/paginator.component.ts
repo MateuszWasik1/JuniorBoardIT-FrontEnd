@@ -10,23 +10,23 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   standalone: true,
   imports: [MatPaginatorModule]
 })
-export class PaginatorComponent{
-    @Input() length: number = 50;
-    @Output() paginationData = new EventEmitter<object>();
+export class PaginatorComponent {
+  @Input() length: number = 50;
+  @Output() paginationData = new EventEmitter<object>();
 
-    public pageSizeOptions: number[] = [1, 3, 5, 10, 15, 20, 25, 50, 100];
-    public pageSize: number = 10;
-    public pageIndex: number = 0;
+  public pageSizeOptions: number[] = [1, 3, 5, 10, 15, 20, 25, 50, 100];
+  public pageSize: number = 10;
+  public pageIndex: number = 0;
 
-    constructor(public translations: TranslationService){}
+  constructor(public translations: TranslationService) {}
 
-    HandlePageEvent(e: PageEvent) {
-      this.pageSize = e.pageSize;
-      this.pageIndex = e.pageIndex;
+  HandlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
 
-      this.paginationData.emit({ 
-        Skip: this.pageIndex * this.pageSize, 
-        Take: this.pageSize 
-      });
-    }
+    this.paginationData.emit({
+      Skip: this.pageIndex * this.pageSize,
+      Take: this.pageSize
+    });
+  }
 }

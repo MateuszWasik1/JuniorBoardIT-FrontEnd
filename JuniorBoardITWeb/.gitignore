@@ -36,6 +36,9 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+npm-debug.log
+yarn-error.log
+/typings
 
 # System files
 .DS_Store
