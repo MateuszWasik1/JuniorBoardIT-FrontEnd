@@ -27,13 +27,5 @@ export const updatePaginationDataJobOffers = createAction(
   '[JobOffers Page] Update Pagination Data JobOffers',
   props<{ PaginationData: any }>()
 );
-export const updatePaginationDataJobOffersNotes = createAction(
-  '[JobOffers Page] Update Pagination Data JobOffers Notes',
-  props<{ PaginationData: any }>()
-);
-export const updatePaginationDataJobOffersSubJobOffers = createAction(
-  '[JobOffers Page] Update Pagination Data JobOffers SubJobOffers',
-  props<{ PaginationData: any }>()
-);
 
 export const cleanState = createAction('[JobOffers Page] Clean State');

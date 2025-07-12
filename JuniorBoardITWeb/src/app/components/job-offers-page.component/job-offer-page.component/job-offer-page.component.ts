@@ -7,7 +7,36 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { Guid } from 'guid-typescript';
-import { cleanState } from '../job-offers-page-state/job-offers-page-state.actions';
+import { cleanState, loadJobOffer } from '../job-offers-page-state/job-offers-page-state.actions';
+import { selectErrorMessage, selectJobOffer } from '../job-offers-page-state/job-offers-page-state.selectors';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
+import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
+
+type FormModel = {
+  JOTitle: FormControl<string>;
+  JOCompanyName: FormControl<string>;
+  JOLocationType: FormControl<LocationEnum>;
+  JOOfficeLocation: FormControl<string>;
+  JOEmploymentType: FormControl<EmploymentTypeEnum>;
+  JOExpirenceLevel: FormControl<ExpirenceEnum>;
+  JOExpirenceYears: FormControl<number>;
+  JOCategory: FormControl<CategoryEnum>;
+  JOSalaryMin: FormControl<number>;
+  JOSalaryMax: FormControl<number>;
+  JOCurrency: FormControl<CurrencyEnum>;
+  JOSalaryType: FormControl<SalaryEnum>;
+  JODescription: FormControl<string>;
+  JORequirements: FormControl<string>;
+  JOBenefits: FormControl<string>;
+  JOPostedAt: FormControl<Date>;
+  JOExpiresAt: FormControl<Date>;
+  JOStatus: FormControl<StatusEnum>;
+};
 
 @Component({
   selector: 'app-task-page',
@@ -15,32 +44,16 @@ import { cleanState } from '../job-offers-page-state/job-offers-page-state.actio
   styleUrls: ['./job-offer-page.component.scss']
 })
 export class JobOfferPageComponent implements OnInit, OnDestroy {
-  // public subscriptions: Subscription[];
+  public subscriptions: Subscription[];
   // public statuses: any;
   // public selectedStatus: number = 0;
-  // public selectedCategory: string = "";
-  // public countTaskNotes: number = 0;
-  // public countTaskSubTasks: number = 0;
 
-  // public form: FormGroup = new FormGroup({});
-  // public addTaskNote: FormGroup = new FormGroup({});
-  // public addTaskSubTasks: FormGroup = new FormGroup({});
-  // public tgid: string = "";
-  // public isNewTaskView: boolean = true;
+  public form: FormGroup = new FormGroup({});
+  public jogid: string = '';
+  public isNewJobOfferView: boolean = true;
 
-  // public categories: any = [];
-
-  // public Task$ = this.store.select(selectTask);
-  // public TaskNotes$ = this.store.select(selectTasksNotes);
-  // public TaskSubTasks$ = this.store.select(selectTasksSubTasks);
-  // public TaskSubTasksProgressBar$ = this.store.select(selectTasksSubTasksProgressBar);
-  // public Categories$ = this.store.select(selectCategories);
-  // public FiltersTaskNotes$ = this.store.select(selectFiltersTasksNotes);
-  // public FiltersTaskSubTask$ = this.store.select(selectFiltersTasksSubTasks);
-  // public CountTaskNotes$ = this.store.select(selectCountTasksNotes);
-  // public CountTaskSubTask$ = this.store.select(selectCountTasksSubTasks);
-  // public BudgetOverrunMessage$ = this.store.select(selectBudgetOverrunMessage);
-  // public ErrorMessage$ = this.store.select(selectErrorMessage);
+  public JobOffer$ = this.store.select(selectJobOffer);
+  public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
     public store: Store<AppState>,
@@ -49,57 +62,94 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     public router: Router,
     public errorHandler: MainUIErrorHandler
   ) {
-    //this.subscriptions = [];
+    this.subscriptions = [];
   }
   ngOnInit(): void {
-    // this.subscriptions.push(
-    //   this.Categories$.subscribe(categories => {
-    //     this.categories = categories;
-    //     this.selectedCategory = this.categories.length != 0 ? this.categories.find((x: any) => x.cgid == this.form.get("TCGID")?.value).cgid : "";
-    //   })
-    // );
-    // this.tgid = this.route.snapshot.paramMap.get('tgid') ?? "";
-    // this.isNewTaskView = this.tgid == "" || this.tgid == "0";
-    // if(!this.isNewTaskView){
-    //   this.store.dispatch(loadTask({ TGID: this.tgid }));
-    //   this.store.dispatch(loadTasksNotes({ TGID: this.tgid }));
-    //   this.store.dispatch(loadTasksSubTasks({ TGID: this.tgid }));
-    // }
+    this.jogid = this.route.snapshot.paramMap.get('tgid') ?? '';
+    this.isNewJobOfferView = this.jogid == '' || this.jogid == '0';
+    if (!this.isNewJobOfferView) {
+      this.store.dispatch(loadJobOffer({ JOGID: this.jogid }));
+    }
     // this.statuses = [
     //   {id: '0', name: 'Nie zaczęty'},
     //   {id: '1', name: 'W trakcie'},
     //   {id: '2', name: 'Skończony'},
     // ]
-    // this.subscriptions.push(
-    //   this.Task$.subscribe(x =>{
-    //     this.form = new FormGroup({
-    //       TGID: new FormControl( x.TGID, { validators: [] }),
-    //       TCGID: new FormControl( x.TCGID, { validators: [] }),
-    //       TName: new FormControl( x.TName, { validators: [ Validators.required, Validators.maxLength(300) ] }),
-    //       TLocalization: new FormControl( x.TLocalization, { validators: [ Validators.required, Validators.maxLength(300) ] }),
-    //       TTime: new FormControl( x.TTime, { validators: [ Validators.required ] }),
-    //       TBudget: new FormControl( x.TBudget, { validators: [ Validators.required, Validators.min(0) ] }),
-    //     })
-    //     this.selectedStatus = this.statuses[x.TStatus].id;
-    //     this.selectedCategory = this.categories.length != 0 ? this.categories.find((x: any) => x.cgid == x.TCGID).cgid : "";
-    //   })
-    // );
-    // this.subscriptions.push(
-    //   this.ErrorMessage$.subscribe(error => {
-    //     this.errorHandler.HandleException(error);
-    //   })
-    // );
-    // this.addTaskNote = new FormGroup({
-    //   taskNote: new FormControl('', { validators: [ Validators.required, Validators.maxLength(2000) ] }),
-    // });
-    // this.addTaskSubTasks = new FormGroup({
-    //   subTaskTitle: new FormControl('', { validators: [ Validators.required, Validators.maxLength(200) ] }),
-    //   subTaskText: new FormControl('', { validators: [ Validators.required, Validators.maxLength(2000) ] }),
-    // });
-    // this.subscriptions.push(this.FiltersTaskNotes$.subscribe(() => this.store.dispatch(loadTasksNotes({ TGID: this.tgid }))));
-    // this.subscriptions.push(this.FiltersTaskSubTask$.subscribe(() => this.store.dispatch(loadTasksSubTasks({ TGID: this.tgid }))));
-    // this.subscriptions.push(this.CountTaskNotes$.subscribe(countTaskNotes => this.countTaskNotes = countTaskNotes));
-    // this.subscriptions.push(this.CountTaskSubTask$.subscribe(countTaskSubTasks => this.countTaskSubTasks = countTaskSubTasks));
+    this.subscriptions.push(
+      this.JobOffer$.subscribe((x) => {
+        this.form = new FormGroup<FormModel>({
+          JOTitle: new FormControl<string>(x.JOTitle, {
+            validators: [Validators.required, Validators.maxLength(255)],
+            nonNullable: true
+          }),
+          JOCompanyName: new FormControl<string>(x.JOCompanyName, {
+            validators: [Validators.required, Validators.maxLength(255)],
+            nonNullable: true
+          }),
+          JOLocationType: new FormControl<LocationEnum>(x.JOLocationType, {
+            validators: [Validators.required],
+            nonNullable: true
+          }),
+          JOOfficeLocation: new FormControl<string>(x.JOOfficeLocation, {
+            validators: [Validators.maxLength(100)],
+            nonNullable: true
+          }),
+          JOEmploymentType: new FormControl<EmploymentTypeEnum>(x.JOEmploymentType, {
+            validators: [Validators.required],
+            nonNullable: true
+          }),
+          JOExpirenceLevel: new FormControl<ExpirenceEnum>(x.JOExpirenceLevel, {
+            validators: [Validators.required],
+            nonNullable: true
+          }),
+          JOExpirenceYears: new FormControl<number>(x.JOExpirenceYears, {
+            validators: [Validators.required],
+            nonNullable: true
+          }),
+          JOCategory: new FormControl<CategoryEnum>(x.JOCategory, {
+            validators: [Validators.required],
+            nonNullable: true
+          }),
+          JOSalaryMin: new FormControl<number>(x.JOSalaryMin, {
+            validators: [Validators.required, Validators.min(0)],
+            nonNullable: true
+          }),
+          JOSalaryMax: new FormControl<number>(x.JOSalaryMax, {
+            validators: [Validators.required, Validators.min(0)],
+            nonNullable: true
+          }),
+          JOCurrency: new FormControl<CurrencyEnum>(x.JOCurrency, {
+            validators: [Validators.required],
+            nonNullable: true
+          }),
+          JOSalaryType: new FormControl<SalaryEnum>(x.JOSalaryType, {
+            validators: [Validators.required],
+            nonNullable: true
+          }),
+          JODescription: new FormControl<string>(x.JODescription, {
+            validators: [Validators.required, Validators.maxLength(2000)],
+            nonNullable: true
+          }),
+          JORequirements: new FormControl<string>(x.JORequirements, {
+            validators: [Validators.required, Validators.maxLength(2000)],
+            nonNullable: true
+          }),
+          JOBenefits: new FormControl<string>(x.JOBenefits, {
+            validators: [Validators.required, Validators.maxLength(2000)],
+            nonNullable: true
+          }),
+          JOPostedAt: new FormControl<Date>(x.JOPostedAt, { validators: [Validators.required], nonNullable: true }),
+          JOExpiresAt: new FormControl<Date>(x.JOExpiresAt, { validators: [Validators.required], nonNullable: true }),
+          JOStatus: new FormControl<StatusEnum>(x.JOStatus, { validators: [Validators.required], nonNullable: true })
+        });
+        // this.selectedStatus = this.statuses[x.TStatus].id;
+      })
+    );
+    this.subscriptions.push(
+      this.ErrorMessage$.subscribe((error) => {
+        this.errorHandler.HandleException(error);
+      })
+    );
   }
 
   // public SaveTask = () => {
@@ -121,10 +171,10 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
 
   // public DisplayStatus = (status: number) => this.statuses[status].name;
 
-  // public Cancel = () => this.router.navigate(["/tasks"]);
+  public Cancel = () => this.router.navigate(['/job-offers']);
 
   ngOnDestroy() {
-    //this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.store.dispatch(cleanState());
   }
 }

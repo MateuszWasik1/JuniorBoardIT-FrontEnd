@@ -20,7 +20,7 @@ var initialStateOfJobOfferPage: JobOffersState = {
     JOExpirenceLevel: ExpirenceEnum.Junior,
     JOExpirenceYears: 0,
     JOCategory: CategoryEnum.FrontEnd,
-    JOsalaryMin: 0,
+    JOSalaryMin: 0,
     JOSalaryMax: 0,
     JOCurrency: CurrencyEnum.PLN,
     JOSalaryType: SalaryEnum.Monthly,
@@ -117,32 +117,14 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   //     }
   //   })),
 
-  //   on(Actions.updatePaginationDataTasks, (state, { PaginationData }) => ({
-  //     ...state,
-  //     Filters: {
-  //       ...state.Filters,
-  //       Skip: PaginationData.Skip,
-  //       Take: PaginationData.Take
-  //     }
-  //   })),
-
-  //   on(Actions.updatePaginationDataTasksNotes, (state, { PaginationData }) => ({
-  //     ...state,
-  //     FiltersTasksNotes: {
-  //       ...state.FiltersTasksNotes,
-  //       Skip: PaginationData.Skip,
-  //       Take: PaginationData.Take
-  //     }
-  //   })),
-
-  //   on(Actions.updatePaginationDataTasksSubTasks, (state, { PaginationData }) => ({
-  //     ...state,
-  //     FiltersTasksSubTasks: {
-  //       ...state.FiltersTasksSubTasks,
-  //       Skip: PaginationData.Skip,
-  //       Take: PaginationData.Take
-  //     }
-  //   })),
+  on(Actions.updatePaginationDataJobOffers, (state, { PaginationData }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Skip: PaginationData.Skip,
+      Take: PaginationData.Take
+    }
+  })),
 
   on(Actions.cleanState, (state) => ({
     ...state,
@@ -156,7 +138,7 @@ export const JobOfferReducer = createReducer<JobOffersState>(
       JOExpirenceLevel: ExpirenceEnum.Junior,
       JOExpirenceYears: 0,
       JOCategory: CategoryEnum.FrontEnd,
-      JOsalaryMin: 0,
+      JOSalaryMin: 0,
       JOSalaryMax: 0,
       JOCurrency: CurrencyEnum.PLN,
       JOSalaryType: SalaryEnum.Monthly,

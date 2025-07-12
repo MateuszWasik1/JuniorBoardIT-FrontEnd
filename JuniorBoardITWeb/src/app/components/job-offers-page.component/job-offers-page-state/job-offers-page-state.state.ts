@@ -19,7 +19,7 @@ export interface JobOffersState {
     JOExpirenceLevel: ExpirenceEnum;
     JOExpirenceYears: number;
     JOCategory: CategoryEnum;
-    JOsalaryMin: number;
+    JOSalaryMin: number;
     JOSalaryMax: number;
     JOCurrency: CurrencyEnum;
     JOSalaryType: SalaryEnum;
