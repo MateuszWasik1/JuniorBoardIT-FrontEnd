@@ -47,8 +47,9 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.roles = [
       { id: '1', name: RolesEnum.User },
       { id: '2', name: RolesEnum.Premium },
-      { id: '3', name: RolesEnum.Support },
-      { id: '4', name: RolesEnum.Admin }
+      { id: '3', name: RolesEnum.Recruiter },
+      { id: '4', name: RolesEnum.Support },
+      { id: '5', name: RolesEnum.Admin }
     ];
 
     this.subscriptions.push(
