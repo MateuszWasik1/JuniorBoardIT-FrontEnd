@@ -4,6 +4,8 @@ import { RegisterComponent } from './components/account-page.component/register-
 import { LoginComponent } from './components/account-page.component/login-page.component/login-page.component';
 import { UserPageComponent } from './components/user-page.component/user-page.component';
 import { UsersPageComponent } from './components/users-page.component/users-page.component';
+import { JobOffersPageComponent } from './components/job-offers-page.component/job-offers-page.component';
+import { JobOfferPageComponent } from './components/job-offers-page.component/job-offer-page.component/job-offer-page.component';
 
 const routes: Routes = [
   {
@@ -32,9 +34,19 @@ const routes: Routes = [
     title: 'Użytkownicy'
   },
   {
+    path: 'job-offer/:jogid',
+    component: JobOfferPageComponent,
+    title: 'Oferta Pracy'
+  },
+  {
+    path: 'job-offers',
+    component: JobOffersPageComponent,
+    title: 'Oferty Pracy'
+  },
+  {
     path: '**',
-    component: UsersPageComponent,
-    title: 'Użytkownicy'
+    component: JobOffersPageComponent,
+    title: 'Oferty Pracy'
   }
 ];
 

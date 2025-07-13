@@ -1,0 +1,233 @@
+<section class="body">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+      @if (JobOffer$ | async; as jobOffer) {
+        @if (isNewJobOfferView) {
+          <h1 class="page-title">{{ translations.Get('Categories_New_Category') }}</h1>
+        } @else {
+          <h1 class="page-title">{{ translations.Get('Categories_Category') }}: {{ jobOffer.JOTitle }}</h1>
+        }
+      }
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+      <p-button
+        [label]="translations.Get('General_Save')"
+        (click)="SaveTask()"
+        [disabled]="form.invalid"
+        class="margin-right-15"
+      ></p-button>
+      <p-button [label]="translations.Get('General_Cancel')" (click)="Cancel()" severity="secondary"></p-button>
+    </div>
+  </div>
+
+  <div class="row" [formGroup]="form">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jotitle">Tytuł oferty</label>
+      <input pInputText id="jotitle" aria-describedby="job-title" formControlName="JOTitle" />
+      <small id="job-title">Wpisz tytuł swojej oferty o pracę.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jocompanyname">Nazwa firmy</label>
+      <input pInputText id="jocompanyname" aria-describedby="company-name" formControlName="JOCompanyName" />
+      <small id="company-name">Wpisz nazwę firmy.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jolocationtype">Tryb pracy</label>
+      <p-select
+        [options]="locationTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        inputId="jolocationtype"
+        placeholder="Wybierz tryb pracy"
+        aria-describedby="location-types"
+        formControlName="JOLocationType"
+      />
+      <small id="location-types">Wybierz typ pracy w jakim pracownik będzie zatrudniony.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="joofficelocation">Lokalizacja biura (opcjonalnie)</label>
+      <input pInputText id="joofficelocation" aria-describedby="office-location" formControlName="JOOfficeLocation" />
+      <small id="office-location">Jeżeli firma posiada lokalizację biura można ją wpisać.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="joemploymenttype">Typ umowy</label>
+      <p-select
+        [options]="employmentTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        inputId="joemploymenttype"
+        placeholder="Wybierz typ umowy"
+        aria-describedby="employment-types"
+        formControlName="JOEmploymentType"
+      />
+      <small id="employment-types">Wybierz preferowany typ umowy.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="joexpirencelevel">Poziom doświadczenia</label>
+      <p-select
+        [options]="expirenceTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        inputId="joexpirencelevel"
+        placeholder="Wybierz poziom doświadczenia"
+        aria-describedby="expirence-types"
+        formControlName="JOExpirenceLevel"
+      />
+      <small id="expirence-types">Wybierz poziom doświadczenia pracownika.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="joexpirenceyears">Liczba lat doświadczenia</label>
+      <p-inputnumber
+        inputId="joexpirenceyears"
+        aria-describedby="expirence-years"
+        mode="decimal"
+        locale="pl-PL"
+        [minFractionDigits]="1"
+        [maxFractionDigits]="1"
+        formControlName="JOExpirenceYears"
+      />
+      <small id="expirence-years">Wpisz minimalną liczbę lat doświadczenia kandydata.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jocategory">Kategoria</label>
+      <p-select
+        [options]="categoryTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        inputId="jocategory"
+        placeholder="Wybierz kategorię doświadczenia"
+        aria-describedby="offer-category"
+        formControlName="JOCategory"
+      />
+      <small id="offer-category">Wybierz kategorię dla której tworzysz ofertę pracy.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="josalarymin">Dolne widełki finansowe.</label>
+      <p-inputnumber
+        inputId="josalarymin"
+        aria-describedby="salary-min"
+        mode="decimal"
+        locale="pl-PL"
+        [minFractionDigits]="1"
+        [maxFractionDigits]="4"
+        formControlName="JOSalaryMin"
+      />
+      <small id="salary-min">Wpisz dolne widełki finansowe oferty.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="josalarymax">Górne widełki finansowe.</label>
+      <p-inputnumber
+        inputId="josalarymax"
+        aria-describedby="salary-miax"
+        mode="decimal"
+        locale="pl-PL"
+        [minFractionDigits]="1"
+        [maxFractionDigits]="4"
+        formControlName="JOSalaryMax"
+      />
+      <small id="salary-max">Wpisz górne widełki finansowe oferty.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jocurrency">Waluta</label>
+      <p-select
+        [options]="currencyTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        inputId="jocurrency"
+        placeholder="Wybierz typ waluty użytej przy wypłacie"
+        aria-describedby="currency-type"
+        formControlName="JOCurrency"
+      />
+      <small id="currency-type">Wybierz walutę w której będzie wypłacana wypłata.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="josalarytype">Typ wypłaty</label>
+      <p-select
+        [options]="salaryTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        inputId="josalarytype"
+        placeholder="Wybierz typ wypłaty"
+        aria-describedby="salary-type"
+        formControlName="JOSalaryType"
+      />
+      <small id="salary-type">Wybierz typ wypłacania wypłaty.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jodescription">Opis oferty.</label>
+      <input pInputText id="jodescription" aria-describedby="description" formControlName="JODescription" />
+      <small id="description">Wpisz opis oferty pracy.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="Jorequirements">Wymagania oferty</label>
+      <input pInputText id="jorequirements" aria-describedby="requirements" formControlName="JORequirements" />
+      <small id="requirements">Wpisz dodatkowe wymagania oferty pracy.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jobenefits">Benefity</label>
+      <input pInputText id="jobenefits" aria-describedby="benefits" formControlName="JOBenefits" />
+      <small id="benefits">Wpisz oferowane przez firmę benefity pracownicze.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jopostedat">Data publikacji oferty</label>
+      <p-datepicker
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        [maxDate]="form.controls['JOExpiresAt'].value"
+        [showTime]="true"
+        hourFormat="24"
+        inputId="jopostedat"
+        aria-describedby="posted-at"
+        formControlName="JOPostedAt"
+      />
+      <small id="posted-at">Wpisz datę od której oferta będzie widoczna.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="joexpiresat">Data wygaśnięcia oferty</label>
+      <p-datepicker
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        [minDate]="form.controls['JOPostedAt'].value"
+        [showTime]="true"
+        hourFormat="24"
+        inputId="joexpiresat"
+        aria-describedby="expired-at"
+        formControlName="JOExpiresAt"
+      />
+      <small id="expired-at">Wpisz datę od której oferta nie będzie już widoczna.</small>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="jostatus">Wybierz status oferty.</label>
+      <p-select
+        [options]="statuses"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Wybierz status oferty"
+        aria-describedby="offer-status"
+        formControlName="JOStatus"
+      />
+      <small id="offer-status">Wybierz odpowiedni status dla oferty.</small>
+    </div>
+  </div>
+</section>

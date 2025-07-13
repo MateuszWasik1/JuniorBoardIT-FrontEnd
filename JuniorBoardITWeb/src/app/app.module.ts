@@ -30,6 +30,9 @@ import { featureKeyUsersState } from './components/users-page.component/users-pa
 import { UsersEffects } from './components/users-page.component/users-page-state/users-page-state.effects';
 import { GlobalErrorHandler } from './error-handlers/global-error-handler';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { featureKeyJobOffersState } from './components/job-offers-page.component/job-offers-page-state/job-offers-page-state.state';
+import { JobOfferReducer } from './components/job-offers-page.component/job-offers-page-state/job-offers-page-state.reducer';
+import { JobOffersEffects } from './components/job-offers-page.component/job-offers-page-state/job-offers-page-state.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -58,8 +61,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     StoreModule.forFeature(featureKeyAccountState, AccountReducer),
     StoreModule.forFeature(featureKeyUserState, UserReducer),
     StoreModule.forFeature(featureKeyUsersState, UsersReducer),
+    StoreModule.forFeature(featureKeyJobOffersState, JobOfferReducer),
 
-    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects]),
+    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects, JobOffersEffects]),
     BrowserAnimationsModule
   ],
   providers: [
