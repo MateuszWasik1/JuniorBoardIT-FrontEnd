@@ -24,10 +24,10 @@ export class JobOffersService {
     });
   }
 
-  GetJobOffers(Skip: number, Take: number): Observable<any> {
+  GetAllJobOffers(Skip: number, Take: number): Observable<any> {
     let params = new HttpParams().set('skip', Skip).set('take', Take);
 
-    return this.http.get<any>(this.apiUrl + 'api/JobOffers/GetJobOffers', {
+    return this.http.get<any>(this.apiUrl + 'api/JobOffers/GetAllJobOffers', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
