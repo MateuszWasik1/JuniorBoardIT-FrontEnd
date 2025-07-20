@@ -6,6 +6,7 @@ import { UserPageComponent } from './components/user-page.component/user-page.co
 import { UsersPageComponent } from './components/users-page.component/users-page.component';
 import { JobOffersPageComponent } from './components/job-offers-page.component/job-offers-page.component';
 import { JobOfferPageComponent } from './components/job-offers-page.component/job-offer-page.component/job-offer-page.component';
+import { ReportsPageComponent } from './components/reports-page.component/reports-page.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,16 @@ const routes: Routes = [
     path: 'job-offers',
     component: JobOffersPageComponent,
     title: 'Oferty Pracy'
+  },
+  {
+    path: 'report/:rgid',
+    component: ReportsPageComponent,
+    title: 'Zgłoszenie'
+  },
+  {
+    path: 'reports',
+    component: ReportsPageComponent,
+    title: 'Zgłoszenia'
   },
   {
     path: '**',

@@ -1,0 +1,113 @@
+@if (Reports$ | async; as reports) {
+  <section class="body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1 class="page-title">{{ translations.Get('TopMenu_Tasks') }}</h1>
+      </div>
+    </div>
+
+    <!-- <div class="row padding-top-15 filter-row">
+      <ng-container *ngIf="Categories$ | async as categories">
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Tasks_Categories') }}:</div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <mat-form-field>
+            <mat-select [(value)]="selectedFilterCategory" (selectionChange)="ChangeCategoryFilterValue($event)">
+              <mat-option *ngFor="let category of categories" [value]="category['cgid']">
+                {{ category['cName'] }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Tasks_Status') }}:</div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <mat-form-field>
+          <mat-select [(value)]="selectedFilterStatus" (selectionChange)="ChangeStatusFilterValue($event)">
+            <mat-option *ngFor="let status of statuses" [value]="status['id']">
+              {{ status['name'] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div> -->
+
+    <div class="row margin-top-15 filter-row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <app-paginator [length]="count" (paginationData)="UpdatePaginationData($event)"></app-paginator>
+      </div>
+    </div>
+
+    @if (reports.length == 0) {
+      <div class="row no-data-row">
+        <p>{{ translations.Get('Task_NotFound') }}</p>
+      </div>
+    } @else if (reports.length != 0) {
+      <div class="row padding-top-15 padding-bottom-15">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          {{ translations.Get('Tasks_Name') }}
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+          {{ translations.Get('Tasks_Date') }}
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+          {{ translations.Get('Tasks_Localization') }}
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xs">
+          {{ translations.Get('Tasks_Budget') }}
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-sm hidden-xs">
+          {{ translations.Get('Tasks_Status') }}
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3"></div>
+      </div>
+      @for (report of reports; track $index) {
+        <div class="grid p-3">
+          <div class="col-12 md:col-6 lg:col-4">
+            <p-card header="Użytkownik">
+              <div class="mb-2">{{ report.rid }}</div>
+              <div class="mb-2">{{ report.rgid }}</div>
+              <div class="mb-2">{{ report.rjogid }}</div>
+              <div class="mb-2">{{ report.rReporterGID }}</div>
+              <div class="mb-2">{{ report.rSupportGID }}</div>
+              <div class="mb-2">{{ report.rDate }}</div>
+              <div class="mb-2">{{ report.rReasons }}</div>
+              <div class="mb-2">{{ report.rText }}</div>
+              <div class="mb-2">{{ DisplayStatus(report.rStatus) }}</div>
+
+              <ng-template pTemplate="footer">
+                <div class="flex justify-content-between align-items-center">
+                  <div>Lewo</div>
+                  <div>Prawo</div>
+                </div>
+              </ng-template>
+            </p-card>
+          </div>
+        </div>
+        <pre>{{ report | json }}</pre>
+      }
+      <!-- <div *ngFor="let task of tasks">
+        <div class="row data-row">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <p>{{ task.tName }}</p>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+            <p>{{ task.tTime | date: 'yyyy-MM-dd HH:mm' }}</p>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+            <p>{{ task.tLocalization }}</p>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xs">
+            <p>{{ task.tBudget }}</p>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-sm hidden-xs">
+            <p>{{ DisplayStatus(task.tStatus) }}</p>
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3">
+            <span class="bi bi-pencil" (click)="ModifyJobOffer(task.tgid)"></span>
+            <span class="bi bi-trash" (click)="DeleteJobOffer(task.tgid)"></span>
+          </div>
+        </div>
+      </div> -->
+    }
+  </section>
+}

@@ -52,7 +52,7 @@ var initialStateOfReportPage: ReportsState = {
   ErrorMessage: ''
 };
 
-export const ReportReducer = createReducer<ReportsState>(
+export const ReportsReducer = createReducer<ReportsState>(
   initialStateOfReportPage,
 
   //Load Report
