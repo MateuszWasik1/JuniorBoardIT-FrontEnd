@@ -79,35 +79,21 @@ export const ReportReducer = createReducer<ReportsState>(
   })),
 
   //Save Report
-  on(Actions.addReportSuccess, (state) => ({
+  on(Actions.saveReportSuccess, (state) => ({
     ...state
   })),
 
-  on(Actions.addReportError, (state, { error }) => ({
+  on(Actions.saveReportError, (state, { error }) => ({
     ...state,
     ErrorMessage: error
   })),
 
-  //Update Report
-  on(Actions.updateReportSuccess, (state) => ({
+  //Change Report Status
+  on(Actions.changeReportStatusSuccess, (state) => ({
     ...state
   })),
 
-  on(Actions.updateReportError, (state, { error }) => ({
-    ...state,
-    ErrorMessage: error
-  })),
-
-  //Delete Task
-  on(Actions.deleteReportSuccess, (state, { RGID }) => {
-    let newReports = [...state.Reports];
-
-    let reportsWithoutDeletedTask = newReports.filter((x) => x.rgid != RGID);
-
-    return { ...state, Reports: reportsWithoutDeletedTask };
-  }),
-
-  on(Actions.deleteReportError, (state, { error }) => ({
+  on(Actions.changeReportStatusError, (state, { error }) => ({
     ...state,
     ErrorMessage: error
   })),
