@@ -33,6 +33,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { featureKeyJobOffersState } from './components/job-offers-page.component/job-offers-page-state/job-offers-page-state.state';
 import { JobOfferReducer } from './components/job-offers-page.component/job-offers-page-state/job-offers-page-state.reducer';
 import { JobOffersEffects } from './components/job-offers-page.component/job-offers-page-state/job-offers-page-state.effects';
+import { ReportsEffects } from './components/reports-page.component/reports-page-state/reports-page-state.effects';
+import { featureKeyReportsState } from './components/reports-page.component/reports-page-state/reports-page-state.state';
+import { ReportsReducer } from './components/reports-page.component/reports-page-state/reports-page-state.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -62,8 +65,9 @@ import { JobOffersEffects } from './components/job-offers-page.component/job-off
     StoreModule.forFeature(featureKeyUserState, UserReducer),
     StoreModule.forFeature(featureKeyUsersState, UsersReducer),
     StoreModule.forFeature(featureKeyJobOffersState, JobOfferReducer),
+    StoreModule.forFeature(featureKeyReportsState, ReportsReducer),
 
-    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects, JobOffersEffects]),
+    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects, JobOffersEffects, ReportsEffects]),
     BrowserAnimationsModule
   ],
   providers: [

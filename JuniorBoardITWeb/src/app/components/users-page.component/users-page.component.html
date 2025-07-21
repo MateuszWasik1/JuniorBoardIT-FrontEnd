@@ -38,32 +38,32 @@
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
       </div>
 
-      @for (user of users; track user.ugid) {
+      @for (user of users; track user.UGID) {
         <div class="row data-row">
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.ugid }}</p>
+            <p>{{ user.UGID }}</p>
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <p>{{ DisplayRoles(user.urid) }}</p>
+            <p>{{ DisplayRoles(user.URID) }}</p>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.uFirstName }}</p>
+            <p>{{ user.UFirstName }}</p>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.uLastName }}</p>
+            <p>{{ user.ULastName }}</p>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.uUserName }}</p>
+            <p>{{ user.UUserName }}</p>
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <p>{{ user.uEmail }}</p>
+            <p>{{ user.UEmail }}</p>
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <p>{{ user.uPhone }}</p>
+            <p>{{ user.UPhone }}</p>
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <span class="bi bi-pencil" (click)="GoToUser(user.ugid)"></span>
-            <span class="bi bi-trash" (click)="DeleteUser(user.ugid)"></span>
+            <span class="bi bi-pencil" (click)="GoToUser(user.UGID)"></span>
+            <span class="bi bi-trash" (click)="DeleteUser(user.UGID)"></span>
           </div>
         </div>
       }

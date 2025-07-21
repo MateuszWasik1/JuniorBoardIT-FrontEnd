@@ -90,16 +90,16 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.User$.subscribe((user) => {
         this.form.patchValue({
-          UID: user.uid,
-          UGID: user.ugid,
-          UFirstName: user.uFirstName,
-          ULastName: user.uLastName,
-          UUserName: user.uUserName,
-          UEmail: user.uEmail,
-          UPhone: user.uPhone
+          UID: user.UID,
+          UGID: user.UGID,
+          UFirstName: user.UFirstName,
+          ULastName: user.ULastName,
+          UUserName: user.UUserName,
+          UEmail: user.UEmail,
+          UPhone: user.UPhone
         });
 
-        this.selectedRole = this.roles[user.urid ? user.urid - 1 : 0].id;
+        this.selectedRole = this.roles[user.URID ? user.URID - 1 : 0].id;
       })
     );
 

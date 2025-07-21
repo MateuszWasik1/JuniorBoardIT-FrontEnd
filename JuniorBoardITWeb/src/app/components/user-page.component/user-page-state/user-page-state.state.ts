@@ -2,14 +2,14 @@ export const featureKeyUserState = 'user-page-state';
 
 export interface UserState {
   User: {
-    uid: number;
-    ugid: string;
-    urid: number;
-    uFirstName: string;
-    uLastName: string;
-    uUserName: string;
-    uEmail: string;
-    uPhone: string;
+    UID: number;
+    UGID: string;
+    URID: number;
+    UFirstName: string;
+    ULastName: string;
+    UUserName: string;
+    UEmail: string;
+    UPhone: string;
   };
   ErrorMessage: string;
 }

@@ -17,8 +17,8 @@ export const UsersReducer = createReducer<UsersState>(
 
   on(Actions.loadUsersSuccess, (state, { Users }) => ({
     ...state,
-    Users: Users.list,
-    UsersCount: Users.count
+    Users: Users.List,
+    UsersCount: Users.Count
   })),
 
   on(Actions.loadUsersError, (state, { error }) => ({
@@ -29,7 +29,7 @@ export const UsersReducer = createReducer<UsersState>(
   on(Actions.deleteUserSuccess, (state, { ugid }) => {
     let users = [...state.Users];
 
-    let deletedUserIndex = users.findIndex((x) => x.ugid == ugid);
+    let deletedUserIndex = users.findIndex((x) => x.UGID == ugid);
 
     users.splice(deletedUserIndex, 1);
 
