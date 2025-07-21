@@ -5,22 +5,12 @@
         <h1 class="page-title">{{ translations.Get('Categories_Category') }}: {{ jobOffer.JOTitle }}</h1>
       }
     </div>
-    <!-- <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-      <p-button
-        [label]="translations.Get('General_Save')"
-        (click)="SaveTask()"
-        [disabled]="form.invalid"
-        class="margin-right-15"
-      ></p-button>
-      <p-button [label]="translations.Get('General_Cancel')" (click)="Cancel()" severity="secondary"></p-button>
-    </div> -->
-    ToDo Przeniść niżej
   </div>
 
   @if (Report$ | async; as report) {
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <p-card header="Użytkownik">
+        <p-card header="Czy zgłosznie użytkownika potwierdziło się?">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               {{ report.RReasons }}
@@ -36,12 +26,23 @@
               {{ report.RStatus }}
             </div>
           </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p-button
+                [label]="translations.Get('General_Save')"
+                (click)="ChangeReportStatus(report.RGID, report.RStatus)"
+                [disabled]="form.invalid"
+                class="margin-right-15"
+              ></p-button>
+              <p-button [label]="translations.Get('General_Cancel')" (click)="Cancel()" severity="secondary"></p-button>
+            </div>
+          </div>
         </p-card>
       </div>
     </div>
   }
 
-  <div class="row" [formGroup]="form">
+  <div class="row margin-top-15" [formGroup]="form">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <label for="jotitle">Tytuł oferty</label>
       <input pInputText id="jotitle" aria-describedby="job-title" formControlName="JOTitle" />
