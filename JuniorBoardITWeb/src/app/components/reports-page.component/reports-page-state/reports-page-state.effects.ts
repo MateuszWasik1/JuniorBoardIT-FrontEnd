@@ -23,7 +23,9 @@ export class ReportsEffects {
       ofType(ReportsActions.loadReport),
       switchMap((params) => {
         return this.reportsService.GetReport(params.RGID).pipe(
-          map((result) => ReportsActions.loadReportSuccess({ Report: result })),
+          map((result) =>
+            ReportsActions.loadReportSuccess({ ReportModel: result.ReportModel, JobOfferModel: result.JobOfferModel })
+          ),
           catchError((error) => of(ReportsActions.loadReportError({ error: this.errorHandler.handleAPIError(error) })))
         );
       })
@@ -59,7 +61,11 @@ export class ReportsEffects {
     return this.actions.pipe(
       ofType(ReportsActions.changeReportStatus),
       switchMap((params) => {
-        return this.reportsService.ChangeReportStatus(params.Report).pipe(
+        const model = {
+          RGID: params.RGID,
+          Status: params.RStatus
+        };
+        return this.reportsService.ChangeReportStatus(model).pipe(
           map(() => ReportsActions.changeReportStatusSuccess()),
           catchError((error) =>
             of(ReportsActions.changeReportStatusError({ error: this.errorHandler.handleAPIError(error) }))

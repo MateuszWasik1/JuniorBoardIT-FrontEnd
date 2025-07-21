@@ -56,9 +56,10 @@ export const ReportsReducer = createReducer<ReportsState>(
   initialStateOfReportPage,
 
   //Load Report
-  on(Actions.loadReportSuccess, (state, { Report }) => ({
+  on(Actions.loadReportSuccess, (state, { ReportModel, JobOfferModel }) => ({
     ...state,
-    Report: Report
+    Report: ReportModel,
+    JobOffer: JobOfferModel
   })),
 
   on(Actions.loadReportError, (state, { error }) => ({
@@ -69,8 +70,8 @@ export const ReportsReducer = createReducer<ReportsState>(
   //Load Reports
   on(Actions.loadReportsSuccess, (state, { Reports }) => ({
     ...state,
-    Reports: Reports.list,
-    ReportsCount: Reports.count
+    Reports: Reports.List,
+    ReportsCount: Reports.Count
   })),
 
   on(Actions.loadReportsError, (state, { error }) => ({

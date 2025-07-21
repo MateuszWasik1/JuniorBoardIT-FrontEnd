@@ -57,8 +57,8 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   //Load JobOffers
   on(Actions.loadJobOffersSuccess, (state, { JobOffers }) => ({
     ...state,
-    JobOffers: JobOffers.list,
-    JobOffersCount: JobOffers.count
+    JobOffers: JobOffers.List,
+    JobOffersCount: JobOffers.Count
   })),
 
   on(Actions.loadJobOffersError, (state, { error }) => ({
@@ -90,7 +90,7 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   on(Actions.deleteJobOfferSuccess, (state, { JOGID }) => {
     let newJobOffers = [...state.JobOffers];
 
-    let jobOffersWithoutDeletedTask = newJobOffers.filter((x) => x.jogid != JOGID);
+    let jobOffersWithoutDeletedTask = newJobOffers.filter((x) => x.JOGID != JOGID);
 
     return { ...state, JobOffers: jobOffersWithoutDeletedTask };
   }),
