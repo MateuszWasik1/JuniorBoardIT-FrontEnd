@@ -4,6 +4,7 @@
     <nav>
       <a href="job-offers">{{ 'TopMenu_JobOffers' | translate }}</a>
       <a href="reports">{{ 'TopMenu_Reports' | translate }}</a>
+      <a href="bugs">{{ 'TopMenu_Bugs' | translate }}</a>
       @if (IsAdmin) {
         <a href="users">{{ 'TopMenu_Users' | translate }}</a>
       }
@@ -14,6 +15,9 @@
       </div>
       <div class="mobile-menu" [ngClass]="IsMobileMenuActive ? 'mobile-menu-active' : 'mobile-menu-inactive'">
         <div class="mobile-menu-container">
+          <a href="job-offers">{{ 'TopMenu_JobOffers' | translate }}</a>
+          <a href="reports">{{ 'TopMenu_Reports' | translate }}</a>
+          <a href="bugs">{{ 'TopMenu_Bugs' | translate }}</a>
           @if (IsAdmin) {
             <a href="users">{{ 'TopMenu_Users' | translate }}</a>
           }
