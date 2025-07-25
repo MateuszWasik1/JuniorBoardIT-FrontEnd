@@ -20,11 +20,17 @@ import {
 import { Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
+import { MatFormField, MatOption, MatSelect } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-bugs-page',
   templateUrl: './bugs-page.component.html',
-  styleUrls: ['./bugs-page.component.scss']
+  styleUrls: ['./bugs-page.component.scss'],
+  standalone: true,
+  imports: [PaginatorComponent, AsyncPipe, DatePipe, NgClass, MatFormField, MatSelect, MatOption, MatButton]
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];

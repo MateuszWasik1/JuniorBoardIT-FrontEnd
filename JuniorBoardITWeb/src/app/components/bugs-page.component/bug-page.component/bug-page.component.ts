@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   selectBug,
   selectBugNotes,
@@ -25,11 +25,28 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { MatFormField } from '@angular/material/form-field';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
+import { PaginatorComponent } from '../../shared/paginator.component/paginator.component';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-bug-page',
   templateUrl: './bug-page.component.html',
-  styleUrls: ['./bug-page.component.scss']
+  styleUrls: ['./bug-page.component.scss'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    PaginatorComponent,
+    AsyncPipe,
+    DatePipe,
+    NgClass,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    MatButton
+  ]
 })
 export class BugPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
