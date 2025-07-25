@@ -29,7 +29,18 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
 import { PaginatorComponent } from '../../shared/paginator.component/paginator.component';
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+
+type FormBugModel = {
+  BGID: FormControl<string>;
+  BTitle: FormControl<string>;
+  BText: FormControl<string>;
+  BStatus: FormControl<BugStatusEnum>;
+};
+
+type FormBugNoteModel = {
+  BugNote: FormControl<string>;
+};
 
 @Component({
   selector: 'app-bug-page',
@@ -45,13 +56,15 @@ import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
     MatFormField,
     MatSelect,
     MatOption,
-    MatButton
+    MatButton,
+    NgIf,
+    NgFor
   ]
 })
 export class BugPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public form: FormGroup = new FormGroup({});
-  public addBugNote: FormGroup = new FormGroup({});
+  public form: FormGroup<FormBugModel>;
+  public formBugNote: FormGroup<FormBugNoteModel>;
   public bgid: string = '';
   public count: number = 0;
   public isNewBugView: boolean = true;
@@ -81,6 +94,8 @@ export class BugPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.form = this.InitBugForm();
+    this.formBugNote = this.InitBugNoteForm();
   }
   ngOnInit(): void {
     this.bgid = this.route.snapshot.paramMap.get('bgid') ?? '';
@@ -94,27 +109,12 @@ export class BugPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(loadUserRoles());
 
     this.subscriptions.push(
-      this.Bug$.subscribe((x) => {
-        this.form = new FormGroup({
-          bguid: new FormControl(x.bguid, { validators: [] }),
-          bTitle: new FormControl(
-            { value: x.bTitle, disabled: !this.isNewBugView },
-            { validators: [Validators.required, Validators.maxLength(200)] }
-          ),
-          bText: new FormControl(
-            { value: x.bText, disabled: !this.isNewBugView },
-            { validators: [Validators.required, Validators.maxLength(4000)] }
-          ),
-          bStatus: new FormControl(x.bStatus, { validators: [] })
-        });
+      this.Bug$.subscribe((bug) => {
+        this.form.patchValue(bug);
 
-        this.selectedBugStatus = this.bugStatusAdmin[x.bStatus].id;
+        this.selectedBugStatus = this.bugStatusAdmin[bug.BStatus].id;
       })
     );
-
-    this.addBugNote = new FormGroup({
-      bugNote: new FormControl('', { validators: [Validators.required, Validators.maxLength(4000)] })
-    });
 
     this.subscriptions.push(
       this.ErrorMessage$.subscribe((error) => {
@@ -127,7 +127,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.Filters$.subscribe(() => this.store.dispatch(loadBugNotes({ bgid: this.bgid }))));
   }
 
-  public ChangeColor = (IsStatusChange: boolean, status: number) => {
+  public ChangeColor = (IsStatusChange: boolean, status: number): string => {
     if (!IsStatusChange) return '';
 
     let statuses = [
@@ -144,38 +144,50 @@ export class BugPageComponent implements OnInit, OnDestroy {
     return color;
   };
 
-  public SaveBug = () => {
-    let model = {
-      BGID: this.form.get('bguid')?.value,
-      BTitle: this.form.get('bTitle')?.value,
-      BText: this.form.get('bText')?.value,
-      BStatus: this.form.get('bStatus')?.value
-    };
+  public SaveBug = (): void => this.store.dispatch(saveBug({ bug: this.form.value }));
 
-    this.store.dispatch(saveBug({ bug: model }));
-  };
-
-  public AddBugNote = () => {
+  public AddBugNote = (): void => {
     let model = {
-      BNBGID: this.form.get('bguid')?.value,
-      BNText: this.addBugNote.get('bugNote')?.value
+      BNBGID: this.form.controls.BGID?.value,
+      BNText: this.formBugNote.controls.BugNote?.value
     };
     this.store.dispatch(saveBugNote({ BugNote: model }));
   };
 
-  public ChangeBugStatus = (event: any) => {
+  public ChangeBugStatus = (event: any): void => {
     let model = {
-      BGID: this.form.get('bguid')?.value,
+      BGID: this.form.controls.BGID?.value,
       Status: event.value
     };
 
     this.store.dispatch(changeBugStatus({ model: model }));
   };
 
-  public Cancel = () => this.router.navigate(['/bugs']);
+  public Cancel = (): Promise<boolean> => this.router.navigate(['/bugs']);
 
-  public UpdatePaginationData = (PaginationData: any) =>
+  public UpdatePaginationData = (PaginationData: any): void =>
     this.store.dispatch(updateBugNotesPaginationData({ PaginationData: PaginationData }));
+
+  private InitBugForm = (): FormGroup<FormBugModel> => {
+    return new FormGroup<FormBugModel>({
+      BGID: new FormControl('', { validators: [], nonNullable: true }),
+      BTitle: new FormControl(
+        { value: '', disabled: !this.isNewBugView },
+        { validators: [Validators.required, Validators.maxLength(200)], nonNullable: true }
+      ),
+      BText: new FormControl(
+        { value: '', disabled: !this.isNewBugView },
+        { validators: [Validators.required, Validators.maxLength(4000)], nonNullable: true }
+      ),
+      BStatus: new FormControl(BugStatusEnum.New, { validators: [], nonNullable: true })
+    });
+  };
+
+  private InitBugNoteForm = (): FormGroup<FormBugNoteModel> => {
+    return new FormGroup<FormBugNoteModel>({
+      BugNote: new FormControl('', { validators: [Validators.required, Validators.maxLength(4000)], nonNullable: true })
+    });
+  };
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

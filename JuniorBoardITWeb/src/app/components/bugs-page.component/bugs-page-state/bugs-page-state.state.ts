@@ -6,10 +6,10 @@ export const featureKeyBugsState = 'bugs-page-state';
 export interface BugsState {
   Bugs: any[];
   Bug: {
-    bguid: string;
-    bTitle: string;
-    bText: string;
-    bStatus: BugStatusEnum;
+    BGID: string;
+    BTitle: string;
+    BText: string;
+    BStatus: BugStatusEnum;
   };
   BugNotes: any[];
   Filters: {

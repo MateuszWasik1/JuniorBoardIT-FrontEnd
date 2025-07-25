@@ -20,7 +20,7 @@ import {
 import { Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import { MatFormField, MatOption, MatSelect } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
@@ -30,7 +30,7 @@ import { MatButton } from '@angular/material/button';
   templateUrl: './bugs-page.component.html',
   styleUrls: ['./bugs-page.component.scss'],
   standalone: true,
-  imports: [PaginatorComponent, AsyncPipe, DatePipe, NgClass, MatFormField, MatSelect, MatOption, MatButton]
+  imports: [PaginatorComponent, AsyncPipe, DatePipe, NgClass, MatFormField, MatSelect, MatOption, MatButton, NgFor]
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
@@ -86,9 +86,9 @@ export class BugsPageComponent implements OnInit, OnDestroy {
 
   public DisplayStatus = (status: number) => this.bugStatuses[status].name;
 
-  public AddBug = () => this.router.navigate(['bugs/0']);
+  public AddBug = () => this.router.navigate(['bug/0']);
 
-  public ModifyBug = (bgid: any) => this.router.navigate([`bugs/${bgid}`]);
+  public ModifyBug = (bgid: any) => this.router.navigate([`bug/${bgid}`]);
 
   public ChangeBugsType = (BugType: any) => this.store.dispatch(changeBugsType({ BugType: BugType.value }));
 

@@ -8,10 +8,10 @@ import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
 var initialStateOfBugsPage: BugsState = {
   Bugs: [],
   Bug: {
-    bguid: Guid.create().toString(),
-    bTitle: '',
-    bText: '',
-    bStatus: BugStatusEnum.New
+    BGID: Guid.create().toString(),
+    BTitle: '',
+    BText: '',
+    BStatus: BugStatusEnum.New
   },
   BugNotes: [],
   Filters: {
@@ -37,8 +37,8 @@ export const BugsReducer = createReducer<BugsState>(
 
   on(Actions.loadBugsSuccess, (state, { Bugs }) => ({
     ...state,
-    Bugs: Bugs.list,
-    BugsCount: Bugs.count
+    Bugs: Bugs.List,
+    BugsCount: Bugs.Count
   })),
 
   on(Actions.loadBugsError, (state, { error }) => ({
@@ -48,12 +48,7 @@ export const BugsReducer = createReducer<BugsState>(
 
   on(Actions.loadBugSuccess, (state, { Bug }) => ({
     ...state,
-    Bug: {
-      bguid: Bug.bgid,
-      bTitle: Bug.bTitle,
-      bText: Bug.bText,
-      bStatus: Bug.bStatus
-    }
+    Bug: Bug
   })),
 
   on(Actions.loadBugError, (state, { error }) => ({
@@ -63,8 +58,8 @@ export const BugsReducer = createReducer<BugsState>(
 
   on(Actions.loadBugNotesSuccess, (state, { BugNotes }) => ({
     ...state,
-    BugNotes: BugNotes.list,
-    BugsNotesCount: BugNotes.count
+    BugNotes: BugNotes.List,
+    BugsNotesCount: BugNotes.Count
   })),
 
   on(Actions.loadBugNotesError, (state, { error }) => ({
@@ -75,8 +70,8 @@ export const BugsReducer = createReducer<BugsState>(
   on(Actions.loadUserRolesSuccess, (state, { UserRoles }) => ({
     ...state,
     UserRoles: {
-      IsSupport: UserRoles.isSupport,
-      IsAdmin: UserRoles.isAdmin
+      IsSupport: UserRoles.IsSupport,
+      IsAdmin: UserRoles.IsAdmin
     }
   })),
 
@@ -94,11 +89,11 @@ export const BugsReducer = createReducer<BugsState>(
     let newBugNotes = [...state.BugNotes];
 
     let newModel = {
-      bnDate: new Date(),
-      bnText: BugNote.BNText,
-      bnIsNewVerifier: false,
-      bnIsStatusChange: false,
-      bnChangedStatus: 0
+      BNDate: new Date(),
+      BNText: BugNote.BNText,
+      BNIsNewVerifier: false,
+      BNIsStatusChange: false,
+      BNChangedStatus: 0
     };
 
     newBugNotes.push(newModel);
@@ -115,11 +110,11 @@ export const BugsReducer = createReducer<BugsState>(
     let newBugNotes = [...state.BugNotes];
 
     let newModel = {
-      bnDate: new Date(),
-      bnText: 'Status został zmieniony',
-      bnIsNewVerifier: false,
-      bnIsStatusChange: true,
-      bnChangedStatus: +status
+      BNDate: new Date(),
+      BNText: 'Status został zmieniony',
+      BNIsNewVerifier: false,
+      BNIsStatusChange: true,
+      BNChangedStatus: +status
     };
 
     newBugNotes.push(newModel);
@@ -128,7 +123,7 @@ export const BugsReducer = createReducer<BugsState>(
       ...state,
       Bug: {
         ...state.Bug,
-        bStatus: status
+        BStatus: status
       },
       BugNotes: newBugNotes
     };
@@ -169,10 +164,10 @@ export const BugsReducer = createReducer<BugsState>(
     ...state,
     Bugs: [],
     Bug: {
-      bguid: Guid.create().toString(),
-      bTitle: '',
-      bText: '',
-      bStatus: BugStatusEnum.New
+      BGID: Guid.create().toString(),
+      BTitle: '',
+      BText: '',
+      BStatus: BugStatusEnum.New
     },
     BugNotes: [],
     Filters: {
