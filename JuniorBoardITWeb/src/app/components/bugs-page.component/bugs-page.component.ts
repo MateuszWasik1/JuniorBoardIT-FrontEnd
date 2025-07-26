@@ -22,20 +22,22 @@ import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler
 import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
 import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
-import { MatFormField, MatOption, MatSelect } from '@angular/material/select';
-import { MatButton } from '@angular/material/button';
+import { SelectChangeEvent, SelectModule } from 'primeng/select';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-bugs-page',
   templateUrl: './bugs-page.component.html',
   styleUrls: ['./bugs-page.component.scss'],
   standalone: true,
-  imports: [PaginatorComponent, AsyncPipe, DatePipe, NgClass, MatFormField, MatSelect, MatOption, MatButton, NgFor]
+  imports: [PaginatorComponent, AsyncPipe, DatePipe, NgClass, ButtonModule, SelectModule, ReactiveFormsModule]
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
   public ShowAddModal: boolean = false;
   public count: number = 0;
+  public formFilter: FormGroup = new FormGroup({});
 
   public Bugs$ = this.store.select(selectBugs);
   public Filters$ = this.store.select(selectFilters);
@@ -69,6 +71,9 @@ export class BugsPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.formFilter = new FormGroup({
+      filter: new FormControl(this.bugsTypes[3].value)
+    });
   }
   ngOnInit(): void {
     this.store.dispatch(loadUserRoles());
@@ -88,9 +93,10 @@ export class BugsPageComponent implements OnInit, OnDestroy {
 
   public AddBug = () => this.router.navigate(['bug/0']);
 
-  public ModifyBug = (bgid: any) => this.router.navigate([`bug/${bgid}`]);
+  public ModifyBug = (bgid: string) => this.router.navigate([`bug/${bgid}`]);
 
-  public ChangeBugsType = (BugType: any) => this.store.dispatch(changeBugsType({ BugType: BugType.value }));
+  public ChangeBugsType = (BugType: SelectChangeEvent) =>
+    this.store.dispatch(changeBugsType({ BugType: BugType.value }));
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));

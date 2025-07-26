@@ -10,14 +10,15 @@
       }
     </div>
     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+      <p-button
+        [label]="translations.Get('General_Cancel')"
+        (click)="Cancel()"
+        severity="secondary"
+        class="margin-right-15"
+      ></p-button>
       @if (isNewBugView) {
-        <button mat-raised-button class="primary-btn float-right" (click)="SaveBug()" [disabled]="form.invalid">
-          {{ translations.Get('General_Save') }}
-        </button>
+        <p-button [label]="translations.Get('General_Save')" (click)="SaveBug()" [disabled]="form.invalid"></p-button>
       }
-      <button mat-raised-button class="float-right margin-right-15" (click)="Cancel()">
-        {{ translations.Get('General_Cancel') }}
-      </button>
     </div>
   </div>
 
@@ -66,6 +67,7 @@
             [placeholder]="translations.Get('Bugs_Title')"
             class="bugs-textarea"
             required
+            pTextarea
           ></textarea>
         </div>
         @if (form.controls.BTitle.errors?.['required']) {
@@ -90,6 +92,7 @@
             [placeholder]="translations.Get('Bugs_Text')"
             class="bugs-textarea"
             required
+            pTextarea
           ></textarea>
         </div>
         @if (form.controls.BText.errors?.['required']) {
@@ -119,20 +122,18 @@
           <h1 class="page-subtitle">{{ translations.Get('Bugs_Bug_AddNoteTitle') }}:</h1>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-          <button
-            mat-raised-button
-            class="primary-btn float-right add-task-note-btn"
+          <p-button
+            [label]="translations.Get('Bugs_Bug_AddNote')"
             (click)="AddBugNote()"
             [disabled]="formBugNote.invalid"
-          >
-            {{ translations.Get('Bugs_Bug_AddNote') }}
-          </button>
+            class="margin-right-15"
+          ></p-button>
         </div>
       </div>
 
       <div class="row" [formGroup]="formBugNote">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <textarea formControlName="BugNote" class="bugs-textarea" maxlength="4000" required></textarea>
+          <textarea formControlName="BugNote" class="bugs-textarea" maxlength="4000" required pTextarea></textarea>
         </div>
         @if (formBugNote.controls.BugNote.errors?.['required']) {
           <div class="error row margin-bottom-15">
@@ -162,7 +163,7 @@
           </div>
         </div>
 
-        @for (bugNote of bugNotes; track bugNote) {
+        @for (bugNote of bugNotes; track bugNote.BNGID) {
           <div class="row data-row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
               <p>{{ bugNote.BNDate | date: 'yyyy-MM-dd HH:mm' }}</p>

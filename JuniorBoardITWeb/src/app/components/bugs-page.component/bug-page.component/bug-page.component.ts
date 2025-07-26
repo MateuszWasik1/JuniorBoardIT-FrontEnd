@@ -27,9 +27,10 @@ import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { MatFormField } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { MatButton } from '@angular/material/button';
 import { PaginatorComponent } from '../../shared/paginator.component/paginator.component';
-import { AsyncPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { TextareaModule } from 'primeng/textarea';
 
 type FormBugModel = {
   BGID: FormControl<string>;
@@ -56,9 +57,9 @@ type FormBugNoteModel = {
     MatFormField,
     MatSelect,
     MatOption,
-    MatButton,
-    NgIf,
-    NgFor
+    NgFor,
+    ButtonModule,
+    TextareaModule
   ]
 })
 export class BugPageComponent implements OnInit, OnDestroy {
