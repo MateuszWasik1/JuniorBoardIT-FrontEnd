@@ -36,6 +36,9 @@ import { JobOffersEffects } from './components/job-offers-page.component/job-off
 import { ReportsEffects } from './components/reports-page.component/reports-page-state/reports-page-state.effects';
 import { featureKeyReportsState } from './components/reports-page.component/reports-page-state/reports-page-state.state';
 import { ReportsReducer } from './components/reports-page.component/reports-page-state/reports-page-state.reducer';
+import { BugsEffects } from './components/bugs-page.component/bugs-page-state/bugs-page-state.effects';
+import { featureKeyBugsState } from './components/bugs-page.component/bugs-page-state/bugs-page-state.state';
+import { BugsReducer } from './components/bugs-page.component/bugs-page-state/bugs-page-state.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -66,8 +69,9 @@ import { ReportsReducer } from './components/reports-page.component/reports-page
     StoreModule.forFeature(featureKeyUsersState, UsersReducer),
     StoreModule.forFeature(featureKeyJobOffersState, JobOfferReducer),
     StoreModule.forFeature(featureKeyReportsState, ReportsReducer),
+    StoreModule.forFeature(featureKeyBugsState, BugsReducer),
 
-    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects, JobOffersEffects, ReportsEffects]),
+    EffectsModule.forRoot([AccountEffects, UserEffects, UsersEffects, JobOffersEffects, ReportsEffects, BugsEffects]),
     BrowserAnimationsModule
   ],
   providers: [

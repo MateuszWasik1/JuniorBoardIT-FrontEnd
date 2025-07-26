@@ -8,6 +8,8 @@ import { JobOffersPageComponent } from './components/job-offers-page.component/j
 import { JobOfferPageComponent } from './components/job-offers-page.component/job-offer-page.component/job-offer-page.component';
 import { ReportsPageComponent } from './components/reports-page.component/reports-page.component';
 import { ReportPageComponent } from './components/reports-page.component/report-page.component/report-page.component';
+import { BugPageComponent } from './components/bugs-page.component/bug-page.component/bug-page.component';
+import { BugsPageComponent } from './components/bugs-page.component/bugs-page.component';
 
 const routes: Routes = [
   {
@@ -54,6 +56,16 @@ const routes: Routes = [
     path: 'reports',
     component: ReportsPageComponent,
     title: 'Zgłoszenia'
+  },
+  {
+    path: 'bug/:bgid',
+    component: BugPageComponent,
+    title: 'Błąd'
+  },
+  {
+    path: 'bugs',
+    component: BugsPageComponent,
+    title: 'Błędy'
   },
   {
     path: '**',
