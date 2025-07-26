@@ -1,12 +1,26 @@
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
+
 export const featureKeyCompaniesState = 'companies-page-state';
 
 export interface CompaniesState {
   Companies: any[];
   Company: {
-    // BGID: string;
-    // BTitle: string;
-    // BText: string;
-    // BStatus: BugStatusEnum;
+    CGID: string;
+    CName: string;
+    CIndustry: IndustryEnum;
+    CDescription: string;
+    CEmail: string;
+    CAddress: string;
+    CCity: string;
+    CCountry: string;
+    CPostalCode: string;
+    CPhoneNumber: string;
+    CLI: string;
+    CFoundedYear: number;
+    CEmployeesNo: CompanyEmpNoEnum;
+    CCreatedAt: Date;
+    CUpdatedAt: Date;
   };
   Filters: {
     Skip: number;
