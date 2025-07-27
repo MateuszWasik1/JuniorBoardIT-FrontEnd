@@ -16,13 +16,11 @@
         severity="secondary"
         class="margin-right-15"
       ></p-button>
-      @if (isNewCompanyView) {
-        <p-button
-          [label]="translations.Get('General_Save')"
-          (click)="isNewCompanyView ? AddCompany() : UpdateCompany()"
-          [disabled]="form.invalid"
-        ></p-button>
-      }
+      <p-button
+        [label]="translations.Get('General_Save')"
+        (click)="isNewCompanyView ? AddCompany() : UpdateCompany()"
+        [disabled]="form.invalid"
+      ></p-button>
     </div>
   </div>
 

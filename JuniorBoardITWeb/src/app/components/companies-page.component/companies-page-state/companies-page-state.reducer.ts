@@ -68,6 +68,14 @@ export const CompaniesReducer = createReducer<CompaniesState>(
     ErrorMessage: error
   })),
 
+  on(Actions.deleteCompanySuccess, (state, { CGID }) => {
+    let newCompanies = [...state.Companies];
+
+    let companiesWithoutDeletedCompany = newCompanies.filter((x) => x.CGID != CGID);
+
+    return { ...state, Companies: companiesWithoutDeletedCompany };
+  }),
+
   on(Actions.deleteCompanyError, (state, { error }) => ({
     ...state,
     ErrorMessage: error

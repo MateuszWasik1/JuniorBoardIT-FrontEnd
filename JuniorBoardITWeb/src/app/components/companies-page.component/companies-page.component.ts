@@ -9,7 +9,12 @@ import {
   selectErrorMessage,
   selectFilters
 } from './companies-page-state/companies-page-state.selectors';
-import { cleanState, loadCompanies, updatePaginationData } from './companies-page-state/companies-page-state.actions';
+import {
+  cleanState,
+  deleteCompany,
+  loadCompanies,
+  updatePaginationData
+} from './companies-page-state/companies-page-state.actions';
 import { Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { AsyncPipe } from '@angular/common';
@@ -56,6 +61,8 @@ export class CompaniesPageComponent implements OnInit, OnDestroy {
   public AddCompany = () => this.router.navigate(['company/0']);
 
   public ModifyCompany = (CGID: string) => this.router.navigate([`company/${CGID}`]);
+
+  public DeleteCompany = (CGID: string) => this.store.dispatch(deleteCompany({ CGID: CGID }));
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));

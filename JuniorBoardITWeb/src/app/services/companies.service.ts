@@ -46,7 +46,7 @@ export class CompaniesService {
   }
 
   DeleteCompany(CGID: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}api/Companies/Delete/${CGID}`, {
+    return this.http.delete<any>(`${this.apiUrl}api/Companies/DeleteCompany/${CGID}`, {
       headers: GetToken(this.cookiesService)
     });
   }
