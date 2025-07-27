@@ -10,6 +10,7 @@ import { ReportsPageComponent } from './components/reports-page.component/report
 import { ReportPageComponent } from './components/reports-page.component/report-page.component/report-page.component';
 import { BugPageComponent } from './components/bugs-page.component/bug-page.component/bug-page.component';
 import { BugsPageComponent } from './components/bugs-page.component/bugs-page.component';
+import { CompaniesPageComponent } from './components/companies-page.component/companies-page.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,16 @@ const routes: Routes = [
     path: 'bugs',
     component: BugsPageComponent,
     title: 'Błędy'
+  },
+  // {
+  //   path: 'company/:cgid',
+  //   component: BugPageComponent,
+  //   title: 'Firma'
+  // },
+  {
+    path: 'companies',
+    component: CompaniesPageComponent,
+    title: 'Firmy'
   },
   {
     path: '**',
