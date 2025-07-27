@@ -1,0 +1,402 @@
+<section class="body">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+      @if (isNewCompanyView) {
+        <h1 class="page-title">{{ translations.Get('TopMenu_Bugs') }}</h1>
+      } @else {
+        @if (Company$ | async; as company) {
+          <h1 class="page-title">{{ translations.Get('Bugs_Bug') }}: {{ company.CName }}</h1>
+        }
+      }
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+      <p-button
+        [label]="translations.Get('General_Cancel')"
+        (click)="Cancel()"
+        severity="secondary"
+        class="margin-right-15"
+      ></p-button>
+      @if (isNewCompanyView) {
+        <p-button
+          [label]="translations.Get('General_Save')"
+          (click)="isNewCompanyView ? AddCompany() : UpdateCompany()"
+          [disabled]="form.invalid"
+        ></p-button>
+      }
+    </div>
+  </div>
+
+  <div class="row" [formGroup]="form">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CName"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CName.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CName.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <!-- <p-select
+        [options]="locationTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Wybierz tryb pracy"
+        formControlName="CIndustry"
+      /> -->
+        </div>
+        @if (form.controls.CIndustry.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <textarea
+            formControlName="CDescription"
+            maxlength="2000"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            pTextarea
+          ></textarea>
+        </div>
+        @if (form.controls.CDescription.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CDescription.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CEmail"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CEmail.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CEmail.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CAddress"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CAddress.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CAddress.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CCity"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CCity.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CCity.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CCountry"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CCountry.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CCountry.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CPostalCode"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CPostalCode.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CPostalCode.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CPhoneNumber"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CPhoneNumber.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CPhoneNumber.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CNIP"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CNIP.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CNIP.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CRegon"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CRegon.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CRegon.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CKRS"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CKRS.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CKRS.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            formControlName="CLI"
+            [placeholder]="translations.Get('Bugs_Title')"
+            required
+            maxlength="255"
+          />
+        </div>
+        @if (form.controls.CLI.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CLI.errors?.['maxlength']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <p-inputnumber
+            mode="decimal"
+            locale="pl-PL"
+            [minFractionDigits]="0"
+            [maxFractionDigits]="0"
+            formControlName="CFoundedYear"
+          />
+        </div>
+        @if (form.controls.CFoundedYear.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+        @if (form.controls.CFoundedYear.errors?.['min']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Max200') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <!-- <p-select
+        [options]="locationTypes"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Wybierz tryb pracy"
+        formControlName="CEmployeesNo"
+      /> -->
+        </div>
+        @if (form.controls.CEmployeesNo.errors?.['required']) {
+          <div class="error row margin-bottom-15">
+            {{ translations.Get('Bugs_AddTitle_Required') }}
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

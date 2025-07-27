@@ -16,6 +16,9 @@ export interface CompaniesState {
     CCountry: string;
     CPostalCode: string;
     CPhoneNumber: string;
+    CNIP: string;
+    CRegon: string;
+    CKRS: string;
     CLI: string;
     CFoundedYear: number;
     CEmployeesNo: CompanyEmpNoEnum;
