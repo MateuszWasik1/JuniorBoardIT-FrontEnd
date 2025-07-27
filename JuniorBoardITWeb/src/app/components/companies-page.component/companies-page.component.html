@@ -2,7 +2,7 @@
   <section class="body">
     <div class="row">
       <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
-        <h1 class="page-title">{{ translations.Get('TopMenu_Bugs') }}</h1>
+        <h1 class="page-title">{{ translations.Get('TopMenu_Companies') }}</h1>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
         <p-button [label]="translations.Get('General_Add')" (click)="AddCompany()" class="margin-right-15"></p-button>
@@ -18,16 +18,16 @@
     @if (companies.length != 0) {
       <div class="row padding-top-15 padding-bottom-15">
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          {{ translations.Get('Bugs_Title') }}
+          {{ translations.Get('Companies_Company_Name') }}
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          {{ translations.Get('Bugs_Text') }}
+          {{ translations.Get('Companies_Company_NIP') }}
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          {{ translations.Get('Bugs_Support') }}
+          {{ translations.Get('Companies_Company_Regon') }}
         </div>
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-          {{ translations.Get('Bugs_Date') }}
+          {{ translations.Get('Companies_Company_KRS') }}
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
       </div>
@@ -53,7 +53,7 @@
     }
     @if (companies.length == 0) {
       <div class="row no-data-row">
-        <p>{{ translations.Get('Bugs_NotFound_User') }}</p>
+        <p>{{ translations.Get('Companies_NotFound') }}</p>
       </div>
     }
   </section>
