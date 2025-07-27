@@ -63,6 +63,25 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
   public form: FormGroup<FormModel>;
   public cgid: string = '';
   public isNewCompanyView: boolean = true;
+  public industryTypes: object[] = [
+    { id: IndustryEnum.Industry, name: 'Przemysł' },
+    { id: IndustryEnum.Trade, name: 'Handel' },
+    { id: IndustryEnum.Services, name: 'Usługi' },
+    { id: IndustryEnum.Technologies, name: 'Technologie' },
+    { id: IndustryEnum.Agriculture, name: 'Rolnictwo' },
+    { id: IndustryEnum.Construction, name: 'Budownictwo' },
+    { id: IndustryEnum.Finance, name: 'Finanse' },
+    { id: IndustryEnum.Healthcare, name: 'Opieka zdrowotna' },
+    { id: IndustryEnum.Education, name: 'Edukacja' }
+  ];
+  public companyEmpNoTypes: object[] = [
+    { id: CompanyEmpNoEnum.Microenterprise, name: 'Mikro przedsiębiorstwo (1-9) ' },
+    { id: CompanyEmpNoEnum.SmallEnterprise, name: 'Małe przedsiębiorstwo (10-49) ' },
+    { id: CompanyEmpNoEnum.MediumEnterprise, name: 'Średnie przedsiębiorstwo (50-249) ' },
+    { id: CompanyEmpNoEnum.LargeEnterprise, name: 'Duże przedsiębiorstwo (250-9999) ' },
+    { id: CompanyEmpNoEnum.EnormousEnterprise, name: 'Wielkie przedsiębiorstwo (1000-4999) ' },
+    { id: CompanyEmpNoEnum.GlobalEnterprise, name: 'Globalne przedsiębiorstwo (5000+) ' }
+  ];
 
   public Company$ = this.store.select(selectCompany);
   public ErrorMessage$ = this.store.select(selectErrorMessage);

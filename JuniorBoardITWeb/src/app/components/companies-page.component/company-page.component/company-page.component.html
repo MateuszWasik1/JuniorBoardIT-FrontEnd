@@ -58,16 +58,16 @@
           <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
-          <!-- <p-select
-        [options]="locationTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="Wybierz tryb pracy"
-        formControlName="CIndustry"
-      /> -->
+          <p-select
+            [options]="industryTypes"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Wybierz typ przedsiębiorstwa"
+            formControlName="CIndustry"
+          />
         </div>
         @if (form.controls.CIndustry.errors?.['required']) {
           <div class="error row margin-bottom-15">
@@ -380,16 +380,16 @@
           <span class="data-input-text"> {{ translations.Get('Bugs_Title') }}: </span>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
-          <!-- <p-select
-        [options]="locationTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="Wybierz tryb pracy"
-        formControlName="CEmployeesNo"
-      /> -->
+          <p-select
+            [options]="companyEmpNoTypes"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Wybierz liczbę pracowników"
+            formControlName="CEmployeesNo"
+          />
         </div>
         @if (form.controls.CEmployeesNo.errors?.['required']) {
           <div class="error row margin-bottom-15">
