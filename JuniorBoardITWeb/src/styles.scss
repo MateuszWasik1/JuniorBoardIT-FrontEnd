@@ -84,8 +84,8 @@ body {
   background-color: #eee;
   border-radius: 5px;
   margin-bottom: 5px;
-  border-left: 10px solid #6e93fe;
-  border-right: 10px solid #6e93fe;
+  border-left: 10px solid #099669;
+  border-right: 10px solid #099669;
 
   p {
     word-wrap: break-word;
@@ -93,7 +93,7 @@ body {
   }
 
   &:hover {
-    background-color: #6e93fe;
+    background-color: #099669;
     color: white;
     cursor: pointer;
   }
@@ -105,11 +105,11 @@ body {
   background-color: #eee;
   border-radius: 5px;
   margin-top: 30px;
-  border-left: 10px solid #6e93fe;
-  border-right: 10px solid #6e93fe;
+  border-left: 10px solid #099669;
+  border-right: 10px solid #099669;
 
   &:hover {
-    background-color: #6e93fe;
+    background-color: #099669;
     color: white;
     cursor: pointer;
   }
@@ -123,12 +123,12 @@ body {
 }
 
 .bi:hover {
-  background-color: #6e93fe;
+  background-color: #099669;
   cursor: pointer;
 }
 
 .primary-btn:not(:disabled) {
-  background-color: #6e93fe !important;
+  background-color: #099669 !important;
   color: white !important;
 }
 
@@ -215,7 +215,7 @@ body {
 //Data inputs
 .data-input-text {
   display: block;
-  border-left: 8px solid #6e93fe;
+  border-left: 8px solid #099669;
   padding-left: 15px;
   font-size: 1.1em;
   letter-spacing: 1px;
