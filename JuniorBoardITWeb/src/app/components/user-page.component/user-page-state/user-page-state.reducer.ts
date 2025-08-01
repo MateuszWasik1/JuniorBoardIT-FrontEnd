@@ -25,11 +25,11 @@ export const UserReducer = createReducer<UserState>(
       UID: 0,
       UGID: '',
       URID: 1,
-      UFirstName: User.uFirstName,
-      ULastName: User.uLastName,
-      UUserName: User.uUserName,
-      UEmail: User.uEmail,
-      UPhone: User.uPhone
+      UFirstName: User.UFirstName,
+      ULastName: User.ULastName,
+      UUserName: User.UUserName,
+      UEmail: User.UEmail,
+      UPhone: User.UPhone
     }
   })),
 

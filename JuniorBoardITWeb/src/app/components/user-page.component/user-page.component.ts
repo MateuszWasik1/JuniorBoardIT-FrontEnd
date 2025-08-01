@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslationService } from 'src/app/services/translate.service';
 import {
   cleanState,
@@ -16,13 +16,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { RolesEnum } from 'src/app/enums/RolesEnum';
 import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { SelectModule } from 'primeng/select';
 
 type FormModel = {
   UID: FormControl<number>;
   UGID: FormControl<string>;
+  URID: FormControl<number>;
   UFirstName: FormControl<string>;
   ULastName: FormControl<string>;
   UUserName: FormControl<string>;
@@ -35,7 +37,7 @@ type FormModel = {
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss'],
   standalone: true,
-  imports: [MatSelectModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule]
+  imports: [MatSelectModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, SelectModule]
 })
 export class UserPageComponent implements OnInit, OnDestroy {
   public IsAdminView: boolean = false;
@@ -44,21 +46,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   public selectedFilterRole: any;
   public subscriptions: Subscription[];
 
-  public form = new FormGroup<FormModel>({
-    UID: new FormControl<number>(0, { validators: [], nonNullable: true }),
-    UGID: new FormControl<string>('', { validators: [], nonNullable: true }),
-    UFirstName: new FormControl<string>('', { validators: [Validators.maxLength(50)], nonNullable: true }),
-    ULastName: new FormControl<string>('', { validators: [Validators.maxLength(50)], nonNullable: true }),
-    UUserName: new FormControl<string>(
-      { value: '', disabled: true },
-      { validators: [Validators.required, Validators.maxLength(100)], nonNullable: true }
-    ),
-    UEmail: new FormControl<string>('', {
-      validators: [Validators.required, Validators.email, Validators.maxLength(100)],
-      nonNullable: true
-    }),
-    UPhone: new FormControl<string>('', { validators: [Validators.maxLength(100)], nonNullable: true })
-  });
+  public form: FormGroup<FormModel>;
 
   public User$ = this.store.select(selectUser);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
@@ -71,20 +59,24 @@ export class UserPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.form = this.InitUserForm();
   }
 
   ngOnInit(): void {
     this.IsAdminView = this.route.snapshot.paramMap.get('ugid') != null;
 
-    if (this.IsAdminView) this.store.dispatch(loadUserByAdmin({ ugid: this.route.snapshot.paramMap.get('ugid') }));
-    else this.store.dispatch(loadUser());
+    if (this.IsAdminView) {
+      this.store.dispatch(loadUserByAdmin({ ugid: this.route.snapshot.paramMap.get('ugid') }));
+    } else {
+      this.store.dispatch(loadUser());
+    }
 
     this.roles = [
-      { id: '1', name: RolesEnum.User },
-      { id: '2', name: RolesEnum.Premium },
-      { id: '3', name: RolesEnum.Recruiter },
-      { id: '4', name: RolesEnum.Support },
-      { id: '5', name: RolesEnum.Admin }
+      { id: 1, name: RolesEnum.User },
+      { id: 2, name: RolesEnum.Premium },
+      { id: 3, name: RolesEnum.Recruiter },
+      { id: 4, name: RolesEnum.Support },
+      { id: 5, name: RolesEnum.Admin }
     ];
 
     this.subscriptions.push(
@@ -92,6 +84,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.form.patchValue({
           UID: user.UID,
           UGID: user.UGID,
+          URID: user.URID,
           UFirstName: user.UFirstName,
           ULastName: user.ULastName,
           UUserName: user.UUserName,
@@ -129,6 +122,25 @@ export class UserPageComponent implements OnInit, OnDestroy {
   };
 
   public Cancel = () => this.router.navigate(['/users']);
+
+  private InitUserForm = (): FormGroup<FormModel> => {
+    return new FormGroup<FormModel>({
+      UID: new FormControl<number>(0, { validators: [], nonNullable: true }),
+      UGID: new FormControl<string>('', { validators: [], nonNullable: true }),
+      URID: new FormControl<number>(1, { validators: [], nonNullable: true }),
+      UFirstName: new FormControl<string>('', { validators: [Validators.maxLength(50)], nonNullable: true }),
+      ULastName: new FormControl<string>('', { validators: [Validators.maxLength(50)], nonNullable: true }),
+      UUserName: new FormControl<string>(
+        { value: '', disabled: true },
+        { validators: [Validators.required, Validators.maxLength(100)], nonNullable: true }
+      ),
+      UEmail: new FormControl<string>('', {
+        validators: [Validators.required, Validators.email, Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      UPhone: new FormControl<string>('', { validators: [Validators.maxLength(100)], nonNullable: true })
+    });
+  };
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

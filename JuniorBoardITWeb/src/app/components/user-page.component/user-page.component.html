@@ -4,14 +4,15 @@
       <h1 class="page-title">{{ translations.Get('User_User') }}</h1>
     </div>
     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+      <p-button
+        [label]="translations.Get('General_Cancel')"
+        (click)="Cancel()"
+        severity="secondary"
+        class="margin-right-15"
+      ></p-button>
       @if (IsAdminView) {
-        <button mat-raised-button class="margin-right-15" (click)="Cancel()">
-          {{ translations.Get('General_Cancel') }}
-        </button>
+        <p-button [label]="translations.Get('General_Save')" (click)="Save()" [disabled]="form.invalid"></p-button>
       }
-      <button mat-raised-button class="primary-btn" (click)="Save()" [disabled]="form.invalid">
-        {{ translations.Get('General_Save') }}
-      </button>
     </div>
   </div>
 
@@ -23,7 +24,15 @@
             <span class="data-input-text"> {{ translations.Get('Users_ID') }}: </span>
           </div>
           <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
-            <input type="text" class="data-input" [placeholder]="translations.Get('Users_ID')" formControlName="UID" />
+            <p-inputnumber
+              class="margin-left-30"
+              mode="decimal"
+              locale="pl-PL"
+              [minFractionDigits]="0"
+              [maxFractionDigits]="0"
+              [placeholder]="translations.Get('Users_ID')"
+              formControlName="UID"
+            />
           </div>
         </div>
         <div class="row">
@@ -32,6 +41,7 @@
           </div>
           <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
             <input
+              pInputText
               type="text"
               class="data-input"
               [placeholder]="translations.Get('Users_GUID')"
@@ -44,15 +54,18 @@
             <span class="data-input-text"> {{ translations.Get('Users_Role') }}: </span>
           </div>
           <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
-            <mat-form-field class="margin-left-30">
-              <mat-select [(value)]="selectedRole">
-                @for (role of roles; track role['id']) {
-                  <mat-option [value]="role.id">
-                    {{ role['name'] }}
-                  </mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
+            <p-select
+              [options]="roles"
+              [showClear]="false"
+              [filter]="true"
+              filterBy="name"
+              optionLabel="name"
+              optionValue="id"
+              inputId="roles"
+              aria-describedby="roles"
+              formControlName="URID"
+              class="margin-left-30"
+            />
           </div>
         </div>
       }
@@ -62,6 +75,7 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
           <input
+            pInputText
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_First_Name')"
@@ -80,6 +94,7 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
           <input
+            pInputText
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_Last_Name')"
@@ -98,6 +113,7 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
           <input
+            pInputText
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_User_Name')"
@@ -116,6 +132,7 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
           <input
+            pInputText
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_Email')"
@@ -144,6 +161,7 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
           <input
+            pInputText
             type="text"
             class="data-input"
             [placeholder]="translations.Get('User_Phone')"
