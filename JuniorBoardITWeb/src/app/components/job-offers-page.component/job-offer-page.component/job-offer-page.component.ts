@@ -6,7 +6,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TranslationService } from 'src/app/services/translate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { Guid } from 'guid-typescript';
 import {
   addJobOffer,
   cleanState,
@@ -50,7 +49,7 @@ type FormModel = {
 };
 
 @Component({
-  selector: 'app-task-page',
+  selector: 'app-job-offer-page',
   templateUrl: './job-offer-page.component.html',
   styleUrls: ['./job-offer-page.component.scss'],
   standalone: true,
@@ -96,6 +95,14 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     { id: '2', name: 'Miesięcznie' },
     { id: '3', name: 'Rocznie' }
   ];
+  public educationTypes: object[] = [
+    { id: '0', name: 'Podstawowe' },
+    { id: '1', name: 'Średnie' },
+    { id: '2', name: 'Zawodowe' },
+    { id: '3', name: 'Wyższe pierwszego stopnia' },
+    { id: '4', name: 'Wyższe drugiego stopnia' },
+    { id: '5', name: 'Wszystkie' }
+  ];
   public statuses: object[] = [
     { id: '0', name: 'Aktywny' },
     { id: '1', name: 'Zarchiwizowany' },
@@ -108,7 +115,6 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
 
   public jogid: string = '';
   public isNewJobOfferView: boolean = true;
-  // public minPostedAtDate: Date = new Date().;
 
   public JobOffer$ = this.store.select(selectJobOffer);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
@@ -206,9 +212,7 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  public SaveTask = () => {
-    console.log(this.form.value);
-
+  public SaveJobOffer = () => {
     if (this.jogid == '0' || this.jogid == '') {
       this.store.dispatch(addJobOffer({ JobOffer: this.form.value }));
     } else {
