@@ -37,6 +37,7 @@ export class BugsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
   public ShowAddModal: boolean = false;
   public count: number = 0;
+
   public formFilter: FormGroup = new FormGroup({});
 
   public Bugs$ = this.store.select(selectBugs);

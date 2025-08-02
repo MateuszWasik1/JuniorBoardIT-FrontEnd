@@ -104,21 +104,13 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   })),
 
   //Filters
-  //   on(Actions.ChangeCategoryFilterValue, (state, { value }) => ({
-  //     ...state,
-  //     Filters: {
-  //       ...state.Filters,
-  //       Category: value
-  //     }
-  //   })),
-
-  //   on(Actions.ChangeStatusFilterValue, (state, { value }) => ({
-  //     ...state,
-  //     Filters: {
-  //       ...state.Filters,
-  //       Status: parseInt(value)
-  //     }
-  //   })),
+  on(Actions.ChangeEducationFilterValue, (state, { value }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Education: parseInt(value)
+    }
+  })),
 
   on(Actions.updatePaginationDataJobOffers, (state, { PaginationData }) => ({
     ...state,
