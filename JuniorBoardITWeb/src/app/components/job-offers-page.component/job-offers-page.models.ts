@@ -35,4 +35,5 @@ export interface Filters {
   Skip: number;
   Take: number;
   Education: EducationEnum;
+  Favorite: boolean;
 }

@@ -28,6 +28,11 @@ export const ChangeEducationFilterValue = createAction(
   props<{ value: any }>()
 );
 
+export const ChangeFavoriteFilterValue = createAction(
+  '[JobOffers Page] Change Favorite Filter Value',
+  props<{ checked: any }>()
+);
+
 export const updatePaginationDataJobOffers = createAction(
   '[JobOffers Page] Update Pagination Data JobOffers',
   props<{ PaginationData: any }>()

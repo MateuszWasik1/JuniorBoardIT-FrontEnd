@@ -7,6 +7,7 @@ import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler
 import { Router } from '@angular/router';
 import {
   ChangeEducationFilterValue,
+  ChangeFavoriteFilterValue,
   cleanState,
   deleteJobOffer,
   loadJobOffers,
@@ -22,13 +23,14 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import { SelectModule } from 'primeng/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './job-offers-page.component.html',
   styleUrls: ['./job-offers-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, JsonPipe, PaginatorComponent, ReactiveFormsModule, SelectModule]
+  imports: [AsyncPipe, JsonPipe, PaginatorComponent, ReactiveFormsModule, SelectModule, CheckboxModule]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
@@ -71,6 +73,9 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public ChangeEducationFilterValue = (event: any) =>
     this.store.dispatch(ChangeEducationFilterValue({ value: event.value }));
+
+  public ChangeFavoriteFilterValue = (checked: boolean) =>
+    this.store.dispatch(ChangeFavoriteFilterValue({ checked: checked }));
 
   public AddJobOffer = () => this.router.navigate(['job-offer/0']);
 

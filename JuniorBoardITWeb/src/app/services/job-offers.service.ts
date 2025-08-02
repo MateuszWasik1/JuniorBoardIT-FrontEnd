@@ -25,8 +25,13 @@ export class JobOffersService {
     });
   }
 
-  GetAllJobOffers(Skip: number, Take: number, Education: EducationEnum): Observable<any> {
-    let params = new HttpParams().set('skip', Skip).set('take', Take).set('education', Education);
+  GetAllJobOffers(Skip: number, Take: number, Education: EducationEnum, Favorite: boolean): Observable<any> {
+    console.log(Favorite);
+    let params = new HttpParams()
+      .set('skip', Skip)
+      .set('take', Take)
+      .set('education', Education)
+      .set('favorites', Favorite);
 
     return this.http.get<any>(this.apiUrl + 'api/JobOffers/GetAllJobOffers', {
       params: params,
