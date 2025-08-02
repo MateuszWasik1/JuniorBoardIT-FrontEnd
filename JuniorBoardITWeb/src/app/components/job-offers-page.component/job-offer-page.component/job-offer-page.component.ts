@@ -129,7 +129,7 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
   }
   ngOnInit(): void {
-    this.jogid = this.route.snapshot.paramMap.get('tgid') ?? '';
+    this.jogid = this.route.snapshot.paramMap.get('jogid') ?? '';
     this.isNewJobOfferView = this.jogid == '' || this.jogid == '0';
 
     if (!this.isNewJobOfferView) {
