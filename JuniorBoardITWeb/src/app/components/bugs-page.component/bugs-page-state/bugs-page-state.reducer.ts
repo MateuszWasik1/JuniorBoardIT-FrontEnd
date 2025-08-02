@@ -89,6 +89,7 @@ export const BugsReducer = createReducer<BugsState>(
     let newBugNotes = [...state.BugNotes];
 
     let newModel = {
+      BNGID: '',
       BNDate: new Date(),
       BNText: BugNote.BNText,
       BNIsNewVerifier: false,
@@ -110,6 +111,7 @@ export const BugsReducer = createReducer<BugsState>(
     let newBugNotes = [...state.BugNotes];
 
     let newModel = {
+      BNGID: '',
       BNDate: new Date(),
       BNText: 'Status został zmieniony',
       BNIsNewVerifier: false,

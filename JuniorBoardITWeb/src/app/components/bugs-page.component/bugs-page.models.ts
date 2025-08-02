@@ -20,6 +20,7 @@ export interface Bug {
 }
 
 export interface BugNotes {
+  BNGID: string;
   BNDate: Date;
   BNText: string;
   BNIsNewVerifier: boolean;
