@@ -23,6 +23,7 @@ import { CardModule } from 'primeng/card';
 import { changeReportStatus, cleanState, loadReport } from '../reports-page-state/reports-page-state.actions';
 import { selectErrorMessage, selectJobOffer, selectReport } from '../reports-page-state/reports-page-state.selectors';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
+import { SelectObjectModel } from 'src/app/models/general-models';
 
 type FormModel = {
   JOTitle: FormControl<string>;
@@ -63,49 +64,49 @@ type FormModel = {
 })
 export class ReportPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public locationTypes: object[] = [
-    { id: '0', name: 'Zdalnie' },
-    { id: '1', name: 'Hybrydowo' },
-    { id: '2', name: 'Stacjonarnie' }
+  public locationTypes: SelectObjectModel[] = [
+    { id: 0, name: 'Zdalnie' },
+    { id: 1, name: 'Hybrydowo' },
+    { id: 2, name: 'Stacjonarnie' }
   ];
-  public employmentTypes: object[] = [
-    { id: '0', name: 'UoP' },
-    { id: '1', name: 'UZ' },
-    { id: '2', name: 'UD' },
-    { id: '3', name: 'B2B' }
+  public employmentTypes: SelectObjectModel[] = [
+    { id: 0, name: 'UoP' },
+    { id: 1, name: 'UZ' },
+    { id: 2, name: 'UD' },
+    { id: 3, name: 'B2B' }
   ];
-  public expirenceTypes: object[] = [
-    { id: '0', name: 'Junior' },
-    { id: '1', name: 'Mid' },
-    { id: '2', name: 'Regular' },
-    { id: '3', name: 'Senior' },
-    { id: '4', name: 'Lead' }
+  public expirenceTypes: SelectObjectModel[] = [
+    { id: 0, name: 'Junior' },
+    { id: 1, name: 'Mid' },
+    { id: 2, name: 'Regular' },
+    { id: 3, name: 'Senior' },
+    { id: 4, name: 'Lead' }
   ];
-  public categoryTypes: object[] = [
-    { id: '0', name: 'FrontEnd' },
-    { id: '1', name: 'BackEnd' },
-    { id: '2', name: 'DevOps' },
-    { id: '3', name: 'QA' },
-    { id: '4', name: 'UX' }
+  public categoryTypes: SelectObjectModel[] = [
+    { id: 0, name: 'FrontEnd' },
+    { id: 1, name: 'BackEnd' },
+    { id: 2, name: 'DevOps' },
+    { id: 3, name: 'QA' },
+    { id: 4, name: 'UX' }
   ];
-  public currencyTypes: object[] = [
-    { id: '0', name: 'PLN' },
-    { id: '1', name: 'USD' },
-    { id: '2', name: 'GBP' },
-    { id: '3', name: 'EUR' },
-    { id: '4', name: 'CHF' }
+  public currencyTypes: SelectObjectModel[] = [
+    { id: 0, name: 'PLN' },
+    { id: 1, name: 'USD' },
+    { id: 2, name: 'GBP' },
+    { id: 3, name: 'EUR' },
+    { id: 4, name: 'CHF' }
   ];
-  public salaryTypes: object[] = [
-    { id: '0', name: 'Dniówka' },
-    { id: '1', name: 'Tygodniówka' },
-    { id: '2', name: 'Miesięcznie' },
-    { id: '3', name: 'Rocznie' }
+  public salaryTypes: SelectObjectModel[] = [
+    { id: 0, name: 'Dniówka' },
+    { id: 1, name: 'Tygodniówka' },
+    { id: 2, name: 'Miesięcznie' },
+    { id: 3, name: 'Rocznie' }
   ];
-  public statuses: object[] = [
-    { id: '0', name: 'Aktywny' },
-    { id: '1', name: 'Zarchiwizowany' },
-    { id: '2', name: 'Szkic' },
-    { id: '3', name: 'Wygasły' }
+  public statuses: SelectObjectModel[] = [
+    { id: 0, name: 'Aktywny' },
+    { id: 1, name: 'Zarchiwizowany' },
+    { id: 2, name: 'Szkic' },
+    { id: 3, name: 'Wygasły' }
   ];
 
   public form: FormGroup = new FormGroup({});

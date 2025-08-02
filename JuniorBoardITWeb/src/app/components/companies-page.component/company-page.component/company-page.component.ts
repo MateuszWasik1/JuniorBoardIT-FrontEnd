@@ -21,6 +21,7 @@ import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { SelectObjectModel } from 'src/app/models/general-models';
 
 type FormModel = {
   CGID: FormControl<string>;
@@ -63,7 +64,7 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
   public form: FormGroup<FormModel>;
   public cgid: string = '';
   public isNewCompanyView: boolean = true;
-  public industryTypes: object[] = [
+  public industryTypes: SelectObjectModel[] = [
     { id: IndustryEnum.Industry, name: 'Przemysł' },
     { id: IndustryEnum.Trade, name: 'Handel' },
     { id: IndustryEnum.Services, name: 'Usługi' },
@@ -74,7 +75,7 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
     { id: IndustryEnum.Healthcare, name: 'Opieka zdrowotna' },
     { id: IndustryEnum.Education, name: 'Edukacja' }
   ];
-  public companyEmpNoTypes: object[] = [
+  public companyEmpNoTypes: SelectObjectModel[] = [
     { id: CompanyEmpNoEnum.Microenterprise, name: 'Mikro przedsiębiorstwo (1-9) ' },
     { id: CompanyEmpNoEnum.SmallEnterprise, name: 'Małe przedsiębiorstwo (10-49) ' },
     { id: CompanyEmpNoEnum.MediumEnterprise, name: 'Średnie przedsiębiorstwo (50-249) ' },
