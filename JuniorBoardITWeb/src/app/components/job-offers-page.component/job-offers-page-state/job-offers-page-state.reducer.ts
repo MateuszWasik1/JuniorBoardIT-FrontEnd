@@ -13,6 +13,7 @@ import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 var initialStateOfJobOfferPage: JobOffersState = {
   JobOffers: [],
   JobOffer: {
+    JOGID: '',
     JOTitle: '',
     JOCompanyName: '',
     JOLocationType: LocationEnum.Stationary,
@@ -125,6 +126,7 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     ...state,
     JobOffers: [],
     JobOffer: {
+      JOGID: '',
       JOTitle: '',
       JOCompanyName: '',
       JOLocationType: LocationEnum.Stationary,

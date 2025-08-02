@@ -9,6 +9,7 @@ import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 import { ReportsState } from './reports-page-state.state';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 
 var initialStateOfReportPage: ReportsState = {
   Reports: [],
@@ -24,6 +25,7 @@ var initialStateOfReportPage: ReportsState = {
     RStatus: ReportsStatusEnum.New
   },
   JobOffer: {
+    JOGID: '',
     JOTitle: '',
     JOCompanyName: '',
     JOLocationType: LocationEnum.Stationary,
@@ -39,6 +41,7 @@ var initialStateOfReportPage: ReportsState = {
     JODescription: '',
     JORequirements: '',
     JOBenefits: '',
+    JOEducation: EducationEnum.All,
     JOCreatedAt: new Date(),
     JOPostedAt: new Date(),
     JOExpiresAt: new Date(),
@@ -99,23 +102,6 @@ export const ReportsReducer = createReducer<ReportsState>(
     ErrorMessage: error
   })),
 
-  //Filters
-  //   on(Actions.ChangeCategoryFilterValue, (state, { value }) => ({
-  //     ...state,
-  //     Filters: {
-  //       ...state.Filters,
-  //       Category: value
-  //     }
-  //   })),
-
-  //   on(Actions.ChangeStatusFilterValue, (state, { value }) => ({
-  //     ...state,
-  //     Filters: {
-  //       ...state.Filters,
-  //       Status: parseInt(value)
-  //     }
-  //   })),
-
   on(Actions.updatePaginationDataReports, (state, { PaginationData }) => ({
     ...state,
     Filters: {
@@ -140,6 +126,7 @@ export const ReportsReducer = createReducer<ReportsState>(
       RStatus: ReportsStatusEnum.New
     },
     JobOffer: {
+      JOGID: '',
       JOTitle: '',
       JOCompanyName: '',
       JOLocationType: LocationEnum.Stationary,
@@ -155,6 +142,7 @@ export const ReportsReducer = createReducer<ReportsState>(
       JODescription: '',
       JORequirements: '',
       JOBenefits: '',
+      JOEducation: EducationEnum.All,
       JOCreatedAt: new Date(),
       JOPostedAt: new Date(),
       JOExpiresAt: new Date(),

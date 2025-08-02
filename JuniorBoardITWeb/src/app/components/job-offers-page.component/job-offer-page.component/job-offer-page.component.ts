@@ -27,6 +27,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { SelectObjectModel } from 'src/app/models/general-models';
 
 type FormModel = {
   JOGID: FormControl<string>;
@@ -69,45 +70,45 @@ type FormModel = {
 })
 export class JobOfferPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public locationTypes: object[] = [
+  public locationTypes: SelectObjectModel[] = [
     { id: LocationEnum.Remote, name: 'Zdalnie' },
     { id: LocationEnum.Hybrid, name: 'Hybrydowo' },
     { id: LocationEnum.Stationary, name: 'Stacjonarnie' }
   ];
-  public employmentTypes: object[] = [
+  public employmentTypes: SelectObjectModel[] = [
     { id: EmploymentTypeEnum.UoP, name: 'UoP' },
     { id: EmploymentTypeEnum.UZ, name: 'UZ' },
     { id: EmploymentTypeEnum.UD, name: 'UD' },
     { id: EmploymentTypeEnum.B2B, name: 'B2B' }
   ];
-  public expirenceTypes: object[] = [
+  public expirenceTypes: SelectObjectModel[] = [
     { id: ExpirenceEnum.Junior, name: 'Junior' },
     { id: ExpirenceEnum.Mid, name: 'Mid' },
     { id: ExpirenceEnum.Regular, name: 'Regular' },
     { id: ExpirenceEnum.Senior, name: 'Senior' },
     { id: ExpirenceEnum.Lead, name: 'Lead' }
   ];
-  public categoryTypes: object[] = [
+  public categoryTypes: SelectObjectModel[] = [
     { id: CategoryEnum.FrontEnd, name: 'FrontEnd' },
     { id: CategoryEnum.BackEnd, name: 'BackEnd' },
     { id: CategoryEnum.DevOps, name: 'DevOps' },
     { id: CategoryEnum.QA, name: 'QA' },
     { id: CategoryEnum.UX, name: 'UX' }
   ];
-  public currencyTypes: object[] = [
+  public currencyTypes: SelectObjectModel[] = [
     { id: CurrencyEnum.PLN, name: 'PLN' },
     { id: CurrencyEnum.USD, name: 'USD' },
     { id: CurrencyEnum.GBP, name: 'GBP' },
     { id: CurrencyEnum.EUR, name: 'EUR' },
     { id: CurrencyEnum.CHF, name: 'CHF' }
   ];
-  public salaryTypes: object[] = [
+  public salaryTypes: SelectObjectModel[] = [
     { id: SalaryEnum.Daily, name: 'Dniówka' },
     { id: SalaryEnum.Weekly, name: 'Tygodniówka' },
     { id: SalaryEnum.Monthly, name: 'Miesięcznie' },
     { id: SalaryEnum.Yearly, name: 'Rocznie' }
   ];
-  public educationTypes: object[] = [
+  public educationTypes: SelectObjectModel[] = [
     { id: EducationEnum.Elementary, name: 'Podstawowe' },
     { id: EducationEnum.Secondary, name: 'Średnie' },
     { id: EducationEnum.Vocational, name: 'Zawodowe' },
@@ -115,7 +116,7 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     { id: EducationEnum.HigherIILevel, name: 'Wyższe drugiego stopnia' },
     { id: EducationEnum.All, name: 'Wszystkie' }
   ];
-  public statuses: object[] = [
+  public statuses: SelectObjectModel[] = [
     { id: StatusEnum.Active, name: 'Aktywny' },
     { id: StatusEnum.Archive, name: 'Zarchiwizowany' },
     { id: StatusEnum.Draft, name: 'Szkic' },

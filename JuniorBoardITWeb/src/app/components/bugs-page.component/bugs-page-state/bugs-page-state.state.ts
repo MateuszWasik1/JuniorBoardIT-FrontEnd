@@ -1,26 +1,13 @@
-import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
-import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
+import { Bug, BugFilters, BugNotes, BugNotesFilters, Bugs } from '../bugs-page.models';
 
 export const featureKeyBugsState = 'bugs-page-state';
 
 export interface BugsState {
-  Bugs: any[];
-  Bug: {
-    BGID: string;
-    BTitle: string;
-    BText: string;
-    BStatus: BugStatusEnum;
-  };
-  BugNotes: any[];
-  Filters: {
-    BugType: BugTypeEnum;
-    Skip: number;
-    Take: number;
-  };
-  FiltersBugNotes: {
-    Skip: number;
-    Take: number;
-  };
+  Bugs: Bugs[];
+  Bug: Bug;
+  BugNotes: BugNotes[];
+  Filters: BugFilters;
+  FiltersBugNotes: BugNotesFilters;
   BugsCount: number;
   BugsNotesCount: number;
   UserRoles: {
