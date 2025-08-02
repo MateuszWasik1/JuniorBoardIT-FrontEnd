@@ -6,6 +6,7 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { Router } from '@angular/router';
 import {
+  ChangeEducationFilterValue,
   cleanState,
   deleteJobOffer,
   loadJobOffers,
@@ -19,21 +20,29 @@ import {
 } from './job-offers-page-state/job-offers-page-state.selectors';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
+import { SelectModule } from 'primeng/select';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './job-offers-page.component.html',
   styleUrls: ['./job-offers-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, JsonPipe, PaginatorComponent]
+  imports: [AsyncPipe, JsonPipe, PaginatorComponent, ReactiveFormsModule, SelectModule]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  // public statuses: any;
+  public educationTypes = [
+    { id: 0, name: 'Podstawowe' },
+    { id: 1, name: 'Średnie' },
+    { id: 2, name: 'Zawodowe' },
+    { id: 3, name: 'Wyższe pierwszego stopnia' },
+    { id: 4, name: 'Wyższe drugiego stopnia' },
+    { id: 5, name: 'Wszystkie' }
+  ];
   public count: number = 0;
 
-  // public selectedFilterStatus: any;
-  // public selectedFilterCategory: any;
+  public formFilter: FormGroup = new FormGroup({});
 
   public Filters$ = this.store.select(selectFilters);
   public Count$ = this.store.select(selectCount);
@@ -47,16 +56,12 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.formFilter = new FormGroup({
+      education: new FormControl(this.educationTypes[5].id)
+    });
   }
 
   ngOnInit(): void {
-    // this.statuses = [
-    //   {id: '0', name: 'Nie zaczęty'},
-    //   {id: '1', name: 'W trakcie'},
-    //   {id: '2', name: 'Skończony'},
-    //   {id: '3', name: 'Wszystkie'},
-    // ];
-
     this.subscriptions.push(this.Filters$.subscribe(() => this.store.dispatch(loadJobOffers())));
 
     this.subscriptions.push(this.ErrorMessage$.subscribe((error) => this.errorHandler.HandleException(error)));
@@ -64,11 +69,8 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.Count$.subscribe((count) => (this.count = count)));
   }
 
-  // public ChangeCategoryFilterValue = (event: any) => this.store.dispatch(ChangeCategoryFilterValue({ value: event.value }));
-
-  // public ChangeStatusFilterValue = (event: any) => this.store.dispatch(ChangeStatusFilterValue({ value: event.value }));
-
-  // public DisplayStatus = (status: number) => this.statuses[status].name;
+  public ChangeEducationFilterValue = (event: any) =>
+    this.store.dispatch(ChangeEducationFilterValue({ value: event.value }));
 
   public AddJobOffer = () => this.router.navigate(['job-offer/0']);
 

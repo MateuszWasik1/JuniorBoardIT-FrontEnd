@@ -39,7 +39,7 @@ export class JobOffersEffects {
       ofType(JobOffersActions.loadJobOffers),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.jobOffersService.GetAllJobOffers(params[1].Skip, params[1].Take).pipe(
+        return this.jobOffersService.GetAllJobOffers(params[1].Skip, params[1].Take, params[1].Education).pipe(
           map((result) => JobOffersActions.loadJobOffersSuccess({ JobOffers: result })),
           catchError((error) =>
             of(JobOffersActions.loadJobOffersError({ error: this.errorHandler.handleAPIError(error) }))

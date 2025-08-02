@@ -23,6 +23,11 @@ export const deleteJobOffer = createAction('[JobOffers Page] Delete JobOffer', p
 export const deleteJobOfferSuccess = createAction('JobOffers Page] Delete JobOffer Success', props<{ JOGID: any }>());
 export const deleteJobOfferError = createAction('[JobOffers Page] Delete JobOffer Error', props<{ error: any }>());
 
+export const ChangeEducationFilterValue = createAction(
+  '[JobOffers Page] Change Education Filter Value',
+  props<{ value: any }>()
+);
+
 export const updatePaginationDataJobOffers = createAction(
   '[JobOffers Page] Update Pagination Data JobOffers',
   props<{ PaginationData: any }>()

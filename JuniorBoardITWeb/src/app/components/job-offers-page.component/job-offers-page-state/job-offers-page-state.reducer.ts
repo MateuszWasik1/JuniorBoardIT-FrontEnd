@@ -8,6 +8,7 @@ import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 import { JobOffersState } from './job-offers-page-state.state';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 
 var initialStateOfJobOfferPage: JobOffersState = {
   JobOffers: [],
@@ -27,6 +28,7 @@ var initialStateOfJobOfferPage: JobOffersState = {
     JODescription: '',
     JORequirements: '',
     JOBenefits: '',
+    JOEducation: EducationEnum.All,
     JOCreatedAt: new Date(),
     JOPostedAt: new Date(),
     JOExpiresAt: new Date(),
@@ -34,7 +36,8 @@ var initialStateOfJobOfferPage: JobOffersState = {
   },
   Filters: {
     Skip: 0,
-    Take: 10
+    Take: 10,
+    Education: EducationEnum.All
   },
   JobOffersCount: 0,
   ErrorMessage: ''
@@ -101,21 +104,13 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   })),
 
   //Filters
-  //   on(Actions.ChangeCategoryFilterValue, (state, { value }) => ({
-  //     ...state,
-  //     Filters: {
-  //       ...state.Filters,
-  //       Category: value
-  //     }
-  //   })),
-
-  //   on(Actions.ChangeStatusFilterValue, (state, { value }) => ({
-  //     ...state,
-  //     Filters: {
-  //       ...state.Filters,
-  //       Status: parseInt(value)
-  //     }
-  //   })),
+  on(Actions.ChangeEducationFilterValue, (state, { value }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Education: parseInt(value)
+    }
+  })),
 
   on(Actions.updatePaginationDataJobOffers, (state, { PaginationData }) => ({
     ...state,
@@ -145,6 +140,7 @@ export const JobOfferReducer = createReducer<JobOffersState>(
       JODescription: '',
       JORequirements: '',
       JOBenefits: '',
+      JOEducation: EducationEnum.All,
       JOCreatedAt: new Date(),
       JOPostedAt: new Date(),
       JOExpiresAt: new Date(),
@@ -152,7 +148,8 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     },
     Filters: {
       Skip: 0,
-      Take: 10
+      Take: 10,
+      Education: EducationEnum.All
     },
     JobOffersCount: 0,
     ErrorMessage: ''

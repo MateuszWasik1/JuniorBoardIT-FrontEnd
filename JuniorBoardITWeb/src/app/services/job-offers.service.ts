@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { GetToken } from '../helpers/request.service';
 import { environment } from 'src/environments/environment';
+import { EducationEnum } from '../enums/JobOffers/EducationEnum';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class JobOffersService {
     });
   }
 
-  GetAllJobOffers(Skip: number, Take: number): Observable<any> {
-    let params = new HttpParams().set('skip', Skip).set('take', Take);
+  GetAllJobOffers(Skip: number, Take: number, Education: EducationEnum): Observable<any> {
+    let params = new HttpParams().set('skip', Skip).set('take', Take).set('education', Education);
 
     return this.http.get<any>(this.apiUrl + 'api/JobOffers/GetAllJobOffers', {
       params: params,

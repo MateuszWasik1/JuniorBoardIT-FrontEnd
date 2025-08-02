@@ -1,5 +1,6 @@
 import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
 import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
 import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
@@ -26,6 +27,7 @@ export interface JobOffersState {
     JODescription: string;
     JORequirements: string;
     JOBenefits: string;
+    JOEducation: EducationEnum;
     JOCreatedAt: Date;
     JOPostedAt: Date;
     JOExpiresAt: Date;
@@ -34,6 +36,7 @@ export interface JobOffersState {
   Filters: {
     Skip: number;
     Take: number;
+    Education: EducationEnum;
   };
   JobOffersCount: number;
   ErrorMessage: string;
