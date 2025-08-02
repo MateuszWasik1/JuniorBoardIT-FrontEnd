@@ -33,12 +33,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class JobOffersPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
   public educationTypes = [
-    { id: '0', name: 'Podstawowe' },
-    { id: '1', name: 'Średnie' },
-    { id: '2', name: 'Zawodowe' },
-    { id: '3', name: 'Wyższe pierwszego stopnia' },
-    { id: '4', name: 'Wyższe drugiego stopnia' },
-    { id: '5', name: 'Wszystkie' }
+    { id: 0, name: 'Podstawowe' },
+    { id: 1, name: 'Średnie' },
+    { id: 2, name: 'Zawodowe' },
+    { id: 3, name: 'Wyższe pierwszego stopnia' },
+    { id: 4, name: 'Wyższe drugiego stopnia' },
+    { id: 5, name: 'Wszystkie' }
   ];
   public count: number = 0;
 

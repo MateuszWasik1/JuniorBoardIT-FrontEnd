@@ -20,14 +20,16 @@ import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 
 type FormModel = {
+  JOGID: FormControl<string>;
   JOTitle: FormControl<string>;
   JOCompanyName: FormControl<string>;
   JOLocationType: FormControl<LocationEnum>;
@@ -43,6 +45,7 @@ type FormModel = {
   JODescription: FormControl<string>;
   JORequirements: FormControl<string>;
   JOBenefits: FormControl<string>;
+  JOEducation: FormControl<EducationEnum>;
   JOPostedAt: FormControl<Date>;
   JOExpiresAt: FormControl<Date>;
   JOStatus: FormControl<StatusEnum>;
@@ -53,65 +56,73 @@ type FormModel = {
   templateUrl: './job-offer-page.component.html',
   styleUrls: ['./job-offer-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, ReactiveFormsModule, InputTextModule, InputNumber, DatePickerModule, SelectModule, ButtonModule]
+  imports: [
+    AsyncPipe,
+    ReactiveFormsModule,
+    InputTextModule,
+    InputNumber,
+    DatePickerModule,
+    SelectModule,
+    ButtonModule,
+    JsonPipe
+  ]
 })
 export class JobOfferPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
   public locationTypes: object[] = [
-    { id: '0', name: 'Zdalnie' },
-    { id: '1', name: 'Hybrydowo' },
-    { id: '2', name: 'Stacjonarnie' }
+    { id: LocationEnum.Remote, name: 'Zdalnie' },
+    { id: LocationEnum.Hybrid, name: 'Hybrydowo' },
+    { id: LocationEnum.Stationary, name: 'Stacjonarnie' }
   ];
   public employmentTypes: object[] = [
-    { id: '0', name: 'UoP' },
-    { id: '1', name: 'UZ' },
-    { id: '2', name: 'UD' },
-    { id: '3', name: 'B2B' }
+    { id: EmploymentTypeEnum.UoP, name: 'UoP' },
+    { id: EmploymentTypeEnum.UZ, name: 'UZ' },
+    { id: EmploymentTypeEnum.UD, name: 'UD' },
+    { id: EmploymentTypeEnum.B2B, name: 'B2B' }
   ];
   public expirenceTypes: object[] = [
-    { id: '0', name: 'Junior' },
-    { id: '1', name: 'Mid' },
-    { id: '2', name: 'Regular' },
-    { id: '3', name: 'Senior' },
-    { id: '4', name: 'Lead' }
+    { id: ExpirenceEnum.Junior, name: 'Junior' },
+    { id: ExpirenceEnum.Mid, name: 'Mid' },
+    { id: ExpirenceEnum.Regular, name: 'Regular' },
+    { id: ExpirenceEnum.Senior, name: 'Senior' },
+    { id: ExpirenceEnum.Lead, name: 'Lead' }
   ];
   public categoryTypes: object[] = [
-    { id: '0', name: 'FrontEnd' },
-    { id: '1', name: 'BackEnd' },
-    { id: '2', name: 'DevOps' },
-    { id: '3', name: 'QA' },
-    { id: '4', name: 'UX' }
+    { id: CategoryEnum.FrontEnd, name: 'FrontEnd' },
+    { id: CategoryEnum.BackEnd, name: 'BackEnd' },
+    { id: CategoryEnum.DevOps, name: 'DevOps' },
+    { id: CategoryEnum.QA, name: 'QA' },
+    { id: CategoryEnum.UX, name: 'UX' }
   ];
   public currencyTypes: object[] = [
-    { id: '0', name: 'PLN' },
-    { id: '1', name: 'USD' },
-    { id: '2', name: 'GBP' },
-    { id: '3', name: 'EUR' },
-    { id: '4', name: 'CHF' }
+    { id: CurrencyEnum.PLN, name: 'PLN' },
+    { id: CurrencyEnum.USD, name: 'USD' },
+    { id: CurrencyEnum.GBP, name: 'GBP' },
+    { id: CurrencyEnum.EUR, name: 'EUR' },
+    { id: CurrencyEnum.CHF, name: 'CHF' }
   ];
   public salaryTypes: object[] = [
-    { id: '0', name: 'Dniówka' },
-    { id: '1', name: 'Tygodniówka' },
-    { id: '2', name: 'Miesięcznie' },
-    { id: '3', name: 'Rocznie' }
+    { id: SalaryEnum.Daily, name: 'Dniówka' },
+    { id: SalaryEnum.Weekly, name: 'Tygodniówka' },
+    { id: SalaryEnum.Monthly, name: 'Miesięcznie' },
+    { id: SalaryEnum.Yearly, name: 'Rocznie' }
   ];
   public educationTypes: object[] = [
-    { id: '0', name: 'Podstawowe' },
-    { id: '1', name: 'Średnie' },
-    { id: '2', name: 'Zawodowe' },
-    { id: '3', name: 'Wyższe pierwszego stopnia' },
-    { id: '4', name: 'Wyższe drugiego stopnia' },
-    { id: '5', name: 'Wszystkie' }
+    { id: EducationEnum.Elementary, name: 'Podstawowe' },
+    { id: EducationEnum.Secondary, name: 'Średnie' },
+    { id: EducationEnum.Vocational, name: 'Zawodowe' },
+    { id: EducationEnum.HigherILevel, name: 'Wyższe pierwszego stopnia' },
+    { id: EducationEnum.HigherIILevel, name: 'Wyższe drugiego stopnia' },
+    { id: EducationEnum.All, name: 'Wszystkie' }
   ];
   public statuses: object[] = [
-    { id: '0', name: 'Aktywny' },
-    { id: '1', name: 'Zarchiwizowany' },
-    { id: '2', name: 'Szkic' },
-    { id: '3', name: 'Wygasły' }
+    { id: StatusEnum.Active, name: 'Aktywny' },
+    { id: StatusEnum.Archive, name: 'Zarchiwizowany' },
+    { id: StatusEnum.Draft, name: 'Szkic' },
+    { id: StatusEnum.Expired, name: 'Wygasły' }
   ];
 
-  public form: FormGroup = new FormGroup({});
-  // public form: FormGroup<FormModel> = new FormGroup<FormModel>({});
+  public form: FormGroup<FormModel>;
 
   public jogid: string = '';
   public isNewJobOfferView: boolean = true;
@@ -127,6 +138,7 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.form = this.InitJobOfferForm();
   }
   ngOnInit(): void {
     this.jogid = this.route.snapshot.paramMap.get('jogid') ?? '';
@@ -136,75 +148,8 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
       this.store.dispatch(loadJobOffer({ JOGID: this.jogid }));
     }
 
-    this.subscriptions.push(
-      this.JobOffer$.subscribe((x) => {
-        this.form = new FormGroup<FormModel>({
-          JOTitle: new FormControl<string>(x.JOTitle, {
-            validators: [Validators.required, Validators.maxLength(255)],
-            nonNullable: true
-          }),
-          JOCompanyName: new FormControl<string>(x.JOCompanyName, {
-            validators: [Validators.required, Validators.maxLength(255)],
-            nonNullable: true
-          }),
-          JOLocationType: new FormControl<LocationEnum>(x.JOLocationType, {
-            validators: [Validators.required],
-            nonNullable: true
-          }),
-          JOOfficeLocation: new FormControl<string>(x.JOOfficeLocation, {
-            validators: [Validators.maxLength(100)],
-            nonNullable: true
-          }),
-          JOEmploymentType: new FormControl<EmploymentTypeEnum>(x.JOEmploymentType, {
-            validators: [Validators.required],
-            nonNullable: true
-          }),
-          JOExpirenceLevel: new FormControl<ExpirenceEnum>(x.JOExpirenceLevel, {
-            validators: [Validators.required],
-            nonNullable: true
-          }),
-          JOExpirenceYears: new FormControl<number>(x.JOExpirenceYears, {
-            validators: [Validators.required],
-            nonNullable: true
-          }),
-          JOCategory: new FormControl<CategoryEnum>(x.JOCategory, {
-            validators: [Validators.required],
-            nonNullable: true
-          }),
-          JOSalaryMin: new FormControl<number>(x.JOSalaryMin, {
-            validators: [Validators.required, Validators.min(0)],
-            nonNullable: true
-          }),
-          JOSalaryMax: new FormControl<number>(x.JOSalaryMax, {
-            validators: [Validators.required, Validators.min(0)],
-            nonNullable: true
-          }),
-          JOCurrency: new FormControl<CurrencyEnum>(x.JOCurrency, {
-            validators: [Validators.required],
-            nonNullable: true
-          }),
-          JOSalaryType: new FormControl<SalaryEnum>(x.JOSalaryType, {
-            validators: [Validators.required],
-            nonNullable: true
-          }),
-          JODescription: new FormControl<string>(x.JODescription, {
-            validators: [Validators.required, Validators.maxLength(2000)],
-            nonNullable: true
-          }),
-          JORequirements: new FormControl<string>(x.JORequirements, {
-            validators: [Validators.required, Validators.maxLength(2000)],
-            nonNullable: true
-          }),
-          JOBenefits: new FormControl<string>(x.JOBenefits, {
-            validators: [Validators.required, Validators.maxLength(2000)],
-            nonNullable: true
-          }),
-          JOPostedAt: new FormControl<Date>(x.JOPostedAt, { validators: [Validators.required], nonNullable: true }),
-          JOExpiresAt: new FormControl<Date>(x.JOExpiresAt, { validators: [Validators.required], nonNullable: true }),
-          JOStatus: new FormControl<StatusEnum>(x.JOStatus, { validators: [Validators.required], nonNullable: true })
-        });
-      })
-    );
+    this.subscriptions.push(this.JobOffer$.subscribe((jobOffer) => this.form.patchValue(jobOffer)));
+
     this.subscriptions.push(
       this.ErrorMessage$.subscribe((error) => {
         this.errorHandler.HandleException(error);
@@ -220,9 +165,83 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     }
   };
 
-  // public DisplayStatus = (status: number) => this.statuses[status].name;
-
   public Cancel = () => this.router.navigate(['/job-offers']);
+
+  private InitJobOfferForm = (): FormGroup<FormModel> => {
+    return new FormGroup<FormModel>({
+      JOGID: new FormControl<string>('', {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOTitle: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(255)],
+        nonNullable: true
+      }),
+      JOCompanyName: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(255)],
+        nonNullable: true
+      }),
+      JOLocationType: new FormControl<LocationEnum>(LocationEnum.Remote, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOOfficeLocation: new FormControl<string>('', {
+        validators: [Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      JOEmploymentType: new FormControl<EmploymentTypeEnum>(EmploymentTypeEnum.UoP, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOExpirenceLevel: new FormControl<ExpirenceEnum>(ExpirenceEnum.Junior, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOExpirenceYears: new FormControl<number>(0, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOCategory: new FormControl<CategoryEnum>(CategoryEnum.FrontEnd, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOSalaryMin: new FormControl<number>(0, {
+        validators: [Validators.required, Validators.min(0)],
+        nonNullable: true
+      }),
+      JOSalaryMax: new FormControl<number>(0, {
+        validators: [Validators.required, Validators.min(0)],
+        nonNullable: true
+      }),
+      JOCurrency: new FormControl<CurrencyEnum>(CurrencyEnum.PLN, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOSalaryType: new FormControl<SalaryEnum>(SalaryEnum.Daily, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JODescription: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(2000)],
+        nonNullable: true
+      }),
+      JORequirements: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(2000)],
+        nonNullable: true
+      }),
+      JOBenefits: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(2000)],
+        nonNullable: true
+      }),
+      JOEducation: new FormControl<EducationEnum>(EducationEnum.Elementary, {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      JOPostedAt: new FormControl<Date>(new Date(), { validators: [Validators.required], nonNullable: true }),
+      JOExpiresAt: new FormControl<Date>(new Date(), { validators: [Validators.required], nonNullable: true }),
+      JOStatus: new FormControl<StatusEnum>(StatusEnum.Active, { validators: [Validators.required], nonNullable: true })
+    });
+  };
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
