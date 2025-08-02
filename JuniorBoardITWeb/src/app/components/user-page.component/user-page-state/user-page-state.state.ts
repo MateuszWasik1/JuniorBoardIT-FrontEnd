@@ -1,15 +1,8 @@
+import { User } from '../user-page.models';
+
 export const featureKeyUserState = 'user-page-state';
 
 export interface UserState {
-  User: {
-    UID: number;
-    UGID: string;
-    URID: number;
-    UFirstName: string;
-    ULastName: string;
-    UUserName: string;
-    UEmail: string;
-    UPhone: string;
-  };
+  User: User;
   ErrorMessage: string;
 }
