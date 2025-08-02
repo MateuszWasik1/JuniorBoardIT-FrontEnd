@@ -147,7 +147,7 @@ body {
   font-family: inherit;
   border-radius: 6px;
   color: #99a3ba;
-  border: 1px solid #cdd9ed;
+  border: 1px solid #69d5b4;
   background: #fff;
   transition: border 0.3s ease;
   &::placeholder {
@@ -155,7 +155,7 @@ body {
   }
   &:focus {
     outline: none;
-    border-color: #275efe;
+    border-color: #099669;
   }
 }
 
@@ -195,9 +195,9 @@ body {
     padding: 8px 12px;
     font-size: 14px;
     line-height: 25px;
-    color: #99a3ba;
-    background: #eef4ff;
-    border: 1px solid #cdd9ed;
+    color: #fff;
+    background: #69d5b4;
+    border: 1px solid #69d5b4;
     transition:
       background 0.3s ease,
       border 0.3s ease,
@@ -206,8 +206,8 @@ body {
   &:focus-within {
     & > span {
       color: #fff;
-      background: #678efe;
-      border-color: #275efe;
+      background: #099669;
+      border-color: #099669;
     }
   }
 }

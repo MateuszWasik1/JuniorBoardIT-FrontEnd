@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
 import { Subscription } from 'rxjs';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { MatButtonModule } from '@angular/material/button';
+import { ButtonModule } from 'primeng/button';
 
 type FormModel = {
   UUserName: FormControl<string>;
@@ -20,17 +20,14 @@ type FormModel = {
   templateUrl: './login-page.component.html',
   styleUrls: ['../register-page.component/register-page.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonModule]
+  imports: [ReactiveFormsModule, ButtonModule]
 })
 export class LoginComponent implements OnInit {
   public subscriptions: Subscription[];
 
-  public ErrorMessage$ = this.store.select(selectErrorMessage);
+  public form: FormGroup<FormModel>;
 
-  public form = new FormGroup<FormModel>({
-    UUserName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    UPassword: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
-  });
+  public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
     public store: Store<AppState>,
@@ -39,6 +36,7 @@ export class LoginComponent implements OnInit {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.form = this.InitLoginForm();
   }
 
   ngOnInit(): void {
@@ -52,6 +50,13 @@ export class LoginComponent implements OnInit {
   public Clear = () => this.form.reset();
 
   public Login = () => this.store.dispatch(Login({ user: this.form.value }));
+
+  private InitLoginForm = (): FormGroup<FormModel> => {
+    return new FormGroup<FormModel>({
+      UUserName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+      UPassword: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
+    });
+  };
 
   public GoToRegistration = () => this.router.navigate(['/register']);
 }
