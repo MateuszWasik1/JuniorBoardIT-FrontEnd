@@ -38,7 +38,8 @@ var initialStateOfJobOfferPage: JobOffersState = {
   Filters: {
     Skip: 0,
     Take: 10,
-    Education: EducationEnum.All
+    Education: EducationEnum.All,
+    Favorite: false
   },
   JobOffersCount: 0,
   ErrorMessage: ''
@@ -113,6 +114,14 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     }
   })),
 
+  on(Actions.ChangeFavoriteFilterValue, (state, { checked }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Favorite: checked
+    }
+  })),
+
   on(Actions.updatePaginationDataJobOffers, (state, { PaginationData }) => ({
     ...state,
     Filters: {
@@ -151,7 +160,8 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     Filters: {
       Skip: 0,
       Take: 10,
-      Education: EducationEnum.All
+      Education: EducationEnum.All,
+      Favorite: false
     },
     JobOffersCount: 0,
     ErrorMessage: ''

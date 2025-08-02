@@ -28,6 +28,10 @@
         />
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">Wybierz tylko ulubione oferty pracy</div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" [formGroup]="formFilter">
+        <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
+      </div>
     </div>
 
     <div class="row margin-top-15 filter-row">
