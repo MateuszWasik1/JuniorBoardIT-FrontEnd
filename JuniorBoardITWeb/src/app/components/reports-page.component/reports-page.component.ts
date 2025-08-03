@@ -5,9 +5,14 @@ import { AppState } from '../../app.state';
 import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { Router } from '@angular/router';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
-import { cleanState, loadReports, updatePaginationDataReports } from './reports-page-state/reports-page-state.actions';
+import {
+  ChangeReportTypeFilterValue,
+  cleanState,
+  loadReports,
+  updatePaginationDataReports
+} from './reports-page-state/reports-page-state.actions';
 import {
   selectCount,
   selectErrorMessage,
@@ -15,26 +20,49 @@ import {
   selectReports
 } from './reports-page-state/reports-page-state.selectors';
 import { CardModule } from 'primeng/card';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
+import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
+
+import { MessageModule } from 'primeng/message';
+type FormFilterModel = {
+  ReportType: FormControl<ReportsTypeEnum>;
+};
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './reports-page.component.html',
   styleUrls: ['./reports-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, JsonPipe, PaginatorComponent, CardModule]
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    PaginatorComponent,
+    CardModule,
+    SelectModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    MessageModule
+  ]
 })
 export class ReportsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public statuses = [
-    { id: '0', name: 'Nowe' },
-    { id: '1', name: 'W weryfikacji' },
-    { id: '2', name: 'Odrzucone' },
-    { id: '3', name: 'Zaakceptowane' }
+  public reportsStatusType = [
+    { id: ReportsStatusEnum.New, name: 'Nowe' },
+    { id: ReportsStatusEnum.InVerification, name: 'W weryfikacji' },
+    { id: ReportsStatusEnum.Rejected, name: 'Odrzucone' },
+    { id: ReportsStatusEnum.Accepted, name: 'Zaakceptowane' }
+  ];
+  public reportsType = [
+    { id: ReportsTypeEnum.New, name: 'Nowe' },
+    { id: ReportsTypeEnum.ImVerificator, name: 'Jestem weryfikatorem' },
+    { id: ReportsTypeEnum.All, name: 'Wszystkie' }
   ];
   public count: number = 0;
 
-  // public selectedFilterStatus: any;
-  // public selectedFilterCategory: any;
+  public formFilter: FormGroup<FormFilterModel>;
 
   public Filters$ = this.store.select(selectFilters);
   public Count$ = this.store.select(selectCount);
@@ -48,6 +76,7 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.formFilter = this.InitReportForm();
   }
 
   ngOnInit(): void {
@@ -58,16 +87,41 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.Count$.subscribe((count) => (this.count = count)));
   }
 
-  // public ChangeCategoryFilterValue = (event: any) => this.store.dispatch(ChangeCategoryFilterValue({ value: event.value }));
+  public DisplayStatus = (reportStatus: ReportsStatusEnum) => this.reportsStatusType[reportStatus].name;
 
-  // public ChangeStatusFilterValue = (event: any) => this.store.dispatch(ChangeStatusFilterValue({ value: event.value }));
+  public DisplaySeverity = (reportStatus: ReportsStatusEnum) => {
+    switch (reportStatus) {
+      case ReportsStatusEnum.New: {
+        return 'secondary';
+      }
+      case ReportsStatusEnum.InVerification: {
+        return 'info';
+      }
+      case ReportsStatusEnum.Rejected: {
+        return 'error';
+      }
+      case ReportsStatusEnum.Accepted: {
+        return 'success';
+      }
+      default: {
+        return 'secondary';
+      }
+    }
+  };
 
-  public DisplayStatus = (status: number) => this.statuses[status].name;
+  public CheckReport = (RGID: any) => this.router.navigate([`report/${RGID}`]);
 
-  public CheckReport = (RGID: any) => this.router.navigate([`reports/${RGID}`]);
+  public ChangeReportTypeFilterValue = (event: any) =>
+    this.store.dispatch(ChangeReportTypeFilterValue({ ReportType: event.value as ReportsTypeEnum }));
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationDataReports({ PaginationData: PaginationData }));
+
+  private InitReportForm = (): FormGroup<FormFilterModel> => {
+    return new FormGroup<FormFilterModel>({
+      ReportType: new FormControl<ReportsTypeEnum>(ReportsTypeEnum.New, { nonNullable: true })
+    });
+  };
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

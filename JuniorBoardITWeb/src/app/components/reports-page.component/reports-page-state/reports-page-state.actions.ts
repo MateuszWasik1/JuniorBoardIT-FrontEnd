@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
+import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
 
 export const loadReport = createAction('[Reports Page] Load Report', props<{ RGID: any }>());
 export const loadReportSuccess = createAction(
@@ -24,6 +25,11 @@ export const changeReportStatusSuccess = createAction('Reports Page] Change Repo
 export const changeReportStatusError = createAction(
   '[Reports Page] Change Report Status Error',
   props<{ error: any }>()
+);
+
+export const ChangeReportTypeFilterValue = createAction(
+  '[JobOffers Page] Change Report Type Filter Value',
+  props<{ ReportType: ReportsTypeEnum }>()
 );
 
 export const updatePaginationDataReports = createAction(

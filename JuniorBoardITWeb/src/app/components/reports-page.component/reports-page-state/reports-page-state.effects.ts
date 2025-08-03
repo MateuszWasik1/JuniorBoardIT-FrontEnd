@@ -37,7 +37,7 @@ export class ReportsEffects {
       ofType(ReportsActions.loadReports),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.reportsService.GetReports(params[1].Skip, params[1].Take).pipe(
+        return this.reportsService.GetReports(params[1].Skip, params[1].Take, params[1].ReportType).pipe(
           map((result) => ReportsActions.loadReportsSuccess({ Reports: result })),
           catchError((error) => of(ReportsActions.loadReportsError({ error: this.errorHandler.handleAPIError(error) })))
         );

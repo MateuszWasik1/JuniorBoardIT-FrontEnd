@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { GetToken } from '../helpers/request.service';
 import { environment } from 'src/environments/environment';
+import { ReportsTypeEnum } from '../enums/Reports/ReportsTypeEnum';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class ReportsService {
     });
   }
 
-  GetReports(Skip: number, Take: number): Observable<any> {
-    let params = new HttpParams().set('skip', Skip).set('take', Take);
+  GetReports(Skip: number, Take: number, ReportType: ReportsTypeEnum): Observable<any> {
+    let params = new HttpParams().set('skip', Skip).set('take', Take).set('reportType', ReportType);
 
     return this.http.get<any>(this.apiUrl + 'api/Reports/GetReports', {
       params: params,
