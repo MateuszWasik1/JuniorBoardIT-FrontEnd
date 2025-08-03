@@ -199,9 +199,7 @@ export class ReportPageComponent implements OnInit, OnDestroy {
     );
     this.subscriptions.push(
       this.Report$.subscribe((report) => {
-        console.log(report);
         if (report.RID !== 0 && (report.RSupportGID == '' || report.RSupportGID == null)) {
-          console.log(report.RGID);
           this.ChangeReportStatus(report.RGID, ReportsStatusEnum.New);
         }
       })

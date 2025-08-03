@@ -1,44 +1,55 @@
-.categories-row{
-    border: 1px solid #DDD;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; 
+.categories-row {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-.row-text{
-    text-align: right;
-    margin-top: 15px;
-    margin-bottom: 15px;
+.row-text {
+  text-align: right;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-.row-inputs{
-    text-align: left;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    input{
-        margin-left: 30px
-    }
-}
-
-.action-btn{
-    background: transparent;
-    border: none;
-    font-size: 40px;
+.row-inputs {
+  text-align: left;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  input {
+    margin-left: 30px;
+  }
 }
 
-.error-handler-actions{
-    margin-left: 10px
+.action-btn {
+  background: transparent;
+  border: none;
+  font-size: 40px;
+}
+
+.error-handler-actions {
+  margin-left: 10px;
+}
+
+.report-textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
+::ng-deep p-selectbutton {
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 @media screen and (max-width: 992px) {
-    .row-text{
-        text-align: left; 
-    }
+  .row-text {
+    text-align: left;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .row-text{
-        text-align: left; 
-    }
+  .row-text {
+    text-align: left;
+  }
 
-    .add-task-note-btn{
-        margin: 0 0 15px 0;
-    }
+  .add-task-note-btn {
+    margin: 0 0 15px 0;
+  }
 }

@@ -11,12 +11,16 @@
     </div>
     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
       <p-button
+        [label]="translations.Get('General_Cancel')"
+        (click)="Cancel()"
+        severity="secondary"
+        class="margin-right-15"
+      ></p-button>
+      <p-button
         [label]="translations.Get('General_Save')"
         (click)="SaveJobOffer()"
         [disabled]="form.invalid"
-        class="margin-right-15"
       ></p-button>
-      <p-button [label]="translations.Get('General_Cancel')" (click)="Cancel()" severity="secondary"></p-button>
     </div>
   </div>
 

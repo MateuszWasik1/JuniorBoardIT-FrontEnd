@@ -34,7 +34,12 @@ export class ReportsService {
   }
 
   SaveReport(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/Reports/SaveReport', model, {
+    let modelToSend = {
+      ...model,
+      RReasons: model.RReasons.join(',')
+    };
+
+    return this.http.post<any>(this.apiUrl + 'api/Reports/SaveReport', modelToSend, {
       headers: GetToken(this.cookiesService)
     });
   }

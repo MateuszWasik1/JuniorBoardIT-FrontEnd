@@ -26,7 +26,6 @@ export class JobOffersService {
   }
 
   GetAllJobOffers(Skip: number, Take: number, Education: EducationEnum, Favorite: boolean): Observable<any> {
-    console.log(Favorite);
     let params = new HttpParams()
       .set('skip', Skip)
       .set('take', Take)
