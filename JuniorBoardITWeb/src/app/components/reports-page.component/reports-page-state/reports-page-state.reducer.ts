@@ -10,6 +10,7 @@ import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 import { ReportsState } from './reports-page-state.state';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
 
 var initialStateOfReportPage: ReportsState = {
   Reports: [],
@@ -49,7 +50,8 @@ var initialStateOfReportPage: ReportsState = {
   },
   Filters: {
     Skip: 0,
-    Take: 10
+    Take: 10,
+    ReportType: ReportsTypeEnum.New
   },
   ReportsCount: 0,
   ErrorMessage: ''
@@ -102,6 +104,15 @@ export const ReportsReducer = createReducer<ReportsState>(
     ErrorMessage: error
   })),
 
+  //Filters
+  on(Actions.ChangeReportTypeFilterValue, (state, { ReportType }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      ReportType: ReportType
+    }
+  })),
+
   on(Actions.updatePaginationDataReports, (state, { PaginationData }) => ({
     ...state,
     Filters: {
@@ -150,7 +161,8 @@ export const ReportsReducer = createReducer<ReportsState>(
     },
     Filters: {
       Skip: 0,
-      Take: 10
+      Take: 10,
+      ReportType: ReportsTypeEnum.New
     },
     ReportsCount: 0,
     ErrorMessage: ''

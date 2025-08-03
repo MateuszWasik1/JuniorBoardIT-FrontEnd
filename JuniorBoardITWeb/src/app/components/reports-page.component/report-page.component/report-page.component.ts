@@ -23,7 +23,9 @@ import { CardModule } from 'primeng/card';
 import { changeReportStatus, cleanState, loadReport } from '../reports-page-state/reports-page-state.actions';
 import { selectErrorMessage, selectJobOffer, selectReport } from '../reports-page-state/reports-page-state.selectors';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
-import { SelectObjectModel } from 'src/app/models/general-models';
+import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
+import { MessageModule } from 'primeng/message';
+import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
 
 type FormModel = {
   JOTitle: FormControl<string>;
@@ -59,7 +61,8 @@ type FormModel = {
     DatePickerModule,
     SelectModule,
     ButtonModule,
-    CardModule
+    CardModule,
+    MessageModule
   ]
 })
 export class ReportPageComponent implements OnInit, OnDestroy {
@@ -108,9 +111,24 @@ export class ReportPageComponent implements OnInit, OnDestroy {
     { id: 2, name: 'Szkic' },
     { id: 3, name: 'Wygasły' }
   ];
+  public reportsStatusType: SelectObjectModel[] = [
+    { id: ReportsStatusEnum.New, name: 'Nowe' },
+    { id: ReportsStatusEnum.InVerification, name: 'W weryfikacji' },
+    { id: ReportsStatusEnum.Rejected, name: 'Odrzucone' },
+    { id: ReportsStatusEnum.Accepted, name: 'Zaakceptowane' }
+  ];
+  public reportReasons: ReportReasonsModel[] = [
+    { name: 'Błędne widełki płacy', value: ReportsReasonsEnum.Reason0 },
+    { name: 'Błędny opis względem wprowadzonych danych', value: ReportsReasonsEnum.Reason1 },
+    { name: 'Wymagane zbyt wiele lat doświadczenie względem poziomu doświadczenia', value: ReportsReasonsEnum.Reason2 },
+    { name: 'Błędnie opisane stanowisko względem kategorii', value: ReportsReasonsEnum.Reason3 },
+    { name: 'Brak klarownego opis stanowiska', value: ReportsReasonsEnum.Reason4 },
+    { name: 'Brak klarownych wymagań stanowiska', value: ReportsReasonsEnum.Reason5 },
+    { name: 'Brak lokalizacji biura dla pracy stacjonarnej', value: ReportsReasonsEnum.Reason6 },
+    { name: 'Po prostu mi się nie podoba', value: ReportsReasonsEnum.Reason7 }
+  ];
 
   public form: FormGroup = new FormGroup({});
-  //public form: FormGroup<FormModel> = new FormGroup<FormModel>({});
 
   public Report$ = this.store.select(selectReport);
   public JobOffer$ = this.store.select(selectJobOffer);
@@ -199,9 +217,7 @@ export class ReportPageComponent implements OnInit, OnDestroy {
     );
     this.subscriptions.push(
       this.Report$.subscribe((report) => {
-        console.log(report);
         if (report.RID !== 0 && (report.RSupportGID == '' || report.RSupportGID == null)) {
-          console.log(report.RGID);
           this.ChangeReportStatus(report.RGID, ReportsStatusEnum.New);
         }
       })
@@ -213,12 +229,43 @@ export class ReportPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  public ChangeReportStatus = (RGID: string, RStatus: ReportsStatusEnum) => {
+  public ChangeReportStatus = (RGID: string, RStatus: ReportsStatusEnum): void => {
     this.store.dispatch(changeReportStatus({ RGID: RGID, RStatus: RStatus }));
   };
-  // Dodać funkcję która będzie aktualizować tylko przypisanie do zgloszenia na BE lub wykorzystać istniejący request z update status
 
-  public Cancel = () => this.router.navigate(['/reports']);
+  public DisplayReasons = (reasons: string): string => {
+    const selectedValues = reasons.split(',');
+
+    const selectedReasons = this.reportReasons.filter((reason) => selectedValues.includes(reason.value));
+
+    const reasonNames = selectedReasons.map((reason) => reason.name);
+
+    return reasonNames.join(', ');
+  };
+
+  public DisplayStatus = (reportStatus: ReportsStatusEnum): string => this.reportsStatusType[reportStatus].name;
+
+  public DisplaySeverity = (reportStatus: ReportsStatusEnum): string => {
+    switch (reportStatus) {
+      case ReportsStatusEnum.New: {
+        return 'secondary';
+      }
+      case ReportsStatusEnum.InVerification: {
+        return 'info';
+      }
+      case ReportsStatusEnum.Rejected: {
+        return 'error';
+      }
+      case ReportsStatusEnum.Accepted: {
+        return 'success';
+      }
+      default: {
+        return 'secondary';
+      }
+    }
+  };
+
+  public Cancel = (): Promise<boolean> => this.router.navigate(['/reports']);
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

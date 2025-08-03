@@ -5,9 +5,7 @@
         <h1 class="page-title">{{ translations.Get('TopMenu_Tasks') }}</h1>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-        <button mat-raised-button class="primary-btn" (click)="AddJobOffer()">
-          {{ translations.Get('General_Add') }}
-        </button>
+        <p-button [label]="translations.Get('General_Add')" (click)="AddJobOffer()" />
       </div>
     </div>
 
@@ -29,7 +27,7 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">Wybierz tylko ulubione oferty pracy</div>
-      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" [formGroup]="formFilter">
+      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
       </div>
     </div>
@@ -63,9 +61,47 @@
         </div>
         <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3"></div>
       </div>
-      @for (jobOffer of jobOffers; track $index) {
+      @for (jobOffer of jobOffers; track jobOffer.JOGID) {
         <pre>{{ jobOffer | json }}</pre>
+        <p-button label="Zgłoś ofertę" (click)="ReportModalOpen(jobOffer.JOGID)"></p-button>
       }
+
+      <p-dialog
+        header="Zgłoś ofertę"
+        [(visible)]="reportModalvisible"
+        [modal]="true"
+        [style]="{ width: '90vw' }"
+        [closable]="true"
+        [draggable]="false"
+        [dismissableMask]="true"
+        [formGroup]="reportForm"
+        (onHide)="ReportModalClose()"
+      >
+        <p>Dlaczego chcesz zgłosić ofertę pracy?</p>
+        <p-selectbutton
+          [options]="reportReasons"
+          formControlName="RReasons"
+          optionLabel="name"
+          optionValue="value"
+          [multiple]="true"
+        />
+        <p>Wybrane z ReactiveForms {{ reportForm.controls.RReasons.value }}</p>
+
+        <p>Podaj dodatkowe informacje do zgłoszenia (Opcjonalne).</p>
+        <textarea
+          formControlName="RText"
+          maxlength="4000"
+          placeholder="Dodatkowe informacje do zgłoszenia."
+          class="report-textarea"
+          pTextarea
+        ></textarea>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-right">
+            <p-button label="Cancel" severity="secondary" (click)="ReportModalClose()" />
+            <p-button label="Save" (click)="ReportJobOffer()" />
+          </div>
+        </div>
+      </p-dialog>
     }
   </section>
 }

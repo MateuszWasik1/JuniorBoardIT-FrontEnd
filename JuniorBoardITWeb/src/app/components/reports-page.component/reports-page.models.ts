@@ -1,4 +1,5 @@
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
+import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
 
 export interface Reports {
   RID: number;
@@ -29,4 +30,5 @@ export interface Report {
 export interface Filters {
   Skip: number;
   Take: number;
+  ReportType: ReportsTypeEnum;
 }
