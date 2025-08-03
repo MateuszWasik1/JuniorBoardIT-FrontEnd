@@ -8,25 +8,25 @@
   </div>
 
   @if (Report$ | async; as report) {
-    <div class="row">
+    <div class="row margin-bottom-15">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p-card header="Czy zgłosznie użytkownika potwierdziło się?">
-          <div class="row">
+          <div class="row margin-top-15">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              {{ report.RReasons }}
+              {{ DisplayReasons(report.RReasons) }}
             </div>
           </div>
-          <div class="row">
+          <div class="row margin-top-15">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               {{ report.RText }}
             </div>
           </div>
-          <div class="row">
+          <div class="row margin-top-15">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              {{ report.RStatus }}
+              <p-message [severity]="DisplaySeverity(report.RStatus)">{{ DisplayStatus(report.RStatus) }}</p-message>
             </div>
           </div>
-          <div class="row">
+          <div class="row margin-top-15">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <p-button
                 [label]="translations.Get('General_Save')"

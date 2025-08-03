@@ -27,6 +27,7 @@ import { ButtonModule } from 'primeng/button';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 
 import { MessageModule } from 'primeng/message';
+import { SelectObjectModel } from 'src/app/models/general-models';
 type FormFilterModel = {
   ReportType: FormControl<ReportsTypeEnum>;
 };
@@ -49,13 +50,13 @@ type FormFilterModel = {
 })
 export class ReportsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public reportsStatusType = [
+  public reportsStatusType: SelectObjectModel[] = [
     { id: ReportsStatusEnum.New, name: 'Nowe' },
     { id: ReportsStatusEnum.InVerification, name: 'W weryfikacji' },
     { id: ReportsStatusEnum.Rejected, name: 'Odrzucone' },
     { id: ReportsStatusEnum.Accepted, name: 'Zaakceptowane' }
   ];
-  public reportsType = [
+  public reportsType: SelectObjectModel[] = [
     { id: ReportsTypeEnum.New, name: 'Nowe' },
     { id: ReportsTypeEnum.ImVerificator, name: 'Jestem weryfikatorem' },
     { id: ReportsTypeEnum.All, name: 'Wszystkie' }
