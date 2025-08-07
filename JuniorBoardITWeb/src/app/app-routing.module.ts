@@ -12,6 +12,7 @@ import { BugPageComponent } from './components/bugs-page.component/bug-page.comp
 import { BugsPageComponent } from './components/bugs-page.component/bugs-page.component';
 import { CompaniesPageComponent } from './components/companies-page.component/companies-page.component';
 import { CompanyPageComponent } from './components/companies-page.component/company-page.component/company-page.component';
+import { StatsPageComponent } from './components/stats-page.component/stats-page.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,11 @@ const routes: Routes = [
     path: 'companies',
     component: CompaniesPageComponent,
     title: 'Firmy'
+  },
+  {
+    path: 'stats',
+    component: StatsPageComponent,
+    title: 'Statystyki'
   },
   {
     path: '**',

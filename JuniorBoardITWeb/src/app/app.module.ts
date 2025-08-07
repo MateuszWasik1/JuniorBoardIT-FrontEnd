@@ -42,6 +42,10 @@ import { BugsReducer } from './components/bugs-page.component/bugs-page-state/bu
 import { featureKeyCompaniesState } from './components/companies-page.component/companies-page-state/companies-page-state.state';
 import { CompaniesReducer } from './components/companies-page.component/companies-page-state/companies-page-state.reducer';
 import { CompaniesEffects } from './components/companies-page.component/companies-page-state/companies-page-state.effects';
+import { featureKeyStatsState } from './components/stats-page.component/stats-page-state/stats-page-state.state';
+import { StatsReducer } from './components/stats-page.component/stats-page-state/stats-page-state.reducer';
+import { StatsEffects } from './components/stats-page.component/stats-page-state/stats-page-state.effects';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -74,6 +78,7 @@ import { CompaniesEffects } from './components/companies-page.component/companie
     StoreModule.forFeature(featureKeyReportsState, ReportsReducer),
     StoreModule.forFeature(featureKeyBugsState, BugsReducer),
     StoreModule.forFeature(featureKeyCompaniesState, CompaniesReducer),
+    StoreModule.forFeature(featureKeyStatsState, StatsReducer),
 
     EffectsModule.forRoot([
       AccountEffects,
@@ -82,7 +87,8 @@ import { CompaniesEffects } from './components/companies-page.component/companie
       JobOffersEffects,
       ReportsEffects,
       BugsEffects,
-      CompaniesEffects
+      CompaniesEffects,
+      StatsEffects
     ]),
     BrowserAnimationsModule
   ],
@@ -94,7 +100,8 @@ import { CompaniesEffects } from './components/companies-page.component/companie
       theme: {
         preset: Aura
       }
-    })
+    }),
+    provideCharts(withDefaultRegisterables())
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,59 @@
+@if (Stats$ | async; as stats) {
+  @if (Filters$ | async; as filter) {
+    <section class="body">
+      <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+          <h1 class="page-title">{{ translations.Get('TopMenu_Stats') }}</h1>
+        </div>
+      </div>
+      <div class="row filter-row">
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_StartDate') }}:</div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <!-- <mat-form-field>
+            <mat-label>{{ translations.Get('Stats_ChooseStartDate') }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="startDate"
+              [value]="filter.StartDate"
+              (dateChange)="setMonthAndYear($event, startDate, true)"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate startView="year"></mat-datepicker>
+          </mat-form-field> -->
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_EndDate') }}:</div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <!-- <mat-form-field>
+            <mat-label>{{ translations.Get('Stats_ChooseEndDate') }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="endDate"
+              [value]="filter.EndDate"
+              (dateChange)="setMonthAndYear($event, endDate, false)"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate startView="year"></mat-datepicker>
+          </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row margin-top-15 filter-row">
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 row-text">{{ translations.Get('Stats_DataType') }}:</div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 row-inputs">
+          <!-- <mat-form-field>
+            <mat-select [value]="defaultDataType" (selectionChange)="changeDataType($event)">
+              <mat-option *ngFor="let dataType of dataTypes" [value]="dataType['value']">
+                {{ dataType['name'] }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <p-chart type="bar" [data]="basicData" [options]="barChartOptions" />
+      </div>
+    </section>
+  }
+}
