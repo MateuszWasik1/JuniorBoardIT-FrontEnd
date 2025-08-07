@@ -27,6 +27,8 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { ChartModule } from 'primeng/chart';
 import { AsyncPipe } from '@angular/common';
+import { SelectObjectModel } from 'src/app/models/general-models';
+import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
 
 @Component({
   selector: 'app-stats-page',
@@ -57,23 +59,18 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     }
   };
 
-  public emptyChartData = {
-    labels: [],
-    datasets: []
-  };
+  public dataTypes: SelectObjectModel[] = [
+    { id: StatsTypeEnum.NumberOfRecruiterPublishedOfferts, name: 'Oferty opublikowane przez rekrutera' },
+    { id: StatsTypeEnum.NumberOfCompanyPublishedOfferts, name: 'Oferty opublikowane przez firmę' },
+    { id: StatsTypeEnum.NumberOfCompaniesPublishedOfferts, name: 'Oferty opublikowane przez wszystkie firmy' },
+    { id: StatsTypeEnum.NumberOfActiveCompaniesOfferts, name: 'Aktywne oferty firmy' },
+    { id: StatsTypeEnum.NumberOfCompanyRecruiters, name: 'Aktywni rekruterzy firmy' }
+  ];
 
   public Stats$ = this.store.select(selectStats);
   public Filters$ = this.store.select(selectFilters);
   public IsStatsError$ = this.store.select(selectErrors);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
-
-  public defaultDataType: string = 'savings';
-  public dataTypes = [
-    { name: 'Oszczędności', value: 'savings' },
-    { name: 'Wydatki z zadań', value: 'task-money' },
-    { name: 'Wydatki z kategorii', value: 'category' },
-    { name: 'Notatki', value: 'notes' }
-  ];
 
   constructor(
     public store: Store<AppState>,
@@ -89,10 +86,10 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(loadCustomStats());
     this.subscriptions.push(
       this.Filters$.subscribe((filters) => {
-        if (filters.DataType == 'savings') this.store.dispatch(loadSavingBarChartStats());
-        if (filters.DataType == 'task-money') this.store.dispatch(loadTaskSpendedMoneyBarChartStats());
-        if (filters.DataType == 'category') this.store.dispatch(loadCategorySpendedMoneyBarChartStats());
-        if (filters.DataType == 'notes') this.store.dispatch(loadNotesBarChartStats());
+        // if (filters.DataType == 'savings') this.store.dispatch(loadSavingBarChartStats());
+        // if (filters.DataType == 'task-money') this.store.dispatch(loadTaskSpendedMoneyBarChartStats());
+        // if (filters.DataType == 'category') this.store.dispatch(loadCategorySpendedMoneyBarChartStats());
+        // if (filters.DataType == 'notes') this.store.dispatch(loadNotesBarChartStats());
       })
     );
 

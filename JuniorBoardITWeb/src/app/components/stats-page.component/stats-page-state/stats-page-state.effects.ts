@@ -51,12 +51,10 @@ export class StatsEffects {
       ofType(StatsActions.loadCategorySpendedMoneyBarChartStats),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.statsService
-          .getMoneySpendedForCategoryBarChart(params[1].StartDate, params[1].EndDate, params[1].Category)
-          .pipe(
-            map((result) => StatsActions.loadStatsSuccess({ Result: result })),
-            catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
-          );
+        return this.statsService.getMoneySpendedForCategoryBarChart(params[1].StartDate, params[1].EndDate).pipe(
+          map((result) => StatsActions.loadStatsSuccess({ Result: result })),
+          catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
+        );
       })
     );
   });
