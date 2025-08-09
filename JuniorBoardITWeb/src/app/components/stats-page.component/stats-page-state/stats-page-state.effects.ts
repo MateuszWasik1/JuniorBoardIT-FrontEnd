@@ -20,12 +20,12 @@ export class StatsEffects {
     private errorHandler: APIErrorHandler
   ) {}
 
-  loadSavingBarChartStats = createEffect(() => {
+  loadNumberOfRecruiterPublishedOfferts = createEffect(() => {
     return this.actions.pipe(
-      ofType(StatsActions.loadSavingBarChartStats),
+      ofType(StatsActions.loadNumberOfRecruiterPublishedOfferts),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.statsService.getSavingsBarChart(params[1].StartDate, params[1].EndDate).pipe(
+        return this.statsService.GetNumberOfRecruiterPublishedOfferts(params[1].StartDate, params[1].EndDate).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
           catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
         );
@@ -33,12 +33,12 @@ export class StatsEffects {
     );
   });
 
-  loadTaskSpendedMoneyBarChartStats = createEffect(() => {
+  loadNumberOfCompanyPublishedOfferts = createEffect(() => {
     return this.actions.pipe(
-      ofType(StatsActions.loadTaskSpendedMoneyBarChartStats),
+      ofType(StatsActions.loadNumberOfCompanyPublishedOfferts),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.statsService.getMoneySpendedFromTaskBarChart(params[1].StartDate, params[1].EndDate).pipe(
+        return this.statsService.GetNumberOfCompanyPublishedOfferts(params[1].StartDate, params[1].EndDate).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
           catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
         );
@@ -46,12 +46,12 @@ export class StatsEffects {
     );
   });
 
-  loadCategorySpendedMoneyBarChartStats = createEffect(() => {
+  loadNumberOfCompaniesPublishedOfferts = createEffect(() => {
     return this.actions.pipe(
-      ofType(StatsActions.loadCategorySpendedMoneyBarChartStats),
+      ofType(StatsActions.loadNumberOfCompaniesPublishedOfferts),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.statsService.getMoneySpendedForCategoryBarChart(params[1].StartDate, params[1].EndDate).pipe(
+        return this.statsService.GetNumberOfCompaniesPublishedOfferts(params[1].StartDate, params[1].EndDate).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
           catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
         );
@@ -59,12 +59,12 @@ export class StatsEffects {
     );
   });
 
-  loadNotesBarChartStats = createEffect(() => {
+  loadNumberOfActiveCompaniesOfferts = createEffect(() => {
     return this.actions.pipe(
-      ofType(StatsActions.loadNotesBarChartStats),
+      ofType(StatsActions.loadNumberOfActiveCompaniesOfferts),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.statsService.GetNotesBarChart(params[1].StartDate, params[1].EndDate).pipe(
+        return this.statsService.GetNumberOfActiveCompaniesOfferts(params[1].Date).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
           catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
         );
@@ -72,12 +72,12 @@ export class StatsEffects {
     );
   });
 
-  loadCustomStats = createEffect(() => {
+  loadNumberOfCompanyRecruiters = createEffect(() => {
     return this.actions.pipe(
-      ofType(StatsActions.loadCustomStats),
+      ofType(StatsActions.loadNumberOfCompanyRecruiters),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return of(this.fillDataService.FillStats(params[1].DataType)).pipe(
+        return this.statsService.GetNumberOfCompanyRecruiters(params[1].Date).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
           catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
         );

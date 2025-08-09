@@ -6,6 +6,5 @@ export const featureKeyStatsState = 'stats-page-state';
 export interface StatsState {
   Stats: ChartData<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint | null)[], unknown>;
   Filters: Filters;
-  IsStatsError: boolean;
   ErrorMessage: string;
 }

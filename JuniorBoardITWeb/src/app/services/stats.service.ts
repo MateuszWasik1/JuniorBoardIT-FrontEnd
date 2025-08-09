@@ -15,45 +15,52 @@ export class StatsService {
     private cookiesService: CookieService
   ) {}
 
-  getSavingsBarChart(startDate: Date, endDate: Date): Observable<any> {
+  GetNumberOfRecruiterPublishedOfferts(startDate: Date, endDate: Date): Observable<any> {
     let params = new HttpParams()
       .set('startDate', this.DateToString(new Date(startDate)))
       .set('endDate', this.DateToString(new Date(endDate)));
 
-    return this.http.get<any>(this.apiUrl + 'api/Stats/GetSavingBarChart', {
+    return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfRecruiterPublishedOfferts', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  getMoneySpendedFromTaskBarChart(startDate: Date, endDate: Date): Observable<any> {
+  GetNumberOfCompanyPublishedOfferts(startDate: Date, endDate: Date): Observable<any> {
     let params = new HttpParams()
       .set('startDate', this.DateToString(new Date(startDate)))
       .set('endDate', this.DateToString(new Date(endDate)));
 
-    return this.http.get<any>(this.apiUrl + 'api/Stats/GetMoneySpendedFromTaskBarChart', {
+    return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfCompanyPublishedOfferts', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  getMoneySpendedForCategoryBarChart(startDate: Date, endDate: Date): Observable<any> {
+  GetNumberOfCompaniesPublishedOfferts(startDate: Date, endDate: Date): Observable<any> {
     let params = new HttpParams()
       .set('startDate', this.DateToString(new Date(startDate)))
       .set('endDate', this.DateToString(new Date(endDate)));
 
-    return this.http.get<any>(this.apiUrl + 'api/Stats/GetMoneySpendedForCategoryBarChart', {
+    return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfCompaniesPublishedOfferts', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  GetNotesBarChart(startDate: Date, endDate: Date): Observable<any> {
-    let params = new HttpParams()
-      .set('startDate', this.DateToString(new Date(startDate)))
-      .set('endDate', this.DateToString(new Date(endDate)));
+  GetNumberOfActiveCompaniesOfferts(date: Date): Observable<any> {
+    let params = new HttpParams().set('date', this.DateToString(new Date(date)));
 
-    return this.http.get<any>(this.apiUrl + 'api/Stats/GetNotesBarChart', {
+    return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfActiveCompaniesOfferts', {
+      params: params,
+      headers: GetToken(this.cookiesService)
+    });
+  }
+
+  GetNumberOfCompanyRecruiters(date: Date): Observable<any> {
+    let params = new HttpParams().set('date', this.DateToString(new Date(date)));
+
+    return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfCompanyRecruiters', {
       params: params,
       headers: GetToken(this.cookiesService)
     });

@@ -1,16 +1,19 @@
 import { createAction, props } from '@ngrx/store';
 
-export const loadSavingBarChartStats = createAction('[Stats Page] Load Saving Bar Chart Stats');
-export const loadTaskSpendedMoneyBarChartStats = createAction('[Stats Page] Load Task Spended Money Bar Chart Stats');
-export const loadCategorySpendedMoneyBarChartStats = createAction(
-  '[Stats Page] Load Category Spended Money Bar Chart Stats'
+export const loadNumberOfRecruiterPublishedOfferts = createAction(
+  '[Stats Page] Load Number Of Recruiter Published Offerts'
 );
-export const loadNotesBarChartStats = createAction('[Stats Page] Load Notes Bar Chart Stats');
+export const loadNumberOfCompanyPublishedOfferts = createAction(
+  '[Stats Page] Load Number Of Company Published Offerts'
+);
+export const loadNumberOfCompaniesPublishedOfferts = createAction(
+  '[Stats Page] Load Number Of Companies Published Offerts'
+);
+export const loadNumberOfActiveCompaniesOfferts = createAction('[Stats Page] Load Number Of Active Companies Offerts');
+export const loadNumberOfCompanyRecruiters = createAction('[Stats Page] Load Number Of Company Recruiters');
 
 export const loadStatsSuccess = createAction('[Stats Page] Load Stats Success', props<{ Result: any }>());
 export const loadStatsError = createAction('[Stats Page] Load Stats Error', props<{ error: any }>());
-
-export const loadCustomStats = createAction('[Stats Page] Load Custom Stats');
 
 export const changeStartDateFilter = createAction('[Stats Page] Change Start Date Filter', props<{ startDate: any }>());
 export const changeEndDateFilter = createAction('[Stats Page] Change End Date Filter', props<{ endDate: any }>());

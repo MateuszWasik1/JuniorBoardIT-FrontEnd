@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as Actions from './stats-page-state.actions';
 import { StatsState } from './stats-page-state.state';
-import { Guid } from 'guid-typescript';
 import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
 
 var initialStateOfStatsPage: StatsState = {
@@ -12,10 +11,10 @@ var initialStateOfStatsPage: StatsState = {
   Filters: {
     StartDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+    Date: new Date(),
     ChartType: 'bar',
     DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts
   },
-  IsStatsError: false,
   ErrorMessage: ''
 };
 
@@ -27,13 +26,11 @@ export const StatsReducer = createReducer<StatsState>(
     Stats: {
       labels: Result.labels,
       datasets: [Result.datasets]
-    },
-    IsStatsLoaded: true
+    }
   })),
 
   on(Actions.loadStatsError, (state, { error }) => ({
     ...state,
-    IsStatsError: true,
     ErrorMessage: error
   })),
 
@@ -78,10 +75,10 @@ export const StatsReducer = createReducer<StatsState>(
     Filters: {
       StartDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
       EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+      Date: new Date(),
       ChartType: 'bar',
       DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts
     },
-    IsStatsError: false,
     ErrorMessage: ''
   }))
 );

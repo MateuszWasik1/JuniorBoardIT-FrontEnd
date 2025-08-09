@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -10,18 +10,13 @@ import {
   changeEndDateFilter,
   changeStartDateFilter,
   cleanState,
-  loadCategorySpendedMoneyBarChartStats,
-  loadCustomStats,
-  loadNotesBarChartStats,
-  loadSavingBarChartStats,
-  loadTaskSpendedMoneyBarChartStats
+  loadNumberOfActiveCompaniesOfferts,
+  loadNumberOfCompaniesPublishedOfferts,
+  loadNumberOfCompanyPublishedOfferts,
+  loadNumberOfCompanyRecruiters,
+  loadNumberOfRecruiterPublishedOfferts
 } from './stats-page-state/stats-page-state.actions';
-import {
-  selectErrorMessage,
-  selectErrors,
-  selectFilters,
-  selectStats
-} from './stats-page-state/stats-page-state.selectors';
+import { selectErrorMessage, selectFilters, selectStats } from './stats-page-state/stats-page-state.selectors';
 import { ChartData, ChartOptions } from 'chart.js';
 import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
@@ -69,35 +64,34 @@ export class StatsPageComponent implements OnInit, OnDestroy {
 
   public Stats$ = this.store.select(selectStats);
   public Filters$ = this.store.select(selectFilters);
-  public IsStatsError$ = this.store.select(selectErrors);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
-    public store: Store<AppState>,
     public translations: TranslationService,
-    public errorHandler: MainUIErrorHandler,
+    private store: Store<AppState>,
+    private errorHandler: MainUIErrorHandler,
     private cdr: ChangeDetectorRef
   ) {
     this.subscriptions = [];
   }
   ngOnInit() {
-    // this.store.dispatch(loadSavingBarChartStats());
-    // this.store.dispatch(loadCategories());
-    this.store.dispatch(loadCustomStats());
+    this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
+
     this.subscriptions.push(
       this.Filters$.subscribe((filters) => {
-        // if (filters.DataType == 'savings') this.store.dispatch(loadSavingBarChartStats());
-        // if (filters.DataType == 'task-money') this.store.dispatch(loadTaskSpendedMoneyBarChartStats());
-        // if (filters.DataType == 'category') this.store.dispatch(loadCategorySpendedMoneyBarChartStats());
-        // if (filters.DataType == 'notes') this.store.dispatch(loadNotesBarChartStats());
+        if (filters.DataType === StatsTypeEnum.NumberOfRecruiterPublishedOfferts) {
+          this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
+        } else if (filters.DataType === StatsTypeEnum.NumberOfCompanyPublishedOfferts) {
+          this.store.dispatch(loadNumberOfCompanyPublishedOfferts());
+        } else if (filters.DataType === StatsTypeEnum.NumberOfCompaniesPublishedOfferts) {
+          this.store.dispatch(loadNumberOfCompaniesPublishedOfferts());
+        } else if (filters.DataType === StatsTypeEnum.NumberOfActiveCompaniesOfferts) {
+          this.store.dispatch(loadNumberOfActiveCompaniesOfferts());
+        } else if (filters.DataType === StatsTypeEnum.NumberOfCompanyRecruiters) {
+          this.store.dispatch(loadNumberOfCompanyRecruiters());
+        }
       })
     );
-
-    // this.subscriptions.push(
-    //   this.IsStatsError$.subscribe((isError) => {
-    //     if (isError) this.store.dispatch(loadCustomStats());
-    //   })
-    // );
 
     this.subscriptions.push(
       this.ErrorMessage$.subscribe((error) => {
