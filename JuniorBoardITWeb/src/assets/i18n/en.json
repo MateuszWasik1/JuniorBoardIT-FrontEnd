@@ -33,6 +33,7 @@
   "TopMenu_Reports": "Reports",
   "TopMenu_Bugs": "Bugs",
   "TopMenu_Companies": "Companies",
+  "TopMenu_Stats": "Stats",
   "User_User": "User",
   "User_First_Name": "First Name",
   "User_Last_Name": "Last Name",
@@ -75,5 +76,10 @@
   "Bugs_Text_Max4000": "You have exceeded the number of characters! The maximum number of characters is 4000!",
   "Bugs_BugNotes_AddNote_Required": "Text field is required",
   "Bugs_BugNotes_AddNote_Max4000": "You have exceeded the number of characters! The maximum number of characters is 4000!",
-  "Bugs_Filters": "Choose bug type"
+  "Bugs_Filters": "Choose bug type",
+  "Stats_DataType": "Data type",
+  "Stats_ChartType": "Chart type",
+  "Stats_StartDate": "Start date",
+  "Stats_EndDate": "End date",
+  "Stats_Date": "Date"
 }

@@ -1,0 +1,88 @@
+@if (Stats$ | async; as stats) {
+  @if (Filters$ | async; as filter) {
+    <section class="body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <h1 class="page-title">{{ translations.Get('TopMenu_Stats') }}</h1>
+        </div>
+      </div>
+      <div class="row filter-row margin-top-15" [formGroup]="filterForm">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_DataType') }}:</div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <p-select
+                [options]="dataTypes"
+                [showClear]="false"
+                [filter]="true"
+                filterBy="name"
+                optionLabel="name"
+                optionValue="id"
+                [placeholder]="translations.Get('Stats_DataType')"
+                formControlName="DataType"
+                (onChange)="ChangeDataType($event)"
+              />
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_ChartType') }}:</div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <p-select
+                [options]="chartTypes"
+                [showClear]="false"
+                [filter]="true"
+                filterBy="name"
+                optionLabel="name"
+                optionValue="name"
+                [placeholder]="translations.Get('Stats_ChartType')"
+                formControlName="ChartType"
+                (onChange)="ChangeChartType($event)"
+              />
+            </div>
+          </div>
+
+          @if (filter.DataType <= 2) {
+            <div class="row margin-top-15">
+              <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_StartDate') }}:</div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <p-datepicker
+                  formControlName="StartDate"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="StartDate"
+                  (onSelect)="ChangeStartDate($event)"
+                />
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_EndDate') }}:</div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <p-datepicker
+                  formControlName="EndDate"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="EndDate"
+                  (onSelect)="ChangeEndDate($event)"
+                />
+              </div>
+            </div>
+          }
+          @if (filter.DataType >= 3) {
+            <div class="row">
+              <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_StartDate') }}:</div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <p-datepicker
+                  formControlName="Date"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="Date"
+                  (onSelect)="ChangeDate($event)"
+                />
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row row margin-top-15">
+        <p-chart type="bar" [data]="basicData" [options]="barChartOptions" />
+      </div>
+    </section>
+  }
+}
