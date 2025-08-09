@@ -129,5 +129,12 @@
   "Stats_ChartType": "Typ wykresu",
   "Stats_StartDate": "Data początkowa",
   "Stats_EndDate": "Data końcowa",
-  "Stats_Date": "Data"
+  "Stats_Date": "Data",
+  "Reports_NotFound": "Nie znaleziono żadnego zgłoszenia!",
+  "Reports_ReportDate": "Data zgłoszenia",
+  "Reports_ReportText": "Wiadomość zgłoszenia",
+  "Reports_ReportStatus": "Status zgłoszenia",
+  "Reports_ChooseStatus": "Wybierz status zgłoszeń",
+  "Reports_ReportVerify": "Zweryfikuj zgłoszenie",
+  "Reports_Report_Title": "Tytuł zgoszenia"
 }

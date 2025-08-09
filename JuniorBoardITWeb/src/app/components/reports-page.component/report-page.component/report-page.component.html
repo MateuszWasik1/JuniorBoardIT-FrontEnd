@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       @if (JobOffer$ | async; as jobOffer) {
-        <h1 class="page-title">{{ translations.Get('Categories_Category') }}: {{ jobOffer.JOTitle }}</h1>
+        <h1 class="page-title">{{ translations.Get('Reports_Report_Title') }}: {{ jobOffer.JOTitle }}</h1>
       }
     </div>
   </div>
@@ -29,12 +29,16 @@
           <div class="row margin-top-15">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <p-button
+                [label]="translations.Get('General_Cancel')"
+                (click)="Cancel()"
+                severity="secondary"
+                class="margin-right-15"
+              ></p-button>
+              <p-button
                 [label]="translations.Get('General_Save')"
                 (click)="ChangeReportStatus(report.RGID, report.RStatus)"
                 [disabled]="form.invalid"
-                class="margin-right-15"
               ></p-button>
-              <p-button [label]="translations.Get('General_Cancel')" (click)="Cancel()" severity="secondary"></p-button>
             </div>
           </div>
         </p-card>

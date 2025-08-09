@@ -2,12 +2,12 @@
   <section class="body">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h1 class="page-title">{{ translations.Get('TopMenu_Tasks') }}</h1>
+        <h1 class="page-title">{{ translations.Get('TopMenu_Reports') }}</h1>
       </div>
     </div>
 
     <div class="row padding-top-15 filter-row">
-      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Tasks_Categories') }}:</div>
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Reports_ReportStatus') }}:</div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" [formGroup]="formFilter">
         <p-select
           [options]="reportsType"
@@ -16,7 +16,7 @@
           filterBy="name"
           optionLabel="name"
           optionValue="id"
-          placeholder="Wybierz status oferty"
+          [placeholder]="translations.Get('Reports_ChooseStatus')"
           aria-describedby="offer-status"
           formControlName="ReportType"
           (onChange)="ChangeReportTypeFilterValue($event)"
@@ -33,18 +33,18 @@
 
     @if (reports.length == 0) {
       <div class="row no-data-row">
-        <p>{{ translations.Get('Task_NotFound') }}</p>
+        <p>{{ translations.Get('Reports_NotFound') }}</p>
       </div>
     } @else {
       <div class="row padding-top-15 padding-bottom-15">
         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-          {{ translations.Get('Tasks_Name') }}
+          {{ translations.Get('Reports_ReportDate') }}
         </div>
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-          {{ translations.Get('Tasks_Date') }}
+          {{ translations.Get('Reports_ReportText') }}
         </div>
         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-          {{ translations.Get('Tasks_Localization') }}
+          {{ translations.Get('Reports_ReportStatus') }}
         </div>
       </div>
       @for (report of reports; track $index) {
@@ -63,7 +63,10 @@
             </div>
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p-button label="Zweryfikuj zgłoszenie" (click)="CheckReport(report.RGID)"></p-button>
+                <p-button
+                  [label]="translations.Get('Reports_ReportVerify')"
+                  (click)="CheckReport(report.RGID)"
+                ></p-button>
               </div>
             </div>
           </div>

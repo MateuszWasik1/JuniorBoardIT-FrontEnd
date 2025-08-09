@@ -81,5 +81,12 @@
   "Stats_ChartType": "Chart type",
   "Stats_StartDate": "Start date",
   "Stats_EndDate": "End date",
-  "Stats_Date": "Date"
+  "Stats_Date": "Date",
+  "Reports_NotFound": "No report found!",
+  "Reports_ReportDate": "Report date",
+  "Reports_ReportText": "Report text",
+  "Reports_ReportStatus": "Report status",
+  "Reports_ChooseStatus": "Choose report status",
+  "Reports_ReportVerify": "Verify report",
+  "Reports_Report_Title": "Report title"
 }
