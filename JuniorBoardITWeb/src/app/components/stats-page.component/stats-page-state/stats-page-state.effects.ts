@@ -6,7 +6,6 @@ import * as StatsActions from './stats-page-state.actions';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { selectFilters } from './stats-page-state.selectors';
-import { FillDataService } from 'src/app/services/fill-data.service';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { StatsService } from 'src/app/services/stats.service';
 
@@ -15,7 +14,6 @@ export class StatsEffects {
   constructor(
     private actions: Actions,
     private store: Store<AppState>,
-    private fillDataService: FillDataService,
     private statsService: StatsService,
     private errorHandler: APIErrorHandler
   ) {}

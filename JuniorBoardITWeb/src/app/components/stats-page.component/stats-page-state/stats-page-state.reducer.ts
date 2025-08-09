@@ -21,13 +21,20 @@ var initialStateOfStatsPage: StatsState = {
 export const StatsReducer = createReducer<StatsState>(
   initialStateOfStatsPage,
 
-  on(Actions.loadStatsSuccess, (state, { Result }) => ({
-    ...state,
-    Stats: {
-      labels: Result.labels,
-      datasets: [Result.datasets]
-    }
-  })),
+  on(Actions.loadStatsSuccess, (state, { Result }) => {
+    const datasets = {
+      data: Result.Datasets.Data,
+      label: Result.Datasets.Label
+    };
+
+    return {
+      ...state,
+      Stats: {
+        labels: Result.Labels,
+        datasets: [datasets]
+      }
+    };
+  }),
 
   on(Actions.loadStatsError, (state, { error }) => ({
     ...state,
