@@ -2,11 +2,9 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { Moment } from 'moment';
 import {
-  changeCategoryFilter,
   changeDataTypeFilter,
+  changeDateFilter,
   changeEndDateFilter,
   changeStartDateFilter,
   cleanState,
@@ -24,13 +22,25 @@ import { ChartModule } from 'primeng/chart';
 import { AsyncPipe } from '@angular/common';
 import { SelectObjectModel } from 'src/app/models/general-models';
 import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
+import { SelectModule } from 'primeng/select';
+
+type FormModel = {
+  StartDate: FormControl<Date>;
+  EndDate: FormControl<Date>;
+  Date: FormControl<Date>;
+  ChartType: FormControl<StatsChartTypeEnum>;
+  DataType: FormControl<StatsTypeEnum>;
+};
 
 @Component({
   selector: 'app-stats-page',
   templateUrl: './stats-page.component.html',
   styleUrls: ['./stats-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, ChartModule]
+  imports: [AsyncPipe, ChartModule, ReactiveFormsModule, SelectModule, DatePickerModule]
 })
 export class StatsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
@@ -54,6 +64,8 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     }
   };
 
+  public filterForm: FormGroup<FormModel>;
+
   public dataTypes: SelectObjectModel[] = [
     { id: StatsTypeEnum.NumberOfRecruiterPublishedOfferts, name: 'Oferty opublikowane przez rekrutera' },
     { id: StatsTypeEnum.NumberOfCompanyPublishedOfferts, name: 'Oferty opublikowane przez firmę' },
@@ -61,6 +73,8 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     { id: StatsTypeEnum.NumberOfActiveCompaniesOfferts, name: 'Aktywne oferty firmy' },
     { id: StatsTypeEnum.NumberOfCompanyRecruiters, name: 'Aktywni rekruterzy firmy' }
   ];
+
+  public chartTypes: SelectObjectModel[] = [{ id: StatsChartTypeEnum.Bar, name: 'bar' }];
 
   public Stats$ = this.store.select(selectStats);
   public Filters$ = this.store.select(selectFilters);
@@ -73,12 +87,20 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {
     this.subscriptions = [];
+
+    this.filterForm = this.InitJobOfferForm();
   }
   ngOnInit() {
     this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
 
     this.subscriptions.push(
       this.Filters$.subscribe((filters) => {
+        this.filterForm.patchValue({
+          StartDate: filters.StartDate,
+          EndDate: filters.EndDate,
+          Date: filters.Date
+        });
+
         if (filters.DataType === StatsTypeEnum.NumberOfRecruiterPublishedOfferts) {
           this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
         } else if (filters.DataType === StatsTypeEnum.NumberOfCompanyPublishedOfferts) {
@@ -107,19 +129,25 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  public setMonthAndYear(normalizedMonth: any, datepicker: MatDatepicker<Moment>, isStartDate: boolean) {
-    if (isStartDate) {
-      this.store.dispatch(changeStartDateFilter({ startDate: normalizedMonth.value }));
-    } else {
-      this.store.dispatch(changeEndDateFilter({ endDate: normalizedMonth.value }));
-    }
+  public ChangeStartDate = (StartDate: Date) => this.store.dispatch(changeStartDateFilter({ StartDate: StartDate }));
 
-    datepicker.close();
-  }
+  public ChangeEndDate = (EndDate: Date) => this.store.dispatch(changeEndDateFilter({ EndDate: EndDate }));
 
-  public changeDataType = (dataType: any) => this.store.dispatch(changeDataTypeFilter({ dataType: dataType.value }));
+  public ChangeDate = (Date: Date) => this.store.dispatch(changeDateFilter({ Date: Date }));
 
-  public changeCategory = (dataType: any) => this.store.dispatch(changeCategoryFilter({ category: dataType.value }));
+  public ChangeDataType = (DataType: any) => this.store.dispatch(changeDataTypeFilter({ DataType: DataType.value }));
+
+  public ChangeChartType = (ChartType: any) => console.log(ChartType); //this.store.dispatch(changeDataTypeFilter({ DataType: dataType.value }));
+
+  private InitJobOfferForm = (): FormGroup<FormModel> => {
+    return new FormGroup<FormModel>({
+      StartDate: new FormControl<Date>(new Date(), { nonNullable: true }),
+      EndDate: new FormControl<Date>(new Date(), { nonNullable: true }),
+      Date: new FormControl<Date>(new Date(), { nonNullable: true }),
+      ChartType: new FormControl<StatsChartTypeEnum>(StatsChartTypeEnum.Bar, { nonNullable: true }),
+      DataType: new FormControl<StatsTypeEnum>(StatsTypeEnum.NumberOfRecruiterPublishedOfferts, { nonNullable: true })
+    });
+  };
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

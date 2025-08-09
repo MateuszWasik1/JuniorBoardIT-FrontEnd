@@ -41,35 +41,35 @@ export const StatsReducer = createReducer<StatsState>(
     ErrorMessage: error
   })),
 
-  on(Actions.changeStartDateFilter, (state, { startDate }) => ({
+  on(Actions.changeStartDateFilter, (state, { StartDate }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      StartDate: startDate
+      StartDate: StartDate
     }
   })),
 
-  on(Actions.changeEndDateFilter, (state, { endDate }) => ({
+  on(Actions.changeEndDateFilter, (state, { EndDate }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      EndDate: endDate
+      EndDate: EndDate
     }
   })),
 
-  on(Actions.changeDataTypeFilter, (state, { dataType }) => ({
+  on(Actions.changeDateFilter, (state, { Date }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      DataType: dataType
+      Date: Date
     }
   })),
 
-  on(Actions.changeCategoryFilter, (state, { category }) => ({
+  on(Actions.changeDataTypeFilter, (state, { DataType }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      Category: category
+      DataType: DataType
     }
   })),
 
