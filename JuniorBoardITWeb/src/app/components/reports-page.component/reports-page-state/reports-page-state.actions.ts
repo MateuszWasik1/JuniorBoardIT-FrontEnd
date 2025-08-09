@@ -21,14 +21,17 @@ export const changeReportStatus = createAction(
   '[Reports Page] Change Report Status',
   props<{ RGID: string; RStatus: ReportsStatusEnum }>()
 );
-export const changeReportStatusSuccess = createAction('Reports Page] Change Report Status Success');
+export const changeReportStatusSuccess = createAction(
+  '[Reports Page] Change Report Status Success',
+  props<{ RStatus: ReportsStatusEnum }>()
+);
 export const changeReportStatusError = createAction(
   '[Reports Page] Change Report Status Error',
   props<{ error: any }>()
 );
 
 export const ChangeReportTypeFilterValue = createAction(
-  '[JobOffers Page] Change Report Type Filter Value',
+  '[Reports Page] Change Report Type Filter Value',
   props<{ ReportType: ReportsTypeEnum }>()
 );
 

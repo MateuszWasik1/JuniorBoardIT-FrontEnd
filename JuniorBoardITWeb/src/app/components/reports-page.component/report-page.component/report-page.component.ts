@@ -48,6 +48,10 @@ type FormModel = {
   JOStatus: FormControl<StatusEnum>;
 };
 
+type FormReportModel = {
+  ReportStatus: FormControl<ReportsStatusEnum>;
+};
+
 @Component({
   selector: 'app-task-page',
   templateUrl: './report-page.component.html',
@@ -129,6 +133,7 @@ export class ReportPageComponent implements OnInit, OnDestroy {
   ];
 
   public form: FormGroup = new FormGroup({});
+  public reportForm: FormGroup<FormReportModel>;
 
   public Report$ = this.store.select(selectReport);
   public JobOffer$ = this.store.select(selectJobOffer);
@@ -142,6 +147,8 @@ export class ReportPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+
+    this.reportForm = this.InitReportForm();
   }
   ngOnInit(): void {
     this.store.dispatch(loadReport({ RGID: this.route.snapshot.paramMap.get('rgid') }));
@@ -266,6 +273,12 @@ export class ReportPageComponent implements OnInit, OnDestroy {
   };
 
   public Cancel = (): Promise<boolean> => this.router.navigate(['/reports']);
+
+  private InitReportForm(): FormGroup<FormReportModel> {
+    return new FormGroup<FormReportModel>({
+      ReportStatus: new FormControl<ReportsStatusEnum>(ReportsStatusEnum.New, { nonNullable: true })
+    });
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
