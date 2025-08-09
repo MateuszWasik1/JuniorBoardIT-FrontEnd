@@ -10,20 +10,46 @@
   @if (Report$ | async; as report) {
     <div class="row margin-bottom-15">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <p-card header="Czy zgłosznie użytkownika potwierdziło się?">
+        <p-card [header]="translations.Get('Reports_Report_Card_Title')">
           <div class="row margin-top-15">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p class="card-subtitle">{{ translations.Get('Reports_Report_Card_Reasons') }}:</p>
+            </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               {{ DisplayReasons(report.RReasons) }}
             </div>
           </div>
           <div class="row margin-top-15">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p class="card-subtitle">{{ translations.Get('Reports_Report_Card_Text') }}:</p>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               {{ report.RText }}
             </div>
           </div>
           <div class="row margin-top-15">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p class="card-subtitle">{{ translations.Get('Reports_Report_Card_Current_Status') }}:</p>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <p-message [severity]="DisplaySeverity(report.RStatus)">{{ DisplayStatus(report.RStatus) }}</p-message>
+            </div>
+          </div>
+          <div class="row margin-top-15" [formGroup]="reportForm">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p class="card-subtitle">{{ translations.Get('Reports_Report_Card_New_Status') }}:</p>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p-select
+                [options]="reportsStatusType"
+                [showClear]="true"
+                [filter]="true"
+                filterBy="name"
+                optionLabel="name"
+                optionValue="id"
+                formControlName="ReportStatus"
+                [placeholder]="translations.Get('Reports_Report_Card_New_Status')"
+              />
             </div>
           </div>
           <div class="row margin-top-15">
@@ -36,7 +62,7 @@
               ></p-button>
               <p-button
                 [label]="translations.Get('General_Save')"
-                (click)="ChangeReportStatus(report.RGID, report.RStatus)"
+                (click)="ChangeReportStatus(report.RGID, reportForm.controls.ReportStatus.value)"
                 [disabled]="form.invalid"
               ></p-button>
             </div>

@@ -136,5 +136,10 @@
   "Reports_ReportStatus": "Status zgłoszenia",
   "Reports_ChooseStatus": "Wybierz status zgłoszeń",
   "Reports_ReportVerify": "Zweryfikuj zgłoszenie",
-  "Reports_Report_Title": "Tytuł zgoszenia"
+  "Reports_Report_Title": "Tytuł zgoszenia",
+  "Reports_Report_Card_Title": "Czy zgłosznie użytkownika potwierdziło się?",
+  "Reports_Report_Card_Reasons": "Powody zgłoszenia",
+  "Reports_Report_Card_Text": "Wiadomość zgłoszenia",
+  "Reports_Report_Card_Current_Status": "Obecny status zgłoszenia",
+  "Reports_Report_Card_New_Status": "Wybierz nowy status zgłoszenia"
 }

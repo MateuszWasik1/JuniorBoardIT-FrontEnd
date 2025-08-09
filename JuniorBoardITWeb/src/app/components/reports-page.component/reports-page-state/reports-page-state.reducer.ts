@@ -95,8 +95,12 @@ export const ReportsReducer = createReducer<ReportsState>(
   })),
 
   //Change Report Status
-  on(Actions.changeReportStatusSuccess, (state) => ({
-    ...state
+  on(Actions.changeReportStatusSuccess, (state, { RStatus }) => ({
+    ...state,
+    Report: {
+      ...state.Report,
+      RStatus: RStatus
+    }
   })),
 
   on(Actions.changeReportStatusError, (state, { error }) => ({

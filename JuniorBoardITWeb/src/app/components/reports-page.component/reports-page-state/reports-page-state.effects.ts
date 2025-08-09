@@ -66,7 +66,7 @@ export class ReportsEffects {
           Status: params.RStatus
         };
         return this.reportsService.ChangeReportStatus(model).pipe(
-          map(() => ReportsActions.changeReportStatusSuccess()),
+          map(() => ReportsActions.changeReportStatusSuccess({ RStatus: params.RStatus })),
           catchError((error) =>
             of(ReportsActions.changeReportStatusError({ error: this.errorHandler.handleAPIError(error) }))
           )
