@@ -1,3 +1,3 @@
 export enum StatsChartTypeEnum {
-  Bar = 0
+  Bar = 'bar'
 }

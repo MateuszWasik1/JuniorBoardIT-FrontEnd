@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as Actions from './stats-page-state.actions';
 import { StatsState } from './stats-page-state.state';
 import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
+import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
 
 var initialStateOfStatsPage: StatsState = {
   Stats: {
@@ -12,7 +13,7 @@ var initialStateOfStatsPage: StatsState = {
     StartDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
     Date: new Date(),
-    ChartType: 'bar',
+    ChartType: StatsChartTypeEnum.Bar,
     DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts
   },
   ErrorMessage: ''
@@ -73,6 +74,14 @@ export const StatsReducer = createReducer<StatsState>(
     }
   })),
 
+  on(Actions.changeChartTypeFilter, (state, { ChartType }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      ChartType: ChartType
+    }
+  })),
+
   on(Actions.cleanState, (state) => ({
     ...state,
     Stats: {
@@ -83,7 +92,7 @@ export const StatsReducer = createReducer<StatsState>(
       StartDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
       EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
       Date: new Date(),
-      ChartType: 'bar',
+      ChartType: StatsChartTypeEnum.Bar,
       DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts
     },
     ErrorMessage: ''

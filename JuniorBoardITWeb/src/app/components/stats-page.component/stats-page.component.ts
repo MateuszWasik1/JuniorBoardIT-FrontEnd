@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import {
+  changeChartTypeFilter,
   changeDataTypeFilter,
   changeDateFilter,
   changeEndDateFilter,
@@ -74,7 +75,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     { id: StatsTypeEnum.NumberOfCompanyRecruiters, name: 'Aktywni rekruterzy firmy' }
   ];
 
-  public chartTypes: SelectObjectModel[] = [{ id: StatsChartTypeEnum.Bar, name: 'bar' }];
+  public chartTypes: SelectObjectModel[] = [{ id: 0, name: StatsChartTypeEnum.Bar }];
 
   public Stats$ = this.store.select(selectStats);
   public Filters$ = this.store.select(selectFilters);
@@ -137,7 +138,8 @@ export class StatsPageComponent implements OnInit, OnDestroy {
 
   public ChangeDataType = (DataType: any) => this.store.dispatch(changeDataTypeFilter({ DataType: DataType.value }));
 
-  public ChangeChartType = (ChartType: any) => console.log(ChartType); //this.store.dispatch(changeDataTypeFilter({ DataType: dataType.value }));
+  public ChangeChartType = (ChartType: any) =>
+    this.store.dispatch(changeChartTypeFilter({ ChartType: ChartType.value }));
 
   private InitJobOfferForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({

@@ -19,5 +19,6 @@ export const changeStartDateFilter = createAction('[Stats Page] Change Start Dat
 export const changeEndDateFilter = createAction('[Stats Page] Change End Date Filter', props<{ EndDate: any }>());
 export const changeDateFilter = createAction('[Stats Page] Change End Date Filter', props<{ Date: any }>());
 export const changeDataTypeFilter = createAction('[Stats Page] Change Data Type Filter', props<{ DataType: any }>());
+export const changeChartTypeFilter = createAction('[Stats Page] Change Chart Type Filter', props<{ ChartType: any }>());
 
 export const cleanState = createAction('[Stats Page] Clean State');
