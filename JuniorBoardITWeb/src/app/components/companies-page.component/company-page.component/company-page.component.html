@@ -393,7 +393,7 @@
             filterBy="name"
             optionLabel="name"
             optionValue="id"
-            placeholder="Wybierz liczbę pracowników"
+            [placeholder]="translations.Get('Companies_Company_EmployeesNo_Placeholder')"
             formControlName="CEmployeesNo"
           />
           @if (form.controls.CEmployeesNo.errors?.['required']) {
