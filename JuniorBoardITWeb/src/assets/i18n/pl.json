@@ -34,6 +34,7 @@
   "TopMenu_Reports": "Zgłoszenia",
   "TopMenu_Bugs": "Błędy",
   "TopMenu_Companies": "Firmy",
+  "TopMenu_Stats": "Statystyki",
   "User_User": "Użytkownik",
   "User_First_Name": "Imię",
   "User_Last_Name": "Nazwisko",
@@ -123,5 +124,10 @@
   "Companies_Company_FoundedYear_Min": "Minimalny rok założenia firmy to 1000 rok",
   "Companies_Company_FoundedYear_Max": "Minimalny rok założenia firmy to 2026 rok",
   "Companies_Company_EmployeesNo": "Liczba pracowników firmy",
-  "Companies_Company_EmployeesNo_Required": "Liczba pracowników firmy jest wymagany!"
+  "Companies_Company_EmployeesNo_Required": "Liczba pracowników firmy jest wymagany!",
+  "Stats_DataType": "Typ danych",
+  "Stats_ChartType": "Typ wykresu",
+  "Stats_StartDate": "Data początkowa",
+  "Stats_EndDate": "Data końcowa",
+  "Stats_Date": "Data"
 }
