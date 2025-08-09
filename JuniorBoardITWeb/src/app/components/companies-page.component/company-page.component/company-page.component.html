@@ -26,11 +26,11 @@
 
   <div class="row" [formGroup]="form">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_Name') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CName"
@@ -38,24 +38,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CName.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Name_Required') }}
+            </div>
+          }
+          @if (form.controls.CName.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Name_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CName.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Name_Required') }}
-          </div>
-        }
-        @if (form.controls.CName.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Name_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_Industry') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <p-select
             [options]="industryTypes"
             [showClear]="false"
@@ -66,12 +66,12 @@
             [placeholder]="translations.Get('Companies_Company_Industry')"
             formControlName="CIndustry"
           />
+          @if (form.controls.CIndustry.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Industry_Required') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CIndustry.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Industry_Required') }}
-          </div>
-        }
       </div>
 
       <div class="row">
@@ -85,25 +85,27 @@
             [placeholder]="translations.Get('Companies_Company_Description')"
             required
             pTextarea
+            style="width: 100%"
+            rows="6"
           ></textarea>
         </div>
         @if (form.controls.CDescription.errors?.['required']) {
-          <div class="error row margin-bottom-15">
+          <div class="error-row">
             {{ translations.Get('Companies_Company_Description_Required') }}
           </div>
         }
         @if (form.controls.CDescription.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
+          <div class="error-row">
             {{ translations.Get('Companies_Company_Description_Max2000') }}
           </div>
         }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_Email') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CEmail"
@@ -111,24 +113,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CEmail.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Email_Required') }}
+            </div>
+          }
+          @if (form.controls.CEmail.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Email_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CEmail.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Email_Required') }}
-          </div>
-        }
-        @if (form.controls.CEmail.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Email_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_Address') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CAddress"
@@ -136,24 +138,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CAddress.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Address_Required') }}
+            </div>
+          }
+          @if (form.controls.CAddress.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Address_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CAddress.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Address_Required') }}
-          </div>
-        }
-        @if (form.controls.CAddress.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Address_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_City') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-19 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CCity"
@@ -161,24 +163,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CCity.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_City_Required') }}
+            </div>
+          }
+          @if (form.controls.CCity.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_City_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CCity.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_City_Required') }}
-          </div>
-        }
-        @if (form.controls.CCity.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_City_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_Country') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CCountry"
@@ -186,24 +188,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CCountry.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Country_Required') }}
+            </div>
+          }
+          @if (form.controls.CCountry.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Country_Max200') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CCountry.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Country_Required') }}
-          </div>
-        }
-        @if (form.controls.CCountry.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Country_Max200') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_PostalCode') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CPostalCode"
@@ -211,24 +213,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CPostalCode.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_PostalCode_Required') }}
+            </div>
+          }
+          @if (form.controls.CPostalCode.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_PostalCode_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CPostalCode.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_PostalCode_Required') }}
-          </div>
-        }
-        @if (form.controls.CPostalCode.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_PostalCode_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_PhoneNumber') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CPhoneNumber"
@@ -236,24 +238,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CPhoneNumber.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_PhoneNumber_Required') }}
+            </div>
+          }
+          @if (form.controls.CPhoneNumber.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_PhoneNumber_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CPhoneNumber.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_PhoneNumber_Required') }}
-          </div>
-        }
-        @if (form.controls.CPhoneNumber.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_PhoneNumber_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_NIP') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CNIP"
@@ -261,24 +263,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CNIP.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_NIP_Required') }}
+            </div>
+          }
+          @if (form.controls.CNIP.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_NIP_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CNIP.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_NIP_Required') }}
-          </div>
-        }
-        @if (form.controls.CNIP.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_NIP_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_Regon') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CRegon"
@@ -286,23 +288,23 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CRegon.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Regon_Required') }}
+            </div>
+          }
+          @if (form.controls.CRegon.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Regon_Max200') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CRegon.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Regon_Required') }}
-          </div>
-        }
-        @if (form.controls.CRegon.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_Regon_Max200') }}
-          </div>
-        }
       </div>
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_KRS') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CKRS"
@@ -310,24 +312,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CKRS.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_KRS_Required') }}
+            </div>
+          }
+          @if (form.controls.CKRS.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_KRS_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CKRS.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_KRS_Required') }}
-          </div>
-        }
-        @if (form.controls.CKRS.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_KRS_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <input
             pInputText
             formControlName="CLI"
@@ -335,24 +337,24 @@
             required
             maxlength="255"
           />
+          @if (form.controls.CLI.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Required') }}
+            </div>
+          }
+          @if (form.controls.CLI.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max255') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CLI.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_LinkedIn_Required') }}
-          </div>
-        }
-        @if (form.controls.CLI.errors?.['maxlength']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_LinkedIn_Max255') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_FoundedYear') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <p-inputnumber
             mode="decimal"
             locale="pl-PL"
@@ -361,29 +363,29 @@
             [placeholder]="translations.Get('Companies_Company_FoundedYear')"
             formControlName="CFoundedYear"
           />
+          @if (form.controls.CFoundedYear.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_FoundedYear_Required') }}
+            </div>
+          }
+          @if (form.controls.CFoundedYear.errors?.['min']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_FoundedYear_Min') }}
+            </div>
+          }
+          @if (form.controls.CFoundedYear.errors?.['max']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_FoundedYear_Max') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CFoundedYear.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_FoundedYear_Required') }}
-          </div>
-        }
-        @if (form.controls.CFoundedYear.errors?.['min']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_FoundedYear_Min') }}
-          </div>
-        }
-        @if (form.controls.CFoundedYear.errors?.['max']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_FoundedYear_Max') }}
-          </div>
-        }
       </div>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('Companies_Company_EmployeesNo') }}: </span>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           <p-select
             [options]="companyEmpNoTypes"
             [showClear]="false"
@@ -394,12 +396,12 @@
             placeholder="Wybierz liczbę pracowników"
             formControlName="CEmployeesNo"
           />
+          @if (form.controls.CEmployeesNo.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_EmployeesNo_Required') }}
+            </div>
+          }
         </div>
-        @if (form.controls.CEmployeesNo.errors?.['required']) {
-          <div class="error row margin-bottom-15">
-            {{ translations.Get('Companies_Company_EmployeesNo_Required') }}
-          </div>
-        }
       </div>
     </div>
   </div>

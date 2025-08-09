@@ -300,6 +300,16 @@ body {
   margin-left: 20%;
 }
 
+.error-row {
+  color: red;
+  text-align: left;
+  margin-top: 15px;
+}
+
+.d-flex {
+  display: flex;
+}
+
 @media screen and (min-width: 1200px) {
   .col-lg-1 {
     width: 8.333%;
