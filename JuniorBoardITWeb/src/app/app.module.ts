@@ -46,6 +46,9 @@ import { featureKeyStatsState } from './components/stats-page.component/stats-pa
 import { StatsReducer } from './components/stats-page.component/stats-page-state/stats-page-state.reducer';
 import { StatsEffects } from './components/stats-page.component/stats-page-state/stats-page-state.effects';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -60,6 +63,9 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
     MatNativeDateModule,
     MatInputModule,
     MatTooltipModule,
+    ToastModule,
+    MessageModule,
+    BrowserAnimationsModule,
 
     TranslateModule.forRoot({
       loader: {
@@ -101,7 +107,8 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
         preset: Aura
       }
     }),
-    provideCharts(withDefaultRegisterables())
+    provideCharts(withDefaultRegisterables()),
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

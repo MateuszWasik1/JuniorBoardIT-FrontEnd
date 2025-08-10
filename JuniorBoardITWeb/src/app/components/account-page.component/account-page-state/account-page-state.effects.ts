@@ -7,6 +7,7 @@ import { AccountsService } from 'src/app/services/accounts.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
+import { SnackBarService } from 'src/app/services/snackbar.service';
 
 @Injectable()
 export class AccountEffects {
@@ -15,7 +16,8 @@ export class AccountEffects {
     private accountService: AccountsService,
     private cookieService: CookieService,
     private router: Router,
-    private errorHandler: APIErrorHandler
+    private errorHandler: APIErrorHandler,
+    private snackbarService: SnackBarService
   ) {}
 
   RegisterUser = createEffect(() => {
@@ -23,11 +25,15 @@ export class AccountEffects {
       ofType(AccountActions.RegisterUser),
       switchMap((params) => {
         return this.accountService.Register(params.user).pipe(
-          map(() => AccountActions.RegisterUserSuccess()),
+          map(() => {
+            this.snackbarService.success('Sukces', 'Rejestracja przebiegła pomyślnie!');
+            return AccountActions.RegisterUserSuccess();
+          }),
           tap(() => this.router.navigate(['/login'])),
-          catchError((error) =>
-            of(AccountActions.RegisterUserError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Podczas rejestracji wystąpił błąd!');
+            return of(AccountActions.RegisterUserError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );

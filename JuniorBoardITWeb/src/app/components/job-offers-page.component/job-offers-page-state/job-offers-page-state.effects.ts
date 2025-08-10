@@ -9,15 +9,17 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/services/snackbar.service';
 
 @Injectable()
 export class JobOffersEffects {
   constructor(
+    public store: Store<AppState>,
     private actions: Actions,
     private router: Router,
     private jobOffersService: JobOffersService,
-    public store: Store<AppState>,
-    private errorHandler: APIErrorHandler
+    private errorHandler: APIErrorHandler,
+    private snackbarService: SnackBarService
   ) {}
 
   loadJobOffer = createEffect(() => {
@@ -56,11 +58,15 @@ export class JobOffersEffects {
       ofType(JobOffersActions.addJobOffer),
       switchMap((params) => {
         return this.jobOffersService.AddJobOffer(params.JobOffer).pipe(
-          map(() => JobOffersActions.addJobOfferSuccess()),
+          map(() => {
+            this.snackbarService.success('Sukces', 'Oferta pracy została pomyślnie dodana!');
+            return JobOffersActions.addJobOfferSuccess();
+          }),
           tap(() => this.router.navigate(['/job-offers'])),
-          catchError((error) =>
-            of(JobOffersActions.addJobOfferError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Oferta pracy nie została dodana!');
+            return of(JobOffersActions.addJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
@@ -71,11 +77,15 @@ export class JobOffersEffects {
       ofType(JobOffersActions.updateJobOffer),
       switchMap((params) => {
         return this.jobOffersService.UpdateJobOffer(params.JobOffer).pipe(
-          map(() => JobOffersActions.updateJobOfferSuccess()),
+          map(() => {
+            this.snackbarService.success('Sukces', 'Oferta pracy została pomyślnie nadpisana!');
+            return JobOffersActions.updateJobOfferSuccess();
+          }),
           tap(() => this.router.navigate(['/job-offers'])),
-          catchError((error) =>
-            of(JobOffersActions.updateJobOfferError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Oferta pracy nie została nadpisana!');
+            return of(JobOffersActions.updateJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
@@ -86,10 +96,14 @@ export class JobOffersEffects {
       ofType(JobOffersActions.deleteJobOffer),
       switchMap((params) => {
         return this.jobOffersService.DeleteJobOffer(params.JOGID).pipe(
-          map(() => JobOffersActions.deleteJobOfferSuccess({ JOGID: params.JOGID })),
-          catchError((error) =>
-            of(JobOffersActions.deleteJobOfferError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          map(() => {
+            this.snackbarService.success('Sukces', 'Oferta pracy została pomyślnie usunięta!');
+            return JobOffersActions.deleteJobOfferSuccess({ JOGID: params.JOGID });
+          }),
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Oferta pracy nie została usunięta!');
+            return of(JobOffersActions.deleteJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );

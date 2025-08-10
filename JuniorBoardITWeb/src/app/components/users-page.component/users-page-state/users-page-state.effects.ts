@@ -8,6 +8,7 @@ import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { selectFilters } from './users-page-state.selectors';
+import { SnackBarService } from 'src/app/services/snackbar.service';
 
 @Injectable()
 export class UsersEffects {
@@ -15,7 +16,8 @@ export class UsersEffects {
     private actions: Actions,
     private store: Store<AppState>,
     private userService: UserService,
-    private errorHandler: APIErrorHandler
+    private errorHandler: APIErrorHandler,
+    private snackbarService: SnackBarService
   ) {}
 
   loadUsers = createEffect(() => {
@@ -36,8 +38,14 @@ export class UsersEffects {
       ofType(UsersActions.deleteUser),
       switchMap((params) => {
         return this.userService.DeleteUser(params.ugid).pipe(
-          map((result) => UsersActions.deleteUserSuccess({ ugid: params.ugid })),
-          catchError((error) => of(UsersActions.deleteUserError({ error: this.errorHandler.handleAPIError(error) })))
+          map(() => {
+            this.snackbarService.success('Sukces', 'Użytkownik został pomyślnie usunięty!');
+            return UsersActions.deleteUserSuccess({ ugid: params.ugid });
+          }),
+          catchError((error) => {
+            this.snackbarService.error('Błąd', 'Użytkownik nie został usunięty!');
+            return of(UsersActions.deleteUserError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );

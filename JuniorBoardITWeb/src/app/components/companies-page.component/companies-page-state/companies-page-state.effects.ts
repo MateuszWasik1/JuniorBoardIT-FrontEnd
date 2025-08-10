@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { selectFilters } from './companies-page-state.selectors';
+import { SnackBarService } from 'src/app/services/snackbar.service';
 
 @Injectable()
 export class CompaniesEffects {
@@ -17,7 +18,8 @@ export class CompaniesEffects {
     private router: Router,
     private store: Store<AppState>,
     private companiesService: CompaniesService,
-    private errorHandler: APIErrorHandler
+    private errorHandler: APIErrorHandler,
+    private snackbarService: SnackBarService
   ) {}
 
   loadCompanies = createEffect(() => {
@@ -54,11 +56,15 @@ export class CompaniesEffects {
       ofType(CompaniesActions.addCompany),
       switchMap((params) => {
         return this.companiesService.AddCompany(params.Company).pipe(
-          map(() => CompaniesActions.addCompanySuccess()),
+          map(() => {
+            this.snackbarService.success('Sukces', 'Firma została pomyślnie dodana!');
+            return CompaniesActions.addCompanySuccess();
+          }),
           tap(() => this.router.navigate(['/companies'])),
-          catchError((error) =>
-            of(CompaniesActions.addCompanyError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Firma nie została dodana!');
+            return of(CompaniesActions.addCompanyError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
@@ -69,11 +75,15 @@ export class CompaniesEffects {
       ofType(CompaniesActions.updateCompany),
       switchMap((params) => {
         return this.companiesService.UpdateCompany(params.Company).pipe(
-          map(() => CompaniesActions.updateCompanySuccess()),
+          map(() => {
+            this.snackbarService.success('Sukces', 'Firma została pomyślnie nadpisana!');
+            return CompaniesActions.updateCompanySuccess();
+          }),
           tap(() => this.router.navigate(['/companies'])),
-          catchError((error) =>
-            of(CompaniesActions.updateCompanyError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Firma nie została nadpisana!');
+            return of(CompaniesActions.updateCompanyError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
@@ -84,10 +94,14 @@ export class CompaniesEffects {
       ofType(CompaniesActions.deleteCompany),
       switchMap((params) => {
         return this.companiesService.DeleteCompany(params.CGID).pipe(
-          map(() => CompaniesActions.deleteCompanySuccess({ CGID: params.CGID })),
-          catchError((error) =>
-            of(CompaniesActions.deleteCompanyError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          map(() => {
+            this.snackbarService.success('Sukces', 'Firma została pomyślnie usunięta!');
+            return CompaniesActions.deleteCompanySuccess({ CGID: params.CGID });
+          }),
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Firma nie została usunięta!');
+            return of(CompaniesActions.deleteCompanyError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
