@@ -30,6 +30,8 @@ type FormModel = {
   UUserName: FormControl<string>;
   UEmail: FormControl<string>;
   UPhone: FormControl<string>;
+  UCompany: FormControl<string>;
+  UCompanyGID: FormControl<string>;
 };
 
 @Component({
@@ -80,19 +82,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
     ];
 
     this.subscriptions.push(
-      this.User$.subscribe((user) => {
-        this.form.patchValue({
-          UID: user.UID,
-          UGID: user.UGID,
-          URID: user.URID,
-          UFirstName: user.UFirstName,
-          ULastName: user.ULastName,
-          UUserName: user.UUserName,
-          UEmail: user.UEmail,
-          UPhone: user.UPhone
-        });
+      this.User$.subscribe((User) => {
+        this.form.patchValue(User);
 
-        this.selectedRole = this.roles[user.URID ? user.URID - 1 : 0].id;
+        this.selectedRole = this.roles[User.URID ? User.URID - 1 : 0].id;
       })
     );
 
@@ -138,7 +131,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.email, Validators.maxLength(100)],
         nonNullable: true
       }),
-      UPhone: new FormControl<string>('', { validators: [Validators.maxLength(100)], nonNullable: true })
+      UPhone: new FormControl<string>('', { validators: [Validators.maxLength(100)], nonNullable: true }),
+      UCompany: new FormControl<string>('', { validators: [Validators.maxLength(100)], nonNullable: true }),
+      UCompanyGID: new FormControl<string>('', { validators: [Validators.maxLength(100)], nonNullable: true })
     });
   };
 
