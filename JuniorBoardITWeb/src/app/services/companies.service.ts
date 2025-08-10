@@ -33,6 +33,12 @@ export class CompaniesService {
     });
   }
 
+  GetCompaniesForUser(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'api/Companies/GetCompaniesForUser', {
+      headers: GetToken(this.cookiesService)
+    });
+  }
+
   AddCompany(model: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'api/Companies/AddCompany', model, {
       headers: GetToken(this.cookiesService)

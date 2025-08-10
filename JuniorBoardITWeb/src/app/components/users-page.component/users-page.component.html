@@ -14,9 +14,6 @@
 
     @if (users.length != 0) {
       <div class="row padding-top-15 padding-bottom-15">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-          {{ translations.Get('Users_GUID') }}
-        </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
           {{ translations.Get('Users_Role') }}
         </div>
@@ -35,14 +32,14 @@
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
           {{ translations.Get('Users_Phone') }}
         </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          {{ translations.Get('Users_Company') }}
+        </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
       </div>
 
       @for (user of users; track user.UGID) {
         <div class="row data-row">
-          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.UGID }}</p>
-          </div>
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <p>{{ DisplayRoles(user.URID) }}</p>
           </div>
@@ -60,6 +57,9 @@
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <p>{{ user.UPhone }}</p>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <p>{{ user.UCompany }}</p>
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <span class="bi bi-pencil" (click)="GoToUser(user.UGID)"></span>

@@ -49,6 +49,7 @@
   "Users_UserName": "Nazwa",
   "Users_Email": "Email",
   "Users_Phone": "Telefon",
+  "Users_Company": "Firma",
   "Users_NotFound": "Nie znaleziono żadnych użytkowników! Zmień opcje filtrowania!",
   "User_Error_MaxLength50": "Przekroczyłeś liczbę znaków! Maksymalna liczba znaków to 50!",
   "User_Error_MaxLength100": "Przekroczyłeś liczbę znaków! Maksymalna liczba znaków to 100!",
