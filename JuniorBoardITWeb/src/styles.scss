@@ -310,6 +310,18 @@ body {
   display: flex;
 }
 
+.p-inputtext,
+.p-select,
+.p-inputnumber {
+  max-width: 400px;
+  width: 100%;
+}
+
+.p-datepicker {
+  max-width: 400px !important;
+  width: 100% !important;
+}
+
 @media screen and (min-width: 1200px) {
   .col-lg-1 {
     width: 8.333%;
@@ -476,6 +488,9 @@ body {
     > div {
       margin-bottom: 15px;
     }
+  }
+  .d-flex {
+    display: block;
   }
 }
 
