@@ -10,3 +10,8 @@ export interface User {
   UCompany?: string;
   UCompanyGID?: string;
 }
+
+export interface Companies {
+  CGID: string;
+  CName: string;
+}

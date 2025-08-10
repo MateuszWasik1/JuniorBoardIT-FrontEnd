@@ -6,20 +6,21 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TranslationService } from 'src/app/services/translate.service';
 import {
   cleanState,
+  loadCompanies,
   loadUser,
   loadUserByAdmin,
   saveUser,
   saveUserByAdmin
 } from './user-page-state/user-page-state.actions';
-import { selectErrorMessage, selectUser } from './user-page-state/user-page-state.selectors';
+import { selectCompanies, selectErrorMessage, selectUser } from './user-page-state/user-page-state.selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { RolesEnum } from 'src/app/enums/RolesEnum';
-import { MatSelectModule } from '@angular/material/select';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
+import { AsyncPipe } from '@angular/common';
 
 type FormModel = {
   UID: FormControl<number>;
@@ -39,7 +40,7 @@ type FormModel = {
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss'],
   standalone: true,
-  imports: [MatSelectModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, SelectModule]
+  imports: [AsyncPipe, ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, SelectModule]
 })
 export class UserPageComponent implements OnInit, OnDestroy {
   public IsAdminView: boolean = false;
@@ -51,6 +52,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   public form: FormGroup<FormModel>;
 
   public User$ = this.store.select(selectUser);
+  public Companies$ = this.store.select(selectCompanies);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
@@ -69,6 +71,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     if (this.IsAdminView) {
       this.store.dispatch(loadUserByAdmin({ ugid: this.route.snapshot.paramMap.get('ugid') }));
+      this.store.dispatch(loadCompanies());
     } else {
       this.store.dispatch(loadUser());
     }
@@ -104,14 +107,19 @@ export class UserPageComponent implements OnInit, OnDestroy {
       ULastName: this.form.controls.ULastName.value,
       UUserName: this.form.controls.UUserName.value,
       UEmail: this.form.controls.UEmail.value,
-      UPhone: this.form.controls.UPhone.value
+      UPhone: this.form.controls.UPhone.value,
+      UCompanyGID: ''
     };
 
     if (this.IsAdminView) {
       model.UGID = this.form.controls.UGID.value;
       model.URID = this.selectedRole;
+      model.UCompanyGID = this.form.controls.UCompanyGID.value;
+
       this.store.dispatch(saveUserByAdmin({ User: model }));
-    } else this.store.dispatch(saveUser({ User: model }));
+    } else {
+      this.store.dispatch(saveUser({ User: model }));
+    }
   };
 
   public Cancel = () => this.router.navigate(['/users']);

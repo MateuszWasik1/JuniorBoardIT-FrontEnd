@@ -16,4 +16,8 @@ export const saveUserByAdmin = createAction('[User Page] Save User By Admin', pr
 export const saveUserByAdminSuccess = createAction('[User Page] Save User By Admin Success');
 export const saveUserByAdminError = createAction('[User Page] Save User By Admin Error', props<{ error: any }>());
 
+export const loadCompanies = createAction('[User Page] Load Companies');
+export const loadCompaniesSuccess = createAction('[User Page] Load Companies Success', props<{ Companies: any }>());
+export const loadCompaniesError = createAction('[User Page] Load Companies Error', props<{ error: any }>());
+
 export const cleanState = createAction('[User Page] Clean State');

@@ -186,17 +186,19 @@
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
           @if (IsAdminView) {
-            <p-select
-              [options]="roles"
-              [showClear]="false"
-              [filter]="true"
-              filterBy="name"
-              optionLabel="name"
-              optionValue="id"
-              inputId="companies"
-              aria-describedby="companies"
-              formControlName="UCompanyGID"
-            />
+            @if (Companies$ | async; as companies) {
+              <p-select
+                [options]="companies"
+                [showClear]="false"
+                [filter]="true"
+                filterBy="CName"
+                optionLabel="CName"
+                optionValue="CGID"
+                inputId="companies"
+                aria-describedby="companies"
+                formControlName="UCompanyGID"
+              />
+            }
           } @else {
             {{ form.controls.UCompany ? form.controls.UCompany : 'Firma nie została przypisana do użytkownika' }}
           }
