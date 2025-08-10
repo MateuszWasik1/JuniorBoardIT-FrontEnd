@@ -7,6 +7,8 @@ export interface Users {
   UUserName: string;
   UEmail: string;
   UPhone: string;
+  UCompany?: string;
+  UCompanyGID?: string;
 }
 
 export interface Filters {

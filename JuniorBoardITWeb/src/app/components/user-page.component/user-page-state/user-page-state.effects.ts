@@ -5,19 +5,23 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import * as UserActions from './user-page-state.actions';
 import { UserService } from 'src/app/services/user.service';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
+import { CompaniesService } from 'src/app/services/companies.service';
+import { SnackBarService } from 'src/app/services/snackbar.service';
 
 @Injectable()
 export class UserEffects {
   constructor(
     private actions: Actions,
     private userService: UserService,
-    private errorHandler: APIErrorHandler
+    private errorHandler: APIErrorHandler,
+    private companiesService: CompaniesService,
+    private snackbarService: SnackBarService
   ) {}
 
   loadUser = createEffect(() => {
     return this.actions.pipe(
       ofType(UserActions.loadUser),
-      switchMap((params) => {
+      switchMap(() => {
         return this.userService.GetUser().pipe(
           map((result) => UserActions.loadUserSuccess({ User: result })),
           catchError((error) => of(UserActions.loadUserError({ error: this.errorHandler.handleAPIError(error) })))
@@ -40,13 +44,31 @@ export class UserEffects {
     );
   });
 
+  loadComapnies = createEffect(() => {
+    return this.actions.pipe(
+      ofType(UserActions.loadCompanies),
+      switchMap(() => {
+        return this.companiesService.GetCompaniesForUser().pipe(
+          map((result) => UserActions.loadCompaniesSuccess({ Companies: result })),
+          catchError((error) => of(UserActions.loadCompaniesError({ error: this.errorHandler.handleAPIError(error) })))
+        );
+      })
+    );
+  });
+
   saveUser = createEffect(() => {
     return this.actions.pipe(
       ofType(UserActions.saveUser),
       switchMap((params) => {
         return this.userService.SaveUser(params.User).pipe(
-          map(() => UserActions.saveUserSuccess()),
-          catchError((error) => of(UserActions.saveUserError({ error: this.errorHandler.handleAPIError(error) })))
+          map(() => {
+            this.snackbarService.success('Sukces', 'Użytkownik został pomyślnie zapisany!');
+            return UserActions.saveUserSuccess();
+          }),
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Użytkownik nie został zapisany!');
+            return of(UserActions.saveUserError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
@@ -57,10 +79,14 @@ export class UserEffects {
       ofType(UserActions.saveUserByAdmin),
       switchMap((params) => {
         return this.userService.SaveUserByAdmin(params.User).pipe(
-          map(() => UserActions.saveUserByAdminSuccess()),
-          catchError((error) =>
-            of(UserActions.saveUserByAdminError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          map(() => {
+            this.snackbarService.success('Sukces', 'Użytkownik został pomyślnie zapisany!');
+            return UserActions.saveUserByAdminSuccess();
+          }),
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Użytkownik nie został zapisany!');
+            return of(UserActions.saveUserByAdminError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );

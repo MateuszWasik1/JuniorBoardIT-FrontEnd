@@ -7,4 +7,11 @@ export interface User {
   UUserName: string;
   UEmail: string;
   UPhone: string;
+  UCompany?: string;
+  UCompanyGID?: string;
+}
+
+export interface Companies {
+  CGID: string;
+  CName: string;
 }

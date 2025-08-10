@@ -11,14 +11,18 @@ var initialStateOfUserPage: UserState = {
     ULastName: '',
     UUserName: '',
     UEmail: '',
-    UPhone: ''
+    UPhone: '',
+    UCompany: '',
+    UCompanyGID: ''
   },
+  Companies: [],
   ErrorMessage: ''
 };
 
 export const UserReducer = createReducer<UserState>(
   initialStateOfUserPage,
 
+  //Load User
   on(Actions.loadUserSuccess, (state, { User }) => ({
     ...state,
     User: {
@@ -29,7 +33,9 @@ export const UserReducer = createReducer<UserState>(
       ULastName: User.ULastName,
       UUserName: User.UUserName,
       UEmail: User.UEmail,
-      UPhone: User.UPhone
+      UPhone: User.UPhone,
+      UCompany: User.UCompany ?? '',
+      UCompanyGID: User.UCompanyGID ?? ''
     }
   })),
 
@@ -48,6 +54,18 @@ export const UserReducer = createReducer<UserState>(
     ErrorMessage: error
   })),
 
+  //Load Companies
+  on(Actions.loadCompaniesSuccess, (state, { Companies }) => ({
+    ...state,
+    Companies: Companies.List
+  })),
+
+  on(Actions.loadCompaniesError, (state, { error }) => ({
+    ...state,
+    ErrorMessage: error
+  })),
+
+  //Save User
   on(Actions.saveUserError, (state, { error }) => ({
     ...state,
     ErrorMessage: error
@@ -58,6 +76,7 @@ export const UserReducer = createReducer<UserState>(
     ErrorMessage: error
   })),
 
+  //Others
   on(Actions.cleanState, (state) => ({
     ...state,
     User: {
@@ -68,8 +87,11 @@ export const UserReducer = createReducer<UserState>(
       ULastName: '',
       UUserName: '',
       UEmail: '',
-      UPhone: ''
+      UPhone: '',
+      UCompany: '',
+      UCompanyGID: ''
     },
+    Companies: [],
     ErrorMessage: ''
   }))
 );
