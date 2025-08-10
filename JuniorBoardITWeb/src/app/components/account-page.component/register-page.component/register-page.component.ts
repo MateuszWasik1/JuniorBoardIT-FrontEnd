@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
 
   public Clear = () => this.form.reset();
 
-  public RegisterUser = () => this.store.dispatch(RegisterUser({ user: this.form.controls.UEmail.value }));
+  public RegisterUser = () => this.store.dispatch(RegisterUser({ user: this.form.value }));
 
   private InitRegisterForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>(

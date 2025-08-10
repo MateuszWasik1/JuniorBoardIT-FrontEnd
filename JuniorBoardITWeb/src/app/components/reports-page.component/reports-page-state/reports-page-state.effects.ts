@@ -8,6 +8,7 @@ import { selectFilters } from './reports-page-state.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
+import { SnackBarService } from 'src/app/services/snackbar.service';
 
 @Injectable()
 export class ReportsEffects {
@@ -15,7 +16,8 @@ export class ReportsEffects {
     public store: Store<AppState>,
     private actions: Actions,
     private reportsService: ReportsService,
-    private errorHandler: APIErrorHandler
+    private errorHandler: APIErrorHandler,
+    private snackbarService: SnackBarService
   ) {}
 
   loadReport = createEffect(() => {
@@ -50,8 +52,14 @@ export class ReportsEffects {
       ofType(ReportsActions.saveReport),
       switchMap((params) => {
         return this.reportsService.SaveReport(params.Report).pipe(
-          map(() => ReportsActions.saveReportSuccess()),
-          catchError((error) => of(ReportsActions.saveReportError({ error: this.errorHandler.handleAPIError(error) })))
+          map(() => {
+            this.snackbarService.success('Sukces', 'Raport został pomyślnie zapisany!');
+            return ReportsActions.saveReportSuccess();
+          }),
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Raport nie został zapisany!');
+            return of(ReportsActions.saveReportError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
@@ -66,10 +74,14 @@ export class ReportsEffects {
           Status: params.RStatus
         };
         return this.reportsService.ChangeReportStatus(model).pipe(
-          map(() => ReportsActions.changeReportStatusSuccess({ RStatus: params.RStatus })),
-          catchError((error) =>
-            of(ReportsActions.changeReportStatusError({ error: this.errorHandler.handleAPIError(error) }))
-          )
+          map(() => {
+            this.snackbarService.success('Sukces', 'Raport został pomyślnie nadpisany!');
+            return ReportsActions.changeReportStatusSuccess({ RStatus: params.RStatus });
+          }),
+          catchError((error) => {
+            this.snackbarService.success('Błąd', 'Raport nie został nadpisany!');
+            return of(ReportsActions.changeReportStatusError({ error: this.errorHandler.handleAPIError(error) }));
+          })
         );
       })
     );
