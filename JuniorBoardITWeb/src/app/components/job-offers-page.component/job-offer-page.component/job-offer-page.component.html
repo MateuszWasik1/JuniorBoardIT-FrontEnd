@@ -26,230 +26,510 @@
 
   <div class="row" [formGroup]="form">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jotitle">Tytuł oferty</label>
-      <input pInputText id="jotitle" aria-describedby="job-title" formControlName="JOTitle" />
-      <small id="job-title">Wpisz tytuł swojej oferty o pracę.</small>
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: Tytuł oferty </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            id="jotitle"
+            aria-describedby="job-title"
+            formControlName="JOTitle"
+            [placeholder]="translations.Get('Companies_Company_LinkedIn')"
+            required
+            maxlength="255"
+          />
+          @if (form.controls.JOTitle.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Required') }}
+            </div>
+          }
+          @if (form.controls.JOTitle.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max255') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: Nazwa firmy </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            id="jocompanyname"
+            aria-describedby="company-name"
+            formControlName="JOCompanyName"
+            [placeholder]="translations.Get('Companies_Company_LinkedIn')"
+            required
+            maxlength="255"
+          />
+          @if (form.controls.JOCompanyName.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Required') }}
+            </div>
+          }
+          @if (form.controls.JOCompanyName.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max255') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: Tryb pracy </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="locationTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="jolocationtype"
+            placeholder="Wybierz tryb pracy"
+            aria-describedby="location-types"
+            formControlName="JOLocationType"
+          />
+          @if (form.controls.JOLocationType.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Required') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Lokalizacja biura (opcjonalnie)
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <input
+            pInputText
+            id="joofficelocation"
+            aria-describedby="office-location"
+            formControlName="JOOfficeLocation"
+            [placeholder]="translations.Get('Companies_Company_LinkedIn')"
+            required
+            maxlength="100"
+          />
+          @if (form.controls.JOOfficeLocation.errors?.['maxlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: Typ umowy </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="employmentTypes"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="joemploymenttype"
+            placeholder="Wybierz typ umowy"
+            aria-describedby="employment-types"
+            formControlName="JOEmploymentType"
+          />
+          @if (form.controls.JOEmploymentType.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Poziom doświadczenia
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="expirenceTypes"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="joexpirencelevel"
+            placeholder="Wybierz poziom doświadczenia"
+            aria-describedby="expirence-types"
+            formControlName="JOExpirenceLevel"
+          />
+          @if (form.controls.JOExpirenceLevel.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Liczba lat doświadczenia
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-inputnumber
+            inputId="joexpirenceyears"
+            aria-describedby="expirence-years"
+            mode="decimal"
+            locale="pl-PL"
+            [minFractionDigits]="1"
+            [maxFractionDigits]="1"
+            formControlName="JOExpirenceYears"
+          />
+          @if (form.controls.JOExpirenceYears.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: Kategoria </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="categoryTypes"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="jocategory"
+            placeholder="Wybierz kategorię doświadczenia"
+            aria-describedby="offer-category"
+            formControlName="JOCategory"
+          />
+          @if (form.controls.JOCategory.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Dolne widełki finansowe.
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-inputnumber
+            inputId="josalarymin"
+            aria-describedby="salary-min"
+            mode="decimal"
+            locale="pl-PL"
+            [minFractionDigits]="1"
+            [maxFractionDigits]="4"
+            formControlName="JOSalaryMin"
+          />
+          @if (form.controls.JOSalaryMin.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+          @if (form.controls.JOSalaryMin.errors?.['min']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Górne widełki finansowe.
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-inputnumber
+            inputId="josalarymax"
+            aria-describedby="salary-miax"
+            mode="decimal"
+            locale="pl-PL"
+            [minFractionDigits]="1"
+            [maxFractionDigits]="4"
+            formControlName="JOSalaryMax"
+          />
+          @if (form.controls.JOSalaryMax.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+          @if (form.controls.JOSalaryMax.errors?.['min']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: Waluta </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="currencyTypes"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="jocurrency"
+            placeholder="Wybierz typ waluty użytej przy wypłacie"
+            aria-describedby="currency-type"
+            formControlName="JOCurrency"
+          />
+          @if (form.controls.JOCurrency.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: Typ wypłaty </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="salaryTypes"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="josalarytype"
+            placeholder="Wybierz typ wypłaty"
+            aria-describedby="salary-type"
+            formControlName="JOSalaryType"
+          />
+          @if (form.controls.JOSalaryType.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_Description') }}: Opis oferty.</span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <textarea
+            formControlName="JODescription"
+            maxlength="2000"
+            [placeholder]="translations.Get('Companies_Company_Description')"
+            required
+            pTextarea
+            style="width: 100%"
+            rows="6"
+            id="jodescription"
+            aria-describedby="description"
+          ></textarea>
+        </div>
+        @if (form.controls.JODescription.errors?.['required']) {
+          <div class="error-row">
+            {{ translations.Get('Companies_Company_Description_Required') }}
+          </div>
+        }
+        @if (form.controls.JODescription.errors?.['maxlength']) {
+          <div class="error-row">
+            {{ translations.Get('Companies_Company_Description_Max2000') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_Description') }}: Wymagania oferty</span
+          >
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <textarea
+            formControlName="JORequirements"
+            maxlength="2000"
+            [placeholder]="translations.Get('Companies_Company_Description')"
+            required
+            pTextarea
+            style="width: 100%"
+            rows="6"
+            id="jorequirements"
+            aria-describedby="requirements"
+          ></textarea>
+        </div>
+        @if (form.controls.JORequirements.errors?.['required']) {
+          <div class="error-row">
+            {{ translations.Get('Companies_Company_Description_Required') }}
+          </div>
+        }
+        @if (form.controls.JORequirements.errors?.['maxlength']) {
+          <div class="error-row">
+            {{ translations.Get('Companies_Company_Description_Max2000') }}
+          </div>
+        }
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text"> {{ translations.Get('Companies_Company_Description') }}: Benefity</span>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
+          <textarea
+            formControlName="JOBenefits"
+            maxlength="2000"
+            [placeholder]="translations.Get('Companies_Company_Description')"
+            required
+            pTextarea
+            style="width: 100%"
+            rows="6"
+            id="jobenefits"
+            aria-describedby="benefits"
+          ></textarea>
+        </div>
+        @if (form.controls.JOBenefits.errors?.['required']) {
+          <div class="error-row">
+            {{ translations.Get('Companies_Company_Description_Required') }}
+          </div>
+        }
+        @if (form.controls.JOBenefits.errors?.['maxlength']) {
+          <div class="error-row">
+            {{ translations.Get('Companies_Company_Description_Max2000') }}
+          </div>
+        }
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Poziom wykształcenia
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="educationTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="joeducation"
+            placeholder="Wybierz poziom wykształcenia"
+            aria-describedby="offer-education"
+            formControlName="JOEducation"
+          />
+          @if (form.controls.JOEducation.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Data publikacji oferty
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [maxDate]="form.controls['JOExpiresAt'].value"
+            [showTime]="true"
+            hourFormat="24"
+            inputId="jopostedat"
+            aria-describedby="posted-at"
+            formControlName="JOPostedAt"
+          />
+          @if (form.controls.JOPostedAt.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Data wygaśnięcia oferty
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [minDate]="form.controls['JOPostedAt'].value"
+            [showTime]="true"
+            hourFormat="24"
+            inputId="joexpiresat"
+            aria-describedby="expired-at"
+            formControlName="JOExpiresAt"
+          />
+          @if (form.controls.JOExpiresAt.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+          <span class="data-input-text">
+            {{ translations.Get('Companies_Company_LinkedIn') }}: Wybierz status oferty
+          </span>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+          <p-select
+            [options]="statuses"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            inputId="jostatus"
+            placeholder="Wybierz status oferty"
+            aria-describedby="offer-status"
+            formControlName="JOStatus"
+          />
+          @if (form.controls.JOStatus.errors?.['required']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_LinkedIn_Max100') }}
+            </div>
+          }
+        </div>
+      </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jocompanyname">Nazwa firmy</label>
-      <input pInputText id="jocompanyname" aria-describedby="company-name" formControlName="JOCompanyName" />
-      <small id="company-name">Wpisz nazwę firmy.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jolocationtype">Tryb pracy</label>
-      <p-select
-        [options]="locationTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="jolocationtype"
-        placeholder="Wybierz tryb pracy"
-        aria-describedby="location-types"
-        formControlName="JOLocationType"
-      />
-      <small id="location-types">Wybierz typ pracy w jakim pracownik będzie zatrudniony.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="joofficelocation">Lokalizacja biura (opcjonalnie)</label>
-      <input pInputText id="joofficelocation" aria-describedby="office-location" formControlName="JOOfficeLocation" />
-      <small id="office-location">Jeżeli firma posiada lokalizację biura można ją wpisać.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="joemploymenttype">Typ umowy</label>
-      <p-select
-        [options]="employmentTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="joemploymenttype"
-        placeholder="Wybierz typ umowy"
-        aria-describedby="employment-types"
-        formControlName="JOEmploymentType"
-      />
-      <small id="employment-types">Wybierz preferowany typ umowy.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="joexpirencelevel">Poziom doświadczenia</label>
-      <p-select
-        [options]="expirenceTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="joexpirencelevel"
-        placeholder="Wybierz poziom doświadczenia"
-        aria-describedby="expirence-types"
-        formControlName="JOExpirenceLevel"
-      />
-      <small id="expirence-types">Wybierz poziom doświadczenia pracownika.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="joexpirenceyears">Liczba lat doświadczenia</label>
-      <p-inputnumber
-        inputId="joexpirenceyears"
-        aria-describedby="expirence-years"
-        mode="decimal"
-        locale="pl-PL"
-        [minFractionDigits]="1"
-        [maxFractionDigits]="1"
-        formControlName="JOExpirenceYears"
-      />
-      <small id="expirence-years">Wpisz minimalną liczbę lat doświadczenia kandydata.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jocategory">Kategoria</label>
-      <p-select
-        [options]="categoryTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="jocategory"
-        placeholder="Wybierz kategorię doświadczenia"
-        aria-describedby="offer-category"
-        formControlName="JOCategory"
-      />
-      <small id="offer-category">Wybierz kategorię dla której tworzysz ofertę pracy.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="josalarymin">Dolne widełki finansowe.</label>
-      <p-inputnumber
-        inputId="josalarymin"
-        aria-describedby="salary-min"
-        mode="decimal"
-        locale="pl-PL"
-        [minFractionDigits]="1"
-        [maxFractionDigits]="4"
-        formControlName="JOSalaryMin"
-      />
-      <small id="salary-min">Wpisz dolne widełki finansowe oferty.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="josalarymax">Górne widełki finansowe.</label>
-      <p-inputnumber
-        inputId="josalarymax"
-        aria-describedby="salary-miax"
-        mode="decimal"
-        locale="pl-PL"
-        [minFractionDigits]="1"
-        [maxFractionDigits]="4"
-        formControlName="JOSalaryMax"
-      />
-      <small id="salary-max">Wpisz górne widełki finansowe oferty.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jocurrency">Waluta</label>
-      <p-select
-        [options]="currencyTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="jocurrency"
-        placeholder="Wybierz typ waluty użytej przy wypłacie"
-        aria-describedby="currency-type"
-        formControlName="JOCurrency"
-      />
-      <small id="currency-type">Wybierz walutę w której będzie wypłacana wypłata.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="josalarytype">Typ wypłaty</label>
-      <p-select
-        [options]="salaryTypes"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="josalarytype"
-        placeholder="Wybierz typ wypłaty"
-        aria-describedby="salary-type"
-        formControlName="JOSalaryType"
-      />
-      <small id="salary-type">Wybierz typ wypłacania wypłaty.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jodescription">Opis oferty.</label>
-      <input pInputText id="jodescription" aria-describedby="description" formControlName="JODescription" />
-      <small id="description">Wpisz opis oferty pracy.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="Jorequirements">Wymagania oferty</label>
-      <input pInputText id="jorequirements" aria-describedby="requirements" formControlName="JORequirements" />
-      <small id="requirements">Wpisz dodatkowe wymagania oferty pracy.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jobenefits">Benefity</label>
-      <input pInputText id="jobenefits" aria-describedby="benefits" formControlName="JOBenefits" />
-      <small id="benefits">Wpisz oferowane przez firmę benefity pracownicze.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="joeducation">Poziom wykształcenia.</label>
-      <p-select
-        [options]="educationTypes"
-        [showClear]="false"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="joeducation"
-        placeholder="Wybierz poziom wykształcenia"
-        aria-describedby="offer-education"
-        formControlName="JOEducation"
-      />
-      <small id="offer-education">Wybierz odpowiedni poziom wykształcenia kandydata aplikującego na ofertę.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jopostedat">Data publikacji oferty</label>
-      <p-datepicker
-        [iconDisplay]="'input'"
-        [showIcon]="true"
-        [maxDate]="form.controls['JOExpiresAt'].value"
-        [showTime]="true"
-        hourFormat="24"
-        inputId="jopostedat"
-        aria-describedby="posted-at"
-        formControlName="JOPostedAt"
-      />
-      <small id="posted-at">Wpisz datę od której oferta będzie widoczna.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="joexpiresat">Data wygaśnięcia oferty</label>
-      <p-datepicker
-        [iconDisplay]="'input'"
-        [showIcon]="true"
-        [minDate]="form.controls['JOPostedAt'].value"
-        [showTime]="true"
-        hourFormat="24"
-        inputId="joexpiresat"
-        aria-describedby="expired-at"
-        formControlName="JOExpiresAt"
-      />
-      <small id="expired-at">Wpisz datę od której oferta nie będzie już widoczna.</small>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <label for="jostatus">Wybierz status oferty.</label>
-      <p-select
-        [options]="statuses"
-        [showClear]="true"
-        [filter]="true"
-        filterBy="name"
-        optionLabel="name"
-        optionValue="id"
-        inputId="jostatus"
-        placeholder="Wybierz status oferty"
-        aria-describedby="offer-status"
-        formControlName="JOStatus"
-      />
-      <small id="offer-status">Wybierz odpowiedni status dla oferty.</small>
-    </div>
-    <pre> {{ form.value | json }}</pre>
   </div>
 </section>

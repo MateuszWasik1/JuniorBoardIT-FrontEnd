@@ -20,7 +20,7 @@ import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -28,6 +28,7 @@ import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 import { SelectObjectModel } from 'src/app/models/general-models';
+import { TextareaModule } from 'primeng/textarea';
 
 type FormModel = {
   JOGID: FormControl<string>;
@@ -62,14 +63,15 @@ type FormModel = {
     ReactiveFormsModule,
     InputTextModule,
     InputNumber,
+    TextareaModule,
     DatePickerModule,
     SelectModule,
-    ButtonModule,
-    JsonPipe
+    ButtonModule
   ]
 })
 export class JobOfferPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
+
   public locationTypes: SelectObjectModel[] = [
     { id: LocationEnum.Remote, name: 'Zdalnie' },
     { id: LocationEnum.Hybrid, name: 'Hybrydowo' },
