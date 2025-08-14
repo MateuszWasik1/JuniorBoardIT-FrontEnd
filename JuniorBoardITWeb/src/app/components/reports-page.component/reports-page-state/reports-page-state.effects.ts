@@ -57,7 +57,7 @@ export class ReportsEffects {
             return ReportsActions.saveReportSuccess();
           }),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Raport nie został zapisany!');
+            this.snackbarService.error('Błąd', 'Raport nie został zapisany!');
             return of(ReportsActions.saveReportError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
@@ -79,7 +79,7 @@ export class ReportsEffects {
             return ReportsActions.changeReportStatusSuccess({ RStatus: params.RStatus });
           }),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Raport nie został nadpisany!');
+            this.snackbarService.error('Błąd', 'Raport nie został nadpisany!');
             return of(ReportsActions.changeReportStatusError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );

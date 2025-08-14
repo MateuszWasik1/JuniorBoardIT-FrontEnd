@@ -62,7 +62,7 @@ export class CompaniesEffects {
           }),
           tap(() => this.router.navigate(['/companies'])),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Firma nie została dodana!');
+            this.snackbarService.error('Błąd', 'Firma nie została dodana!');
             return of(CompaniesActions.addCompanyError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
@@ -81,7 +81,7 @@ export class CompaniesEffects {
           }),
           tap(() => this.router.navigate(['/companies'])),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Firma nie została nadpisana!');
+            this.snackbarService.error('Błąd', 'Firma nie została nadpisana!');
             return of(CompaniesActions.updateCompanyError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
@@ -99,7 +99,7 @@ export class CompaniesEffects {
             return CompaniesActions.deleteCompanySuccess({ CGID: params.CGID });
           }),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Firma nie została usunięta!');
+            this.snackbarService.error('Błąd', 'Firma nie została usunięta!');
             return of(CompaniesActions.deleteCompanyError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );

@@ -37,3 +37,10 @@ export interface Filters {
   Education: EducationEnum;
   Favorite: boolean;
 }
+
+export interface User {
+  UFirstName: string;
+  ULastName: string;
+  UEmail: string;
+  UPhone: string;
+}

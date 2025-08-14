@@ -6,11 +6,13 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { Router } from '@angular/router';
 import {
+  applyForJobOffer,
   ChangeEducationFilterValue,
   ChangeFavoriteFilterValue,
   cleanState,
   deleteJobOffer,
   loadJobOffers,
+  loadUserData,
   updatePaginationDataJobOffers
 } from './job-offers-page-state/job-offers-page-state.actions';
 import { cleanState as cleanStateReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
@@ -18,7 +20,8 @@ import {
   selectCount,
   selectErrorMessage,
   selectFilters,
-  selectJobOffers
+  selectJobOffers,
+  selectUserData
 } from './job-offers-page-state/job-offers-page-state.selectors';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
@@ -32,11 +35,22 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { ReportReasonsModel } from 'src/app/models/general-models';
 import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
 import { saveReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
+import { InputTextModule } from 'primeng/inputtext';
+import { FileUploadModule } from 'primeng/fileupload';
 
 type FormReportModel = {
   RJOGID: FormControl<string>;
   RReasons: FormControl<object>;
   RText: FormControl<string>;
+};
+
+type FormUserDataModel = {
+  UFirstName: FormControl<string>;
+  ULastName: FormControl<string>;
+  UEmail: FormControl<string>;
+  UPhone: FormControl<string>;
+  UCV: FormControl<string>;
+  JOGID: FormControl<string>;
 };
 
 @Component({
@@ -54,7 +68,9 @@ type FormReportModel = {
     ButtonModule,
     DialogModule,
     TextareaModule,
-    SelectButtonModule
+    SelectButtonModule,
+    InputTextModule,
+    FileUploadModule
   ]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
@@ -68,7 +84,8 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     { id: 5, name: 'Wszystkie' }
   ];
   public count: number = 0;
-  public reportModalvisible: boolean = false;
+  public reportModalVisible: boolean = false;
+  public applicationModalVisible: boolean = false;
   public reportReasons: ReportReasonsModel[] = [
     { name: 'Błędne widełki płacy', value: ReportsReasonsEnum.Reason0 },
     { name: 'Błędny opis względem wprowadzonych danych', value: ReportsReasonsEnum.Reason1 },
@@ -84,9 +101,12 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public reportForm: FormGroup<FormReportModel>;
 
+  public userDataForm: FormGroup<FormUserDataModel>;
+
   public Filters$ = this.store.select(selectFilters);
   public Count$ = this.store.select(selectCount);
   public JobOffers$ = this.store.select(selectJobOffers);
+  public UserData$ = this.store.select(selectUserData);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
@@ -100,12 +120,17 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
       education: new FormControl(this.educationTypes[5].id)
     });
     this.reportForm = this.InitReportForm();
+    this.userDataForm = this.InitUserDataForm();
   }
 
   ngOnInit(): void {
+    this.store.dispatch(loadUserData());
+
     this.subscriptions.push(this.Filters$.subscribe(() => this.store.dispatch(loadJobOffers())));
 
     this.subscriptions.push(this.ErrorMessage$.subscribe((error) => this.errorHandler.HandleException(error)));
+
+    this.subscriptions.push(this.UserData$.subscribe((user) => this.userDataForm.patchValue(user)));
 
     this.subscriptions.push(this.Count$.subscribe((count) => (this.count = count)));
   }
@@ -127,14 +152,36 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public ReportModalOpen = (JOGID: string) => {
     this.reportForm.patchValue({ RJOGID: JOGID });
-    this.reportModalvisible = true;
+    this.reportModalVisible = true;
   };
 
-  public ReportModalClose = () => (this.reportModalvisible = false);
+  public ReportModalClose = () => (this.reportModalVisible = false);
 
   public ReportJobOffer = () => {
-    this.reportModalvisible = false;
+    this.applicationModalVisible = false;
     this.store.dispatch(saveReport({ Report: this.reportForm.value }));
+  };
+
+  public ApplicationModalOpen = (JOGID: string) => {
+    this.userDataForm.patchValue({ JOGID: JOGID });
+    this.applicationModalVisible = true;
+  };
+
+  public ApplicationModalClose = () => {
+    this.applicationModalVisible = false;
+    this.userDataForm.patchValue({ UCV: '' });
+  };
+
+  public ApplicationForJobOffer = () => {
+    this.applicationModalVisible = false;
+    this.store.dispatch(applyForJobOffer({ ApplyData: this.userDataForm.value }));
+  };
+
+  public OnFileUpload = (event: any) => {
+    const file: File = event.files[0];
+    this.convertToBase64(file).then((base64) => {
+      this.userDataForm.patchValue({ UCV: base64?.toString() });
+    });
   };
 
   private InitReportForm = (): FormGroup<FormReportModel> => {
@@ -147,6 +194,38 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
       })
     });
   };
+
+  private InitUserDataForm = (): FormGroup<FormUserDataModel> => {
+    return new FormGroup<FormUserDataModel>({
+      UFirstName: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(50)],
+        nonNullable: true
+      }),
+      ULastName: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(50)],
+        nonNullable: true
+      }),
+      UEmail: new FormControl<string>('', {
+        validators: [Validators.required, Validators.email, Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      UPhone: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      UCV: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+      JOGID: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
+    });
+  };
+
+  private convertToBase64(file: File): Promise<string | ArrayBuffer | null> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

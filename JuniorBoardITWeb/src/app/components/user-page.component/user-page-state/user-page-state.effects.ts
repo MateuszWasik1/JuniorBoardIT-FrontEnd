@@ -66,7 +66,7 @@ export class UserEffects {
             return UserActions.saveUserSuccess();
           }),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Użytkownik nie został zapisany!');
+            this.snackbarService.error('Błąd', 'Użytkownik nie został zapisany!');
             return of(UserActions.saveUserError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
@@ -84,7 +84,7 @@ export class UserEffects {
             return UserActions.saveUserByAdminSuccess();
           }),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Użytkownik nie został zapisany!');
+            this.snackbarService.error('Błąd', 'Użytkownik nie został zapisany!');
             return of(UserActions.saveUserByAdminError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );

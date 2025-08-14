@@ -31,7 +31,7 @@ export class AccountEffects {
           }),
           tap(() => this.router.navigate(['/login'])),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Podczas rejestracji wystąpił błąd!');
+            this.snackbarService.error('Błąd', 'Podczas rejestracji wystąpił błąd!');
             return of(AccountActions.RegisterUserError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
