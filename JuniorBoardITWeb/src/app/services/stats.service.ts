@@ -26,10 +26,11 @@ export class StatsService {
     });
   }
 
-  GetNumberOfCompanyPublishedOfferts(startDate: Date, endDate: Date): Observable<any> {
+  GetNumberOfCompanyPublishedOfferts(startDate: Date, endDate: Date, cgid: string): Observable<any> {
     let params = new HttpParams()
       .set('startDate', this.DateToString(new Date(startDate)))
-      .set('endDate', this.DateToString(new Date(endDate)));
+      .set('endDate', this.DateToString(new Date(endDate)))
+      .set('cgid', cgid);
 
     return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfCompanyPublishedOfferts', {
       params: params,
@@ -48,8 +49,8 @@ export class StatsService {
     });
   }
 
-  GetNumberOfActiveCompaniesOfferts(date: Date): Observable<any> {
-    let params = new HttpParams().set('date', this.DateToString(new Date(date)));
+  GetNumberOfActiveCompaniesOfferts(date: Date, cgid: string): Observable<any> {
+    let params = new HttpParams().set('date', this.DateToString(new Date(date))).set('cgid', cgid);
 
     return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfActiveCompaniesOfferts', {
       params: params,
@@ -57,8 +58,8 @@ export class StatsService {
     });
   }
 
-  GetNumberOfCompanyRecruiters(date: Date): Observable<any> {
-    let params = new HttpParams().set('date', this.DateToString(new Date(date)));
+  GetNumberOfCompanyRecruiters(cgid: string): Observable<any> {
+    let params = new HttpParams().set('cgid', cgid);
 
     return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfCompanyRecruiters', {
       params: params,

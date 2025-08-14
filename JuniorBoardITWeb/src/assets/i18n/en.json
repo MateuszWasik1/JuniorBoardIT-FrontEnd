@@ -136,6 +136,7 @@
   "Stats_StartDate": "Start date",
   "Stats_EndDate": "End date",
   "Stats_Date": "Date",
+  "Stats_Company": "Company",
   "Reports_NotFound": "No report found!",
   "Reports_ReportDate": "Report date",
   "Reports_ReportText": "Report text",

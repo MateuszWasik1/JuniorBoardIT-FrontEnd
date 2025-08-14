@@ -7,4 +7,10 @@ export interface Filters {
   Date: Date;
   ChartType: StatsChartTypeEnum;
   DataType: StatsTypeEnum;
+  CGID: string;
+}
+
+export interface Companies {
+  CGID: string;
+  CName: string;
 }

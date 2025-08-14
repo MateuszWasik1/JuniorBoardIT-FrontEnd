@@ -14,14 +14,17 @@ var initialStateOfStatsPage: StatsState = {
     EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
     Date: new Date(),
     ChartType: StatsChartTypeEnum.Bar,
-    DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts
+    DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts,
+    CGID: ''
   },
+  Companies: [],
   ErrorMessage: ''
 };
 
 export const StatsReducer = createReducer<StatsState>(
   initialStateOfStatsPage,
 
+  //Load Stats
   on(Actions.loadStatsSuccess, (state, { Result }) => {
     const datasets = {
       data: Result.Datasets.Data,
@@ -42,6 +45,18 @@ export const StatsReducer = createReducer<StatsState>(
     ErrorMessage: error
   })),
 
+  //Load Companies
+  on(Actions.loadCompaniesSuccess, (state, { Companies }) => ({
+    ...state,
+    Companies: Companies.List
+  })),
+
+  on(Actions.loadCompaniesError, (state, { error }) => ({
+    ...state,
+    ErrorMessage: error
+  })),
+
+  //Change filters
   on(Actions.changeStartDateFilter, (state, { StartDate }) => ({
     ...state,
     Filters: {
@@ -82,6 +97,15 @@ export const StatsReducer = createReducer<StatsState>(
     }
   })),
 
+  on(Actions.changeCGIDFilter, (state, { CGID }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      CGID: CGID
+    }
+  })),
+
+  //clean
   on(Actions.cleanState, (state) => ({
     ...state,
     Stats: {
@@ -93,8 +117,10 @@ export const StatsReducer = createReducer<StatsState>(
       EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
       Date: new Date(),
       ChartType: StatsChartTypeEnum.Bar,
-      DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts
+      DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts,
+      CGID: ''
     },
+    Companies: [],
     ErrorMessage: ''
   }))
 );
