@@ -98,6 +98,16 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     ErrorMessage: error
   })),
 
+  //Apply for JobOffer
+  on(Actions.applyForJobOfferSuccess, (state) => ({
+    ...state
+  })),
+
+  on(Actions.applyForJobOfferError, (state, { error }) => ({
+    ...state,
+    ErrorMessage: error
+  })),
+
   //Update JobOffer
   on(Actions.updateJobOfferSuccess, (state) => ({
     ...state

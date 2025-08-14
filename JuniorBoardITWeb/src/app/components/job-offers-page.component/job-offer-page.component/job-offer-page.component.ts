@@ -29,6 +29,7 @@ import { ButtonModule } from 'primeng/button';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 import { SelectObjectModel } from 'src/app/models/general-models';
 import { TextareaModule } from 'primeng/textarea';
+import { Guid } from 'guid-typescript';
 
 type FormModel = {
   JOGID: FormControl<string>;
@@ -162,6 +163,7 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
 
   public SaveJobOffer = () => {
     if (this.jogid == '0' || this.jogid == '') {
+      this.form.patchValue({ JOGID: Guid.create().toString() });
       this.store.dispatch(addJobOffer({ JobOffer: this.form.value }));
     } else {
       this.store.dispatch(updateJobOffer({ JobOffer: this.form.value }));
@@ -173,7 +175,6 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
   private InitJobOfferForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({
       JOGID: new FormControl<string>('', {
-        validators: [Validators.required],
         nonNullable: true
       }),
       JOTitle: new FormControl<string>('', {

@@ -6,6 +6,7 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { Router } from '@angular/router';
 import {
+  applyForJobOffer,
   ChangeEducationFilterValue,
   ChangeFavoriteFilterValue,
   cleanState,
@@ -168,7 +169,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public ApplicationForJobOffer = () => {
     this.applicationModalVisible = false;
-    this.store.dispatch(saveReport({ Report: this.reportForm.value }));
+    this.store.dispatch(applyForJobOffer({ ApplyData: this.userDataForm.value }));
   };
 
   private InitReportForm = (): FormGroup<FormReportModel> => {

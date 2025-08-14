@@ -116,7 +116,6 @@
             aria-describedby="office-location"
             formControlName="JOOfficeLocation"
             [placeholder]="translations.Get('JobOffers_JobOffer_OfficeLocation')"
-            required
             maxlength="100"
           />
           @if (form.controls.JOOfficeLocation.errors?.['maxlength']) {
@@ -362,9 +361,7 @@
 
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-textarea">
-          <span class="data-input-text">
-            {{ translations.Get('JobOffers_JobOffer_Requirements') }}: Wymagania oferty</span
-          >
+          <span class="data-input-text"> {{ translations.Get('JobOffers_JobOffer_Requirements') }}: </span>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row-inputs">
           <textarea

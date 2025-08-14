@@ -85,7 +85,7 @@ export class BugsEffects {
           }),
           tap(() => this.router.navigate(['bugs'])),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Błąd nie został dodany!');
+            this.snackbarService.error('Błąd', 'Błąd nie został dodany!');
             return of(BugsActions.saveBugError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
@@ -103,7 +103,7 @@ export class BugsEffects {
             return BugsActions.saveBugNoteSuccess({ BugNote: params.BugNote });
           }),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Notatka do błędu nie została dodana!');
+            this.snackbarService.error('Błąd', 'Notatka do błędu nie została dodana!');
             return of(BugsActions.saveBugNoteError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
@@ -121,7 +121,7 @@ export class BugsEffects {
             return BugsActions.changeBugStatusSuccess({ status: params.model.Status });
           }),
           catchError((error) => {
-            this.snackbarService.success('Błąd', 'Status błędu nie został zmieniony!');
+            this.snackbarService.error('Błąd', 'Status błędu nie został zmieniony!');
             return of(BugsActions.changeBugStatusError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
