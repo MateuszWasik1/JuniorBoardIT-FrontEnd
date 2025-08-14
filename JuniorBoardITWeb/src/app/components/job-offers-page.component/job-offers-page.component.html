@@ -67,11 +67,16 @@
           [label]="translations.Get('JobOffers_Report_ReportOffer')"
           (click)="ReportModalOpen(jobOffer.JOGID)"
         ></p-button>
+
+        <p-button
+          [label]="translations.Get('JobOffers_Application_Apply')"
+          (click)="ApplicationModalOpen(jobOffer.JOGID)"
+        ></p-button>
       }
 
       <p-dialog
         [header]="translations.Get('JobOffers_Report_ReportOffer')"
-        [(visible)]="reportModalvisible"
+        [(visible)]="reportModalVisible"
         [modal]="true"
         [style]="{ width: '90vw' }"
         [closable]="true"
@@ -97,10 +102,137 @@
           class="report-textarea"
           pTextarea
         ></textarea>
+
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-right">
             <p-button label="Cancel" severity="secondary" (click)="ReportModalClose()" />
             <p-button label="Save" (click)="ReportJobOffer()" />
+          </div>
+        </div>
+      </p-dialog>
+
+      <p-dialog
+        [header]="translations.Get('JobOffers_Application_Apply_On_JobOffer')"
+        [(visible)]="applicationModalVisible"
+        [modal]="true"
+        [style]="{ width: '40vw' }"
+        [closable]="true"
+        [draggable]="false"
+        [dismissableMask]="true"
+        [formGroup]="userDataForm"
+        (onHide)="ApplicationModalClose()"
+      >
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('User_First_Name') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                <input
+                  pInputText
+                  type="text"
+                  class="data-input"
+                  [placeholder]="translations.Get('User_First_Name')"
+                  formControlName="UFirstName"
+                />
+                @if (userDataForm.controls.UFirstName.errors?.['required']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_Required') }}
+                  </div>
+                }
+                @if (userDataForm.controls.UFirstName.errors?.['maxlength']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_MaxLength50') }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('User_Last_Name') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                <input
+                  pInputText
+                  type="text"
+                  class="data-input"
+                  [placeholder]="translations.Get('User_Last_Name')"
+                  formControlName="ULastName"
+                />
+                @if (userDataForm.controls.ULastName.errors?.['required']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_Required') }}
+                  </div>
+                }
+                @if (userDataForm.controls.ULastName.errors?.['maxlength']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_MaxLength50') }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('User_Email') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                <input
+                  pInputText
+                  type="text"
+                  class="data-input"
+                  [placeholder]="translations.Get('User_Email')"
+                  formControlName="UEmail"
+                />
+                @if (userDataForm.controls.UEmail.errors?.['required']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_Required') }}
+                  </div>
+                }
+                @if (userDataForm.controls.UEmail.errors?.['email']) {
+                  <div class="error-row">
+                    {{ translations.Get('Account_Register_Validation_Email') }}
+                  </div>
+                }
+                @if (userDataForm.controls.UEmail.errors?.['maxlength']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_MaxLength100') }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('User_Phone') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                <input
+                  pInputText
+                  type="text"
+                  class="data-input"
+                  [placeholder]="translations.Get('User_Phone')"
+                  formControlName="UPhone"
+                />
+                @if (userDataForm.controls.UPhone.errors?.['required']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_Required') }}
+                  </div>
+                }
+                @if (userDataForm.controls.UPhone.errors?.['maxlength']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_MaxLength100') }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="row row-button margin-top-15">
+              <p-button label="Cancel" severity="secondary" (click)="ApplicationModalClose()" />
+              <p-button label="Save" (click)="ApplicationForJobOffer()" />
+            </div>
           </div>
         </div>
       </p-dialog>

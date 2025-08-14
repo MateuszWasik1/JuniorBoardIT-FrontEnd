@@ -78,6 +78,13 @@ body {
   text-align: center;
 }
 
+.row-button {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
 .data-row {
   display: flex;
   align-items: center;

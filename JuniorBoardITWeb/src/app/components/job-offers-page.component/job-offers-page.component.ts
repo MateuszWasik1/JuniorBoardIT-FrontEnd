@@ -32,11 +32,21 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { ReportReasonsModel } from 'src/app/models/general-models';
 import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
 import { saveReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
+import { InputTextModule } from 'primeng/inputtext';
 
 type FormReportModel = {
   RJOGID: FormControl<string>;
   RReasons: FormControl<object>;
   RText: FormControl<string>;
+};
+
+type FormUserDataModel = {
+  UFirstName: FormControl<string>;
+  ULastName: FormControl<string>;
+  UEmail: FormControl<string>;
+  UPhone: FormControl<string>;
+  UCV: FormControl<any>;
+  JOGID: FormControl<string>;
 };
 
 @Component({
@@ -54,7 +64,8 @@ type FormReportModel = {
     ButtonModule,
     DialogModule,
     TextareaModule,
-    SelectButtonModule
+    SelectButtonModule,
+    InputTextModule
   ]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
@@ -68,7 +79,8 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     { id: 5, name: 'Wszystkie' }
   ];
   public count: number = 0;
-  public reportModalvisible: boolean = false;
+  public reportModalVisible: boolean = false;
+  public applicationModalVisible: boolean = false;
   public reportReasons: ReportReasonsModel[] = [
     { name: 'Błędne widełki płacy', value: ReportsReasonsEnum.Reason0 },
     { name: 'Błędny opis względem wprowadzonych danych', value: ReportsReasonsEnum.Reason1 },
@@ -83,6 +95,8 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public formFilter: FormGroup = new FormGroup({});
 
   public reportForm: FormGroup<FormReportModel>;
+
+  public userDataForm: FormGroup<FormUserDataModel>;
 
   public Filters$ = this.store.select(selectFilters);
   public Count$ = this.store.select(selectCount);
@@ -100,6 +114,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
       education: new FormControl(this.educationTypes[5].id)
     });
     this.reportForm = this.InitReportForm();
+    this.userDataForm = this.InitUserDataForm();
   }
 
   ngOnInit(): void {
@@ -127,13 +142,25 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public ReportModalOpen = (JOGID: string) => {
     this.reportForm.patchValue({ RJOGID: JOGID });
-    this.reportModalvisible = true;
+    this.reportModalVisible = true;
   };
 
-  public ReportModalClose = () => (this.reportModalvisible = false);
+  public ReportModalClose = () => (this.reportModalVisible = false);
 
   public ReportJobOffer = () => {
-    this.reportModalvisible = false;
+    this.applicationModalVisible = false;
+    this.store.dispatch(saveReport({ Report: this.reportForm.value }));
+  };
+
+  public ApplicationModalOpen = (JOGID: string) => {
+    this.userDataForm.patchValue({ JOGID: JOGID });
+    this.applicationModalVisible = true;
+  };
+
+  public ApplicationModalClose = () => (this.applicationModalVisible = false);
+
+  public ApplicationForJobOffer = () => {
+    this.applicationModalVisible = false;
     this.store.dispatch(saveReport({ Report: this.reportForm.value }));
   };
 
@@ -145,6 +172,29 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.maxLength(4000)],
         nonNullable: true
       })
+    });
+  };
+
+  private InitUserDataForm = (): FormGroup<FormUserDataModel> => {
+    return new FormGroup<FormUserDataModel>({
+      UFirstName: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(50)],
+        nonNullable: true
+      }),
+      ULastName: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(50)],
+        nonNullable: true
+      }),
+      UEmail: new FormControl<string>('', {
+        validators: [Validators.required, Validators.email, Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      UPhone: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(100)],
+        nonNullable: true
+      }),
+      UCV: new FormControl<any>('', { validators: [Validators.required], nonNullable: true }),
+      JOGID: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
     });
   };
 
