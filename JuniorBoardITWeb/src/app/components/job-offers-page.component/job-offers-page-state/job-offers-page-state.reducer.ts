@@ -9,11 +9,14 @@ import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 import { JobOffersState } from './job-offers-page-state.state';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
 
 var initialStateOfJobOfferPage: JobOffersState = {
   JobOffers: [],
   JobOffer: {
     JOGID: '',
+    JOCGID: '',
     JOTitle: '',
     JOCompanyName: '',
     JOLocationType: LocationEnum.Stationary,
@@ -39,13 +42,32 @@ var initialStateOfJobOfferPage: JobOffersState = {
     UFirstName: '',
     ULastName: '',
     UEmail: '',
-    UPhone: ''
+    UPhone: '',
+    UCompanyGID: ''
   },
   Filters: {
     Skip: 0,
     Take: 10,
     Education: EducationEnum.All,
     Favorite: false
+  },
+  Company: {
+    CGID: '',
+    CName: '',
+    CIndustry: IndustryEnum.Industry,
+    CDescription: '',
+    CEmail: '',
+    CAddress: '',
+    CCity: '',
+    CCountry: '',
+    CPostalCode: '',
+    CPhoneNumber: '',
+    CNIP: '',
+    CRegon: '',
+    CKRS: '',
+    CLI: '',
+    CFoundedYear: 0,
+    CEmployeesNo: CompanyEmpNoEnum.Microenterprise
   },
   JobOffersCount: 0,
   ErrorMessage: ''
@@ -57,7 +79,8 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   //Load JobOffer
   on(Actions.loadJobOfferSuccess, (state, { JobOffer }) => ({
     ...state,
-    JobOffer: JobOffer
+    JobOffer: JobOffer.JobOffer,
+    Company: JobOffer.Company
   })),
 
   on(Actions.loadJobOfferError, (state, { error }) => ({
@@ -84,6 +107,17 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   })),
 
   on(Actions.loadUserDataError, (state, { error }) => ({
+    ...state,
+    ErrorMessage: error
+  })),
+
+  //Load Company
+  on(Actions.loadCompanySuccess, (state, { Company }) => ({
+    ...state,
+    Company: Company
+  })),
+
+  on(Actions.loadCompanyError, (state, { error }) => ({
     ...state,
     ErrorMessage: error
   })),
@@ -163,6 +197,7 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     JobOffers: [],
     JobOffer: {
       JOGID: '',
+      JOCGID: '',
       JOTitle: '',
       JOCompanyName: '',
       JOLocationType: LocationEnum.Stationary,
@@ -184,17 +219,29 @@ export const JobOfferReducer = createReducer<JobOffersState>(
       JOExpiresAt: new Date(),
       JOStatus: StatusEnum.Draft
     },
-    User: {
-      UFirstName: '',
-      ULastName: '',
-      UEmail: '',
-      UPhone: ''
-    },
     Filters: {
       Skip: 0,
       Take: 10,
       Education: EducationEnum.All,
       Favorite: false
+    },
+    Company: {
+      CGID: '',
+      CName: '',
+      CIndustry: IndustryEnum.Industry,
+      CDescription: '',
+      CEmail: '',
+      CAddress: '',
+      CCity: '',
+      CCountry: '',
+      CPostalCode: '',
+      CPhoneNumber: '',
+      CNIP: '',
+      CRegon: '',
+      CKRS: '',
+      CLI: '',
+      CFoundedYear: 0,
+      CEmployeesNo: CompanyEmpNoEnum.Microenterprise
     },
     JobOffersCount: 0,
     ErrorMessage: ''

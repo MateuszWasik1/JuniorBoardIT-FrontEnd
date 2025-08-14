@@ -1,4 +1,4 @@
-import { Filters, JobOffer, User } from '../job-offers-page.models';
+import { Company, Filters, JobOffer, User } from '../job-offers-page.models';
 
 export const featureKeyJobOffersState = 'job-offers-page-state';
 
@@ -8,5 +8,6 @@ export interface JobOffersState {
   User: User;
   Filters: Filters;
   JobOffersCount: number;
+  Company: Company;
   ErrorMessage: string;
 }
