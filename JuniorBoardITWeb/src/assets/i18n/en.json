@@ -24,6 +24,8 @@
   "General_Save": "Save",
   "General_Cancel": "Cancel",
   "General_Close": "Close",
+  "General_Edit": "Edit",
+  "General_Delete": "Delete",
   "General_Pick_Date_And_Time": "Pick date and time",
   "General_Required": "Field is required",
   "Generale_Min1": "Minimal number of characters is 1",

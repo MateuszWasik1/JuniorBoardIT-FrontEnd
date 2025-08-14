@@ -15,13 +15,14 @@ import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler
 import { RolesEnum } from 'src/app/enums/RolesEnum';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import { AsyncPipe } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-users-page',
   templateUrl: './users-page.component.html',
   styleUrls: ['./users-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, PaginatorComponent]
+  imports: [AsyncPipe, PaginatorComponent, ButtonModule]
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];

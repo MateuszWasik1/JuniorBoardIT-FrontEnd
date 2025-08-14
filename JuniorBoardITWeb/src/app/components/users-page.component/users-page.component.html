@@ -14,56 +14,74 @@
 
     @if (users.length != 0) {
       <div class="row padding-top-15 padding-bottom-15">
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-          {{ translations.Get('Users_Role') }}
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+              {{ translations.Get('Users_Role') }}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              {{ translations.Get('Users_FirstName') }}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              {{ translations.Get('Users_LastName') }}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              {{ translations.Get('Users_UserName') }}
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+              {{ translations.Get('Users_Email') }}
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+              {{ translations.Get('Users_Phone') }}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              {{ translations.Get('Users_Company') }}
+            </div>
+          </div>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-          {{ translations.Get('Users_FirstName') }}
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-          {{ translations.Get('Users_LastName') }}
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-          {{ translations.Get('Users_UserName') }}
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-          {{ translations.Get('Users_Email') }}
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-          {{ translations.Get('Users_Phone') }}
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-          {{ translations.Get('Users_Company') }}
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
       </div>
 
       @for (user of users; track user.UGID) {
         <div class="row data-row">
-          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <p>{{ DisplayRoles(user.URID) }}</p>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.UFirstName }}</p>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.ULastName }}</p>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.UUserName }}</p>
-          </div>
-          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <p>{{ user.UEmail }}</p>
-          </div>
-          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <p>{{ user.UPhone }}</p>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <p>{{ user.UCompany }}</p>
-          </div>
-          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <span class="bi bi-pencil" (click)="GoToUser(user.UGID)"></span>
-            <span class="bi bi-trash" (click)="DeleteUser(user.UGID)"></span>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <p>{{ DisplayRoles(user.URID) }}</p>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <p>{{ user.UFirstName }}</p>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <p>{{ user.ULastName }}</p>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <p>{{ user.UUserName }}</p>
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <p>{{ user.UEmail }}</p>
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <p>{{ user.UPhone }}</p>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <p>{{ user.UCompany }}</p>
+              </div>
+            </div>
+            <div class="row margin-top-15 margin-bottom-15">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <p-button
+                  severity="secondary"
+                  [label]="translations.Get('General_Edit')"
+                  (click)="GoToUser(user.UGID)"
+                  class="margin-right-15"
+                ></p-button>
+                <p-button
+                  severity="secondary"
+                  [label]="translations.Get('General_Delete')"
+                  (click)="DeleteUser(user.UGID)"
+                ></p-button>
+              </div>
+            </div>
           </div>
         </div>
       }
