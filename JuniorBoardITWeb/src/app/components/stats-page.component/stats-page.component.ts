@@ -3,19 +3,26 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import {
+  changeCGIDFilter,
   changeChartTypeFilter,
   changeDataTypeFilter,
   changeDateFilter,
   changeEndDateFilter,
   changeStartDateFilter,
   cleanState,
+  loadCompanies,
   loadNumberOfActiveCompaniesOfferts,
   loadNumberOfCompaniesPublishedOfferts,
   loadNumberOfCompanyPublishedOfferts,
   loadNumberOfCompanyRecruiters,
   loadNumberOfRecruiterPublishedOfferts
 } from './stats-page-state/stats-page-state.actions';
-import { selectErrorMessage, selectFilters, selectStats } from './stats-page-state/stats-page-state.selectors';
+import {
+  selectCompanies,
+  selectErrorMessage,
+  selectFilters,
+  selectStats
+} from './stats-page-state/stats-page-state.selectors';
 import { ChartData, ChartOptions } from 'chart.js';
 import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
@@ -34,6 +41,7 @@ type FormModel = {
   Date: FormControl<Date>;
   ChartType: FormControl<StatsChartTypeEnum>;
   DataType: FormControl<StatsTypeEnum>;
+  CGID: FormControl<string>;
 };
 
 @Component({
@@ -79,6 +87,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
 
   public Stats$ = this.store.select(selectStats);
   public Filters$ = this.store.select(selectFilters);
+  public Companies$ = this.store.select(selectCompanies);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
@@ -93,13 +102,16 @@ export class StatsPageComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
+    this.store.dispatch(loadCompanies());
 
     this.subscriptions.push(
       this.Filters$.subscribe((filters) => {
+        console.log(filters.CGID);
         this.filterForm.patchValue({
           StartDate: filters.StartDate,
           EndDate: filters.EndDate,
-          Date: filters.Date
+          Date: filters.Date,
+          CGID: filters.CGID
         });
 
         if (filters.DataType === StatsTypeEnum.NumberOfRecruiterPublishedOfferts) {
@@ -141,13 +153,16 @@ export class StatsPageComponent implements OnInit, OnDestroy {
   public ChangeChartType = (ChartType: any) =>
     this.store.dispatch(changeChartTypeFilter({ ChartType: ChartType.value }));
 
+  public ChangeCGID = (CGID: any) => this.store.dispatch(changeCGIDFilter({ CGID: CGID.value }));
+
   private InitJobOfferForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({
       StartDate: new FormControl<Date>(new Date(), { nonNullable: true }),
       EndDate: new FormControl<Date>(new Date(), { nonNullable: true }),
       Date: new FormControl<Date>(new Date(), { nonNullable: true }),
       ChartType: new FormControl<StatsChartTypeEnum>(StatsChartTypeEnum.Bar, { nonNullable: true }),
-      DataType: new FormControl<StatsTypeEnum>(StatsTypeEnum.NumberOfRecruiterPublishedOfferts, { nonNullable: true })
+      DataType: new FormControl<StatsTypeEnum>(StatsTypeEnum.NumberOfRecruiterPublishedOfferts, { nonNullable: true }),
+      CGID: new FormControl<string>('', { nonNullable: true })
     });
   };
 

@@ -39,6 +39,29 @@
             </div>
           </div>
 
+          @if (filter.DataType == 1 || filter.DataType == 3 || filter.DataType == 4) {
+            <div class="row margin-top-15">
+              <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_Company') }}:</div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                @if (Companies$ | async; as companies) {
+                  <p-select
+                    [options]="companies"
+                    [showClear]="false"
+                    [filter]="true"
+                    filterBy="CName"
+                    optionLabel="CName"
+                    optionValue="CGID"
+                    inputId="companies"
+                    aria-describedby="companies"
+                    formControlName="CGID"
+                    (onChange)="ChangeCGID($event)"
+                  />
+                }
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+            </div>
+          }
+
           @if (filter.DataType <= 2) {
             <div class="row margin-top-15">
               <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_StartDate') }}:</div>
@@ -63,8 +86,9 @@
               </div>
             </div>
           }
-          @if (filter.DataType >= 3) {
-            <div class="row">
+
+          @if (filter.DataType == 3) {
+            <div class="row margin-top-15">
               <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_StartDate') }}:</div>
               <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <p-datepicker
@@ -75,6 +99,7 @@
                   (onSelect)="ChangeDate($event)"
                 />
               </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
             </div>
           }
         </div>
