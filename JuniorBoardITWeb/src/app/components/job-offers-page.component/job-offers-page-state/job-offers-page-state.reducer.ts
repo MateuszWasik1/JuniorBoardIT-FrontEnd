@@ -35,6 +35,12 @@ var initialStateOfJobOfferPage: JobOffersState = {
     JOExpiresAt: new Date(),
     JOStatus: StatusEnum.Draft
   },
+  User: {
+    UFirstName: '',
+    ULastName: '',
+    UEmail: '',
+    UPhone: ''
+  },
   Filters: {
     Skip: 0,
     Take: 10,
@@ -67,6 +73,17 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   })),
 
   on(Actions.loadJobOffersError, (state, { error }) => ({
+    ...state,
+    ErrorMessage: error
+  })),
+
+  //Load UserData
+  on(Actions.loadUserDataSuccess, (state, { User }) => ({
+    ...state,
+    User: User
+  })),
+
+  on(Actions.loadUserDataError, (state, { error }) => ({
     ...state,
     ErrorMessage: error
   })),
@@ -156,6 +173,12 @@ export const JobOfferReducer = createReducer<JobOffersState>(
       JOPostedAt: new Date(),
       JOExpiresAt: new Date(),
       JOStatus: StatusEnum.Draft
+    },
+    User: {
+      UFirstName: '',
+      ULastName: '',
+      UEmail: '',
+      UPhone: ''
     },
     Filters: {
       Skip: 0,

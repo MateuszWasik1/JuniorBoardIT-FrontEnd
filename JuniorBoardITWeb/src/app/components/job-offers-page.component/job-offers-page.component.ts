@@ -11,6 +11,7 @@ import {
   cleanState,
   deleteJobOffer,
   loadJobOffers,
+  loadUserData,
   updatePaginationDataJobOffers
 } from './job-offers-page-state/job-offers-page-state.actions';
 import { cleanState as cleanStateReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
@@ -18,7 +19,8 @@ import {
   selectCount,
   selectErrorMessage,
   selectFilters,
-  selectJobOffers
+  selectJobOffers,
+  selectUserData
 } from './job-offers-page-state/job-offers-page-state.selectors';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
@@ -101,6 +103,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public Filters$ = this.store.select(selectFilters);
   public Count$ = this.store.select(selectCount);
   public JobOffers$ = this.store.select(selectJobOffers);
+  public UserData$ = this.store.select(selectUserData);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
@@ -118,9 +121,13 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(loadUserData());
+
     this.subscriptions.push(this.Filters$.subscribe(() => this.store.dispatch(loadJobOffers())));
 
     this.subscriptions.push(this.ErrorMessage$.subscribe((error) => this.errorHandler.HandleException(error)));
+
+    this.subscriptions.push(this.UserData$.subscribe((user) => this.userDataForm.patchValue(user)));
 
     this.subscriptions.push(this.Count$.subscribe((count) => (this.count = count)));
   }

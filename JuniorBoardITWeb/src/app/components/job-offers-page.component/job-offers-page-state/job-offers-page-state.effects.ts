@@ -10,6 +10,7 @@ import { AppState } from 'src/app/app.state';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Injectable()
 export class JobOffersEffects {
@@ -19,7 +20,8 @@ export class JobOffersEffects {
     private router: Router,
     private jobOffersService: JobOffersService,
     private errorHandler: APIErrorHandler,
-    private snackbarService: SnackBarService
+    private snackbarService: SnackBarService,
+    private userService: UserService
   ) {}
 
   loadJobOffer = createEffect(() => {
@@ -49,6 +51,21 @@ export class JobOffersEffects {
               of(JobOffersActions.loadJobOffersError({ error: this.errorHandler.handleAPIError(error) }))
             )
           );
+      })
+    );
+  });
+
+  loadUserData = createEffect(() => {
+    return this.actions.pipe(
+      ofType(JobOffersActions.loadUserData),
+      withLatestFrom(this.store.select(selectFilters)),
+      switchMap(() => {
+        return this.userService.GetUser().pipe(
+          map((result) => JobOffersActions.loadUserDataSuccess({ User: result })),
+          catchError((error) =>
+            of(JobOffersActions.loadUserDataError({ error: this.errorHandler.handleAPIError(error) }))
+          )
+        );
       })
     );
   });
