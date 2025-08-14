@@ -6,6 +6,7 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { Router } from '@angular/router';
 import {
+  addToFavorite,
   applyForJobOffer,
   ChangeEducationFilterValue,
   ChangeFavoriteFilterValue,
@@ -183,6 +184,8 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
       this.userDataForm.patchValue({ UCV: base64?.toString() });
     });
   };
+
+  public AddToFavorite = (JOGID: string) => this.store.dispatch(addToFavorite({ JOGID: JOGID }));
 
   private InitReportForm = (): FormGroup<FormReportModel> => {
     return new FormGroup<FormReportModel>({
