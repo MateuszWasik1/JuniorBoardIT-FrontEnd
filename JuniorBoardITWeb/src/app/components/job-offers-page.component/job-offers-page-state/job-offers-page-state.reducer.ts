@@ -142,6 +142,16 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     ErrorMessage: error
   })),
 
+  //Add To favorite
+  on(Actions.addToFavoriteSuccess, (state) => ({
+    ...state
+  })),
+
+  on(Actions.addToFavoriteError, (state, { error }) => ({
+    ...state,
+    ErrorMessage: error
+  })),
+
   //Update JobOffer
   on(Actions.updateJobOfferSuccess, (state) => ({
     ...state

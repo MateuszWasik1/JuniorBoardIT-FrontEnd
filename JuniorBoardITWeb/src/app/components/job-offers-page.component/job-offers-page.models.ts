@@ -32,6 +32,7 @@ export interface JobOffer {
   JOPostedAt: Date;
   JOExpiresAt: Date;
   JOStatus: StatusEnum;
+  JOFavorite?: string;
 }
 
 export interface Filters {

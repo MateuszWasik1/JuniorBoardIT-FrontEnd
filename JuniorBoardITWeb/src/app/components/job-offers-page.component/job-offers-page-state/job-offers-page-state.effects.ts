@@ -13,6 +13,7 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { ApplyService } from 'src/app/services/apply.service';
 import { CompaniesService } from 'src/app/services/companies.service';
+import { FavoriteJobOffersService } from 'src/app/services/favorite-job-offers.service';
 
 @Injectable()
 export class JobOffersEffects {
@@ -25,7 +26,8 @@ export class JobOffersEffects {
     private snackbarService: SnackBarService,
     private userService: UserService,
     private applyService: ApplyService,
-    private companiesService: CompaniesService
+    private companiesService: CompaniesService,
+    private favoriteJobOffersService: FavoriteJobOffersService
   ) {}
 
   loadJobOffer = createEffect(() => {
@@ -119,6 +121,24 @@ export class JobOffersEffects {
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Nie udało się zaaplikować na ofertę pracy!');
             return of(JobOffersActions.applyForJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+          })
+        );
+      })
+    );
+  });
+
+  addToFavorite = createEffect(() => {
+    return this.actions.pipe(
+      ofType(JobOffersActions.addToFavorite),
+      switchMap((params) => {
+        return this.favoriteJobOffersService.AddFavoriteJobOffer(params.JOGID).pipe(
+          map(() => {
+            this.snackbarService.success('Sukces', 'Pomyślnie dodano do ulubionych!');
+            return JobOffersActions.addToFavoriteSuccess();
+          }),
+          catchError((error) => {
+            this.snackbarService.error('Błąd', 'Nie udało się dodać do ulubionych!');
+            return of(JobOffersActions.addToFavoriteError({ error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })

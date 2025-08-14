@@ -30,6 +30,10 @@ export const applyForJobOfferError = createAction(
   props<{ error: any }>()
 );
 
+export const addToFavorite = createAction('[JobOffers Page] Add To Favorite', props<{ JOGID: any }>());
+export const addToFavoriteSuccess = createAction('[JobOffers Page] Add To Favorite Success');
+export const addToFavoriteError = createAction('[JobOffers Page] Add To Favorite Error', props<{ error: any }>());
+
 export const updateJobOffer = createAction('[JobOffers Page] Update JobOffer', props<{ JobOffer: any }>());
 export const updateJobOfferSuccess = createAction('JobOffers Page] Update JobOffer Success');
 export const updateJobOfferError = createAction('[JobOffers Page] Update JobOffer Error', props<{ error: any }>());
