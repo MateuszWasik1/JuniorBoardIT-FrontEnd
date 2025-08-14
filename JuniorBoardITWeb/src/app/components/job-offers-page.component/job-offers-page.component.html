@@ -229,6 +229,29 @@
               </div>
             </div>
 
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('User_CV') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                <p-fileupload
+                  mode="basic"
+                  name="demo[]"
+                  chooseIcon="pi pi-upload"
+                  accept="image/*"
+                  maxFileSize="1000000"
+                  (onSelect)="OnFileUpload($event)"
+                  [auto]="false"
+                  [chooseLabel]="translations.Get('User_Search')"
+                />
+                @if (userDataForm.controls.UCV.errors?.['required']) {
+                  <div class="error-row">
+                    {{ translations.Get('User_Error_Required') }}
+                  </div>
+                }
+              </div>
+            </div>
+
             <div class="row row-button margin-top-15">
               <p-button label="Cancel" severity="secondary" (click)="ApplicationModalClose()" />
               <p-button label="Save" (click)="ApplicationForJobOffer()" />

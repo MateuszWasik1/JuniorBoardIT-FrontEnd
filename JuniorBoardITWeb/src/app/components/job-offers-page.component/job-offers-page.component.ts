@@ -36,6 +36,7 @@ import { ReportReasonsModel } from 'src/app/models/general-models';
 import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
 import { saveReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
 import { InputTextModule } from 'primeng/inputtext';
+import { FileUploadModule } from 'primeng/fileupload';
 
 type FormReportModel = {
   RJOGID: FormControl<string>;
@@ -48,7 +49,7 @@ type FormUserDataModel = {
   ULastName: FormControl<string>;
   UEmail: FormControl<string>;
   UPhone: FormControl<string>;
-  UCV: FormControl<any>;
+  UCV: FormControl<string>;
   JOGID: FormControl<string>;
 };
 
@@ -68,7 +69,8 @@ type FormUserDataModel = {
     DialogModule,
     TextareaModule,
     SelectButtonModule,
-    InputTextModule
+    InputTextModule,
+    FileUploadModule
   ]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
@@ -165,11 +167,21 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     this.applicationModalVisible = true;
   };
 
-  public ApplicationModalClose = () => (this.applicationModalVisible = false);
+  public ApplicationModalClose = () => {
+    this.applicationModalVisible = false;
+    this.userDataForm.patchValue({ UCV: '' });
+  };
 
   public ApplicationForJobOffer = () => {
     this.applicationModalVisible = false;
     this.store.dispatch(applyForJobOffer({ ApplyData: this.userDataForm.value }));
+  };
+
+  public OnFileUpload = (event: any) => {
+    const file: File = event.files[0];
+    this.convertToBase64(file).then((base64) => {
+      this.userDataForm.patchValue({ UCV: base64?.toString() });
+    });
   };
 
   private InitReportForm = (): FormGroup<FormReportModel> => {
@@ -201,10 +213,19 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.maxLength(100)],
         nonNullable: true
       }),
-      UCV: new FormControl<any>('', { validators: [Validators.required], nonNullable: true }),
+      UCV: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
       JOGID: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
     });
   };
+
+  private convertToBase64(file: File): Promise<string | ArrayBuffer | null> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

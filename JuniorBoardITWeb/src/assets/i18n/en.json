@@ -40,6 +40,8 @@
   "User_User_Name": "UserName",
   "User_Email": "Email",
   "User_Phone": "Phone",
+  "User_CV": "CV",
+  "User_Search": "Search files",
   "Users_GUID": "GUID",
   "Users_Role": "Role",
   "Users_FirstName": "Name",
