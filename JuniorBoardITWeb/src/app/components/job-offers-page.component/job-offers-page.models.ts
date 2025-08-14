@@ -1,3 +1,5 @@
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
 import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
@@ -9,6 +11,7 @@ import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 
 export interface JobOffer {
   JOGID: string;
+  JOCGID: string;
   JOTitle: string;
   JOCompanyName: string;
   JOLocationType: LocationEnum;
@@ -43,4 +46,24 @@ export interface User {
   ULastName: string;
   UEmail: string;
   UPhone: string;
+  UCompanyGID: string;
+}
+
+export interface Company {
+  CGID: string;
+  CName: string;
+  CIndustry: IndustryEnum;
+  CDescription: string;
+  CEmail: string;
+  CAddress: string;
+  CCity: string;
+  CCountry: string;
+  CPostalCode: string;
+  CPhoneNumber: string;
+  CNIP: string;
+  CRegon: string;
+  CKRS: string;
+  CLI: string;
+  CFoundedYear: number;
+  CEmployeesNo: CompanyEmpNoEnum;
 }

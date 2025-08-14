@@ -164,6 +164,7 @@
   "JobOffers_JobOffer_Title": "Job title",
   "JobOffers_JobOffer_Title_Required": "Job title is required!",
   "JobOffers_JobOffer_Title_Max255": "You have exceeded the number of characters! The maximum number of characters is 255!",
+  "JobOffers_JobOffer_RecruiterCompany": "Do you want to add job offer for company you work for?",
   "JobOffers_JobOffer_CompanyName": "Company name",
   "JobOffers_JobOffer_CompanyName_Required": "Company name jest wymagana!",
   "JobOffers_JobOffer_CompanyName_Max255": "You have exceeded the number of characters! The maximum number of characters is 255!",

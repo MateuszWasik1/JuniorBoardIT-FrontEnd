@@ -27,6 +27,7 @@ var initialStateOfReportPage: ReportsState = {
   },
   JobOffer: {
     JOGID: '',
+    JOCGID: '',
     JOTitle: '',
     JOCompanyName: '',
     JOLocationType: LocationEnum.Stationary,
@@ -142,6 +143,7 @@ export const ReportsReducer = createReducer<ReportsState>(
     },
     JobOffer: {
       JOGID: '',
+      JOCGID: '',
       JOTitle: '',
       JOCompanyName: '',
       JOLocationType: LocationEnum.Stationary,

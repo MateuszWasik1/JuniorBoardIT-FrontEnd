@@ -55,33 +55,6 @@
 
       <div class="row d-flex">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
-          <span class="data-input-text"> {{ translations.Get('JobOffers_JobOffer_CompanyName') }}: </span>
-        </div>
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-          <input
-            pInputText
-            id="jocompanyname"
-            aria-describedby="company-name"
-            formControlName="JOCompanyName"
-            [placeholder]="translations.Get('JobOffers_JobOffer_CompanyName')"
-            required
-            maxlength="255"
-          />
-          @if (form.controls.JOCompanyName.errors?.['required']) {
-            <div class="error-row">
-              {{ translations.Get('JobOffers_JobOffer_CompanyName_Required') }}
-            </div>
-          }
-          @if (form.controls.JOCompanyName.errors?.['maxlength']) {
-            <div class="error-row">
-              {{ translations.Get('JobOffers_JobOffer_CompanyName_Max255') }}
-            </div>
-          }
-        </div>
-      </div>
-
-      <div class="row d-flex">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
           <span class="data-input-text"> {{ translations.Get('JobOffers_JobOffer_LocationType') }}:</span>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
@@ -105,26 +78,189 @@
         </div>
       </div>
 
-      <div class="row d-flex">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
-          <span class="data-input-text"> {{ translations.Get('JobOffers_JobOffer_OfficeLocation') }}: </span>
-        </div>
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-          <input
-            pInputText
-            id="joofficelocation"
-            aria-describedby="office-location"
-            formControlName="JOOfficeLocation"
-            [placeholder]="translations.Get('JobOffers_JobOffer_OfficeLocation')"
-            maxlength="100"
-          />
-          @if (form.controls.JOOfficeLocation.errors?.['maxlength']) {
-            <div class="error-row">
-              {{ translations.Get('JobOffers_JobOffer_OfficeLocation_Max100') }}
+      @if (Company$ | async; as company) {
+        @if (company.CGID) {
+          @if (isNewJobOfferView) {
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('JobOffers_JobOffer_RecruiterCompany') }}:</span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                <p-checkbox [value]="offerForCompany" [binary]="true" (onChange)="ChangeOfferForCompany(company)">
+                </p-checkbox>
+              </div>
             </div>
           }
+
+          @if (offerForCompany) {
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_Name') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CName }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_Email') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CEmail }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_Address') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CAddress }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_City') }}: </span>
+              </div>
+              <div class="col-lg-19 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CCity }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_Country') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CCountry }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_PostalCode') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CPostalCode }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_PhoneNumber') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CPhoneNumber }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_NIP') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CNIP }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_Regon') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CRegon }}
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_KRS') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CKRS }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_LinkedIn') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CLI }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_FoundedYear') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ company.CFoundedYear }}
+              </div>
+            </div>
+
+            <div class="row d-flex">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                <span class="data-input-text"> {{ translations.Get('Companies_Company_EmployeesNo') }}: </span>
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                {{ DisplayCompanySize(company.CEmployeesNo) }}
+              </div>
+            </div>
+          }
+        }
+      }
+
+      @if (!offerForCompany) {
+        <div class="row d-flex">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+            <span class="data-input-text"> {{ translations.Get('JobOffers_JobOffer_CompanyName') }}: </span>
+          </div>
+          <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+            <input
+              pInputText
+              id="jocompanyname"
+              aria-describedby="company-name"
+              formControlName="JOCompanyName"
+              [placeholder]="translations.Get('JobOffers_JobOffer_CompanyName')"
+              required
+              maxlength="255"
+            />
+            @if (form.controls.JOCompanyName.errors?.['required']) {
+              <div class="error-row">
+                {{ translations.Get('JobOffers_JobOffer_CompanyName_Required') }}
+              </div>
+            }
+            @if (form.controls.JOCompanyName.errors?.['maxlength']) {
+              <div class="error-row">
+                {{ translations.Get('JobOffers_JobOffer_CompanyName_Max255') }}
+              </div>
+            }
+          </div>
         </div>
-      </div>
+
+        <div class="row d-flex">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+            <span class="data-input-text"> {{ translations.Get('JobOffers_JobOffer_OfficeLocation') }}: </span>
+          </div>
+          <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+            <input
+              pInputText
+              id="joofficelocation"
+              aria-describedby="office-location"
+              formControlName="JOOfficeLocation"
+              [placeholder]="translations.Get('JobOffers_JobOffer_OfficeLocation')"
+              maxlength="100"
+            />
+            @if (form.controls.JOOfficeLocation.errors?.['maxlength']) {
+              <div class="error-row">
+                {{ translations.Get('JobOffers_JobOffer_OfficeLocation_Max100') }}
+              </div>
+            }
+          </div>
+        </div>
+      }
 
       <div class="row d-flex">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">

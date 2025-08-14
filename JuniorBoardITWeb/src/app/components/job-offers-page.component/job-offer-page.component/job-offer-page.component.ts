@@ -9,10 +9,17 @@ import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler
 import {
   addJobOffer,
   cleanState,
+  loadCompany,
   loadJobOffer,
+  loadUserData,
   updateJobOffer
 } from '../job-offers-page-state/job-offers-page-state.actions';
-import { selectErrorMessage, selectJobOffer } from '../job-offers-page-state/job-offers-page-state.selectors';
+import {
+  selectCompany,
+  selectErrorMessage,
+  selectJobOffer,
+  selectUserData
+} from '../job-offers-page-state/job-offers-page-state.selectors';
 import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
 import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
@@ -30,9 +37,13 @@ import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 import { SelectObjectModel } from 'src/app/models/general-models';
 import { TextareaModule } from 'primeng/textarea';
 import { Guid } from 'guid-typescript';
+import { CheckboxModule } from 'primeng/checkbox';
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { Company } from '../job-offers-page.models';
 
 type FormModel = {
   JOGID: FormControl<string>;
+  JOCGID: FormControl<string>;
   JOTitle: FormControl<string>;
   JOCompanyName: FormControl<string>;
   JOLocationType: FormControl<LocationEnum>;
@@ -67,7 +78,8 @@ type FormModel = {
     TextareaModule,
     DatePickerModule,
     SelectModule,
-    ButtonModule
+    ButtonModule,
+    CheckboxModule
   ]
 })
 export class JobOfferPageComponent implements OnInit, OnDestroy {
@@ -125,13 +137,24 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     { id: StatusEnum.Draft, name: 'Szkic' },
     { id: StatusEnum.Expired, name: 'Wygasły' }
   ];
+  public companyEmpNoTypes: SelectObjectModel[] = [
+    { id: CompanyEmpNoEnum.Microenterprise, name: 'Mikro przedsiębiorstwo (1-9) ' },
+    { id: CompanyEmpNoEnum.SmallEnterprise, name: 'Małe przedsiębiorstwo (10-49) ' },
+    { id: CompanyEmpNoEnum.MediumEnterprise, name: 'Średnie przedsiębiorstwo (50-249) ' },
+    { id: CompanyEmpNoEnum.LargeEnterprise, name: 'Duże przedsiębiorstwo (250-9999) ' },
+    { id: CompanyEmpNoEnum.EnormousEnterprise, name: 'Wielkie przedsiębiorstwo (1000-4999) ' },
+    { id: CompanyEmpNoEnum.GlobalEnterprise, name: 'Globalne przedsiębiorstwo (5000+) ' }
+  ];
 
   public form: FormGroup<FormModel>;
 
   public jogid: string = '';
   public isNewJobOfferView: boolean = true;
+  public offerForCompany: boolean = false;
 
   public JobOffer$ = this.store.select(selectJobOffer);
+  public UserData$ = this.store.select(selectUserData);
+  public Company$ = this.store.select(selectCompany);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
@@ -152,11 +175,30 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
       this.store.dispatch(loadJobOffer({ JOGID: this.jogid }));
     }
 
-    this.subscriptions.push(this.JobOffer$.subscribe((jobOffer) => this.form.patchValue(jobOffer)));
+    this.subscriptions.push(
+      this.JobOffer$.subscribe((jobOffer) => {
+        this.form.patchValue(jobOffer);
+
+        if (jobOffer.JOCGID) {
+          this.offerForCompany = true;
+        }
+      })
+    );
 
     this.subscriptions.push(
       this.ErrorMessage$.subscribe((error) => {
         this.errorHandler.HandleException(error);
+      })
+    );
+
+    this.subscriptions.push(
+      this.UserData$.subscribe((UserData) => {
+        if (this.isNewJobOfferView && !UserData.UCompanyGID) {
+          this.store.dispatch(loadUserData());
+        }
+        if (this.isNewJobOfferView && UserData.UCompanyGID) {
+          this.store.dispatch(loadCompany({ CGID: UserData.UCompanyGID }));
+        }
       })
     );
   }
@@ -170,11 +212,25 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     }
   };
 
+  public ChangeOfferForCompany = (Company: Company): void => {
+    this.offerForCompany = !this.offerForCompany;
+
+    this.form.patchValue({
+      JOCompanyName: this.offerForCompany ? Company.CName : '',
+      JOCGID: this.offerForCompany ? Company.CGID : ''
+    });
+  };
+
+  public DisplayCompanySize = (companyEmpNo: CompanyEmpNoEnum) => this.companyEmpNoTypes[companyEmpNo].name;
+
   public Cancel = () => this.router.navigate(['/job-offers']);
 
   private InitJobOfferForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({
       JOGID: new FormControl<string>('', {
+        nonNullable: true
+      }),
+      JOCGID: new FormControl<string>('', {
         nonNullable: true
       }),
       JOTitle: new FormControl<string>('', {

@@ -15,6 +15,10 @@ export const loadUserData = createAction('[JobOffers Page] Load User Data');
 export const loadUserDataSuccess = createAction('[JobOffers Page] Load User Data Success', props<{ User: any }>());
 export const loadUserDataError = createAction('[JobOffers Page] Load User Data Error', props<{ error: any }>());
 
+export const loadCompany = createAction('[JobOffers Page] Load Company', props<{ CGID: any }>());
+export const loadCompanySuccess = createAction('[JobOffers Page] Load Company Success', props<{ Company: any }>());
+export const loadCompanyError = createAction('[JobOffers Page] Load Company Error', props<{ error: any }>());
+
 export const addJobOffer = createAction('[JobOffers Page] Add JobOffer', props<{ JobOffer: any }>());
 export const addJobOfferSuccess = createAction('JobOffers Page] Add JobOffer Success');
 export const addJobOfferError = createAction('[JobOffers Page] Add JobOffer Error', props<{ error: any }>());

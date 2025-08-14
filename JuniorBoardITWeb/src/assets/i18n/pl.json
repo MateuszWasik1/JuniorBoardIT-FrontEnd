@@ -166,6 +166,7 @@
   "JobOffers_JobOffer_Title": "Tytuł oferty",
   "JobOffers_JobOffer_Title_Required": "Tytuł oferty jest wymagany!",
   "JobOffers_JobOffer_Title_Max255": "Przekroczyłeś liczbę znaków! Maksymalna liczba znaków to 255!",
+  "JobOffers_JobOffer_RecruiterCompany": "Czy chcesz dodać ofertę dla firmy dla której pracujesz ?",
   "JobOffers_JobOffer_CompanyName": "Nazwa firmy",
   "JobOffers_JobOffer_CompanyName_Required": "Nazwa firmy jest wymagana!",
   "JobOffers_JobOffer_CompanyName_Max255": "Przekroczyłeś liczbę znaków! Maksymalna liczba znaków to 255!",
