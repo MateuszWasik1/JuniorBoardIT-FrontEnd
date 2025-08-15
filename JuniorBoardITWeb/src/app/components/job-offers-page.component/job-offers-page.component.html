@@ -10,25 +10,34 @@
     </div>
 
     <div class="row padding-top-15 filter-row">
-      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('JobOffers_Education_Filter') }}:</div>
-      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" [formGroup]="formFilter">
-        <p-select
-          [options]="educationTypes"
-          [showClear]="false"
-          [filter]="true"
-          filterBy="name"
-          optionLabel="name"
-          optionValue="id"
-          [placeholder]="translations.Get('JobOffers_Education_Filter_Placeholder')"
-          aria-describedby="offer-status"
-          formControlName="education"
-          (onChange)="ChangeEducationFilterValue($event)"
-        />
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
-      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">{{ translations.Get('JobOffers_Choose_Only_Favorites') }}</div>
-      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-        <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row margin-bottom-15">
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('JobOffers_Education_Filter') }}:</div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" [formGroup]="formFilter">
+            <p-select
+              [options]="educationTypes"
+              [showClear]="false"
+              [filter]="true"
+              filterBy="name"
+              optionLabel="name"
+              optionValue="id"
+              [placeholder]="translations.Get('JobOffers_Education_Filter_Placeholder')"
+              aria-describedby="offer-status"
+              formControlName="education"
+              (onChange)="ChangeEducationFilterValue($event)"
+            />
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+        </div>
+        <div class="row margin-top-15 margin-bottom-15">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            {{ translations.Get('JobOffers_Choose_Only_Favorites') }}
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
+          </div>
+          <div class="col-lg-6 col-md-62 col-sm-12 col-xs-12"></div>
+        </div>
       </div>
     </div>
 
@@ -44,43 +53,157 @@
       </div>
     } @else if (jobOffers.length != 0) {
       <div class="row padding-top-15 padding-bottom-15">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          {{ translations.Get('Tasks_Name') }}
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-          {{ translations.Get('Tasks_Date') }}
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
-          {{ translations.Get('Tasks_Localization') }}
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xs">
-          {{ translations.Get('Tasks_Budget') }}
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-sm hidden-xs">
-          {{ translations.Get('Tasks_Status') }}
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3"></div>
-      </div>
-      @for (jobOffer of jobOffers; track jobOffer.JOGID) {
-        <pre>{{ jobOffer | json }}</pre>
-        <p-button
-          [label]="
-            jobOffer.JOFavorite
-              ? translations.Get('JobOffers_Report_Favorite')
-              : translations.Get('JobOffers_Report_AddToFavorite')
-          "
-          (click)="AddToFavorite(jobOffer.JOGID)"
-        ></p-button>
-        <p-button
-          [label]="translations.Get('JobOffers_Report_ReportOffer')"
-          (click)="ReportModalOpen(jobOffer.JOGID)"
-        ></p-button>
+        @for (jobOffer of jobOffers; track jobOffer.JOGID) {
+          <pre>{{ jobOffer | json }}</pre>
 
-        <p-button
-          [label]="translations.Get('JobOffers_Application_Apply')"
-          (click)="ApplicationModalOpen(jobOffer.JOGID)"
-        ></p-button>
-      }
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="header-row">
+                <span>{{ DisplayExpirenceType(jobOffer.JOExpirenceLevel) }}</span>
+                <span>{{ DisplayCategoryType(jobOffer.JOCategory) }}</span>
+                <span>{{ DisplayLocationType(jobOffer.JOLocationType) }}</span>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="subtitle">
+              <div class="subtitle-row">
+                <span>{{ jobOffer.JOTitle }}</span>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="row margin-bottom-15">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_Expirience') }}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span> {{ DisplayExpirenceType(jobOffer.JOExpirenceLevel) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_Expirience_Years') }}
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                          <span> {{ jobOffer.JOExpirenceYears }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_Position') }}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span> {{ DisplayCategoryType(jobOffer.JOCategory) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_Work') }}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span> {{ DisplayLocationType(jobOffer.JOLocationType) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row margin-bottom-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="row">
+                        <div class="col-lg-3 col-md-13 col-sm-3 col-xs-3 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_Employee_Requirements') }}
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ jobOffer.JORequirements }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row margin-bottom-15">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                          {{ translations.Get('JobOffers_Education_Filter') }}:
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span> {{ DisplayEducationType(jobOffer.JOEducation) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_EmploymentType') }}:
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span> {{ DisplayEmploymentType(jobOffer.JOEmploymentType) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_Payment') }}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span> {{ jobOffer.JOSalaryMin }}</span> -
+                          <span> {{ jobOffer.JOSalaryMax }}</span>
+                          <span> {{ DisplayCurrencyType(jobOffer.JOCurrency) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                          {{ translations.Get('JobOffers_JobOffer_SalaryType') }}:
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span> {{ DisplaySalaryType(jobOffer.JOSalaryType) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+              <div class="footer-row">
+                <p-button
+                  [label]="
+                    jobOffer.JOFavorite
+                      ? translations.Get('JobOffers_Report_Favorite')
+                      : translations.Get('JobOffers_Report_AddToFavorite')
+                  "
+                  (click)="AddToFavorite(jobOffer.JOGID)"
+                ></p-button>
+                <p-button
+                  [label]="translations.Get('JobOffers_Report_ReportOffer')"
+                  (click)="ReportModalOpen(jobOffer.JOGID)"
+                ></p-button>
+
+                <p-button
+                  [label]="translations.Get('JobOffers_Application_Apply')"
+                  (click)="ApplicationModalOpen(jobOffer.JOGID)"
+                ></p-button>
+              </div>
+            </ng-template>
+          </p-card>
+        }
+      </div>
 
       <p-dialog
         [header]="translations.Get('JobOffers_Report_ReportOffer')"
@@ -111,11 +234,9 @@
           pTextarea
         ></textarea>
 
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-right">
-            <p-button label="Cancel" severity="secondary" (click)="ReportModalClose()" />
-            <p-button label="Save" (click)="ReportJobOffer()" />
-          </div>
+        <div class="row row-button margin-top-15">
+          <p-button [label]="translations.Get('General_Close')" (click)="ReportModalClose()" severity="secondary" />
+          <p-button [label]="translations.Get('JobOffers_Report_ReportOffer')" (click)="ReportJobOffer()" />
         </div>
       </p-dialog>
 
@@ -261,8 +382,12 @@
             </div>
 
             <div class="row row-button margin-top-15">
-              <p-button label="Cancel" severity="secondary" (click)="ApplicationModalClose()" />
-              <p-button label="Save" (click)="ApplicationForJobOffer()" />
+              <p-button
+                severity="secondary"
+                [label]="translations.Get('General_Close')"
+                (click)="ApplicationModalClose()"
+              />
+              <p-button [label]="translations.Get('JobOffers_Application_Apply')" (click)="ApplicationForJobOffer()" />
             </div>
           </div>
         </div>
