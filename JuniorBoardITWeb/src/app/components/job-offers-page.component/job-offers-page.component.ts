@@ -24,7 +24,7 @@ import {
   selectJobOffers,
   selectUserData
 } from './job-offers-page-state/job-offers-page-state.selectors';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import { SelectModule } from 'primeng/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -33,11 +33,19 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TextareaModule } from 'primeng/textarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { ReportReasonsModel } from 'src/app/models/general-models';
+import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
 import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
 import { saveReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
+import { CardModule } from 'primeng/card';
+import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
+import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 
 type FormReportModel = {
   RJOGID: FormControl<string>;
@@ -61,7 +69,6 @@ type FormUserDataModel = {
   standalone: true,
   imports: [
     AsyncPipe,
-    JsonPipe,
     PaginatorComponent,
     ReactiveFormsModule,
     SelectModule,
@@ -71,18 +78,58 @@ type FormUserDataModel = {
     TextareaModule,
     SelectButtonModule,
     InputTextModule,
-    FileUploadModule
+    FileUploadModule,
+    CardModule
   ]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public educationTypes = [
-    { id: 0, name: 'Podstawowe' },
-    { id: 1, name: 'Średnie' },
-    { id: 2, name: 'Zawodowe' },
-    { id: 3, name: 'Wyższe pierwszego stopnia' },
-    { id: 4, name: 'Wyższe drugiego stopnia' },
-    { id: 5, name: 'Wszystkie' }
+
+  public locationTypes: SelectObjectModel[] = [
+    { id: LocationEnum.Remote, name: 'Zdalnie' },
+    { id: LocationEnum.Hybrid, name: 'Hybrydowo' },
+    { id: LocationEnum.Stationary, name: 'Stacjonarnie' }
+  ];
+  public employmentTypes: SelectObjectModel[] = [
+    { id: EmploymentTypeEnum.UoP, name: 'UoP' },
+    { id: EmploymentTypeEnum.UZ, name: 'UZ' },
+    { id: EmploymentTypeEnum.UD, name: 'UD' },
+    { id: EmploymentTypeEnum.B2B, name: 'B2B' }
+  ];
+  public expirenceTypes: SelectObjectModel[] = [
+    { id: ExpirenceEnum.Junior, name: 'Junior' },
+    { id: ExpirenceEnum.Mid, name: 'Mid' },
+    { id: ExpirenceEnum.Regular, name: 'Regular' },
+    { id: ExpirenceEnum.Senior, name: 'Senior' },
+    { id: ExpirenceEnum.Lead, name: 'Lead' }
+  ];
+  public categoryTypes: SelectObjectModel[] = [
+    { id: CategoryEnum.FrontEnd, name: 'FrontEnd' },
+    { id: CategoryEnum.BackEnd, name: 'BackEnd' },
+    { id: CategoryEnum.DevOps, name: 'DevOps' },
+    { id: CategoryEnum.QA, name: 'QA' },
+    { id: CategoryEnum.UX, name: 'UX' }
+  ];
+  public currencyTypes: SelectObjectModel[] = [
+    { id: CurrencyEnum.PLN, name: 'PLN' },
+    { id: CurrencyEnum.USD, name: 'USD' },
+    { id: CurrencyEnum.GBP, name: 'GBP' },
+    { id: CurrencyEnum.EUR, name: 'EUR' },
+    { id: CurrencyEnum.CHF, name: 'CHF' }
+  ];
+  public salaryTypes: SelectObjectModel[] = [
+    { id: SalaryEnum.Daily, name: 'Dniówka' },
+    { id: SalaryEnum.Weekly, name: 'Tygodniówka' },
+    { id: SalaryEnum.Monthly, name: 'Miesięcznie' },
+    { id: SalaryEnum.Yearly, name: 'Rocznie' }
+  ];
+  public educationTypes: SelectObjectModel[] = [
+    { id: EducationEnum.Elementary, name: 'Podstawowe' },
+    { id: EducationEnum.Secondary, name: 'Średnie' },
+    { id: EducationEnum.Vocational, name: 'Zawodowe' },
+    { id: EducationEnum.HigherILevel, name: 'Wyższe pierwszego stopnia' },
+    { id: EducationEnum.HigherIILevel, name: 'Wyższe drugiego stopnia' },
+    { id: EducationEnum.All, name: 'Wszystkie' }
   ];
   public count: number = 0;
   public reportModalVisible: boolean = false;
@@ -186,6 +233,20 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   };
 
   public AddToFavorite = (JOGID: string) => this.store.dispatch(addToFavorite({ JOGID: JOGID }));
+
+  public DisplayLocationType = (locationType: LocationEnum) => this.locationTypes[locationType].name;
+
+  public DisplayEmploymentType = (employmentType: EmploymentTypeEnum) => this.employmentTypes[employmentType].name;
+
+  public DisplayExpirenceType = (expirenceType: ExpirenceEnum) => this.expirenceTypes[expirenceType].name;
+
+  public DisplayCategoryType = (categoryType: CategoryEnum) => this.categoryTypes[categoryType].name;
+
+  public DisplayCurrencyType = (currencyType: CurrencyEnum) => this.currencyTypes[currencyType].name;
+
+  public DisplaySalaryType = (salaryType: SalaryEnum) => this.salaryTypes[salaryType].name;
+
+  public DisplayEducationType = (educationType: EducationEnum) => this.educationTypes[educationType].name;
 
   private InitReportForm = (): FormGroup<FormReportModel> => {
     return new FormGroup<FormReportModel>({
