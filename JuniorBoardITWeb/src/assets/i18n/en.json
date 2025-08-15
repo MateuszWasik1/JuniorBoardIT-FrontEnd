@@ -208,5 +208,11 @@
   "JobOffers_JobOffer_ExpiresAt": "Expired date",
   "JobOffers_JobOffer_ExpiresAt_Required": "Expired date is required!",
   "JobOffers_JobOffer_Status": "Choose offer status",
-  "JobOffers_JobOffer_Status_Required": "Offer status is required!"
+  "JobOffers_JobOffer_Status_Required": "Offer status is required!",
+  "JobOffers_JobOffer_Payment": "Payment:",
+  "JobOffers_JobOffer_Expirience": "Expirience:",
+  "JobOffers_JobOffer_Expirience_Years": "Years of Expirience:",
+  "JobOffers_JobOffer_Position": "Position:",
+  "JobOffers_JobOffer_Work": "Work type:",
+  "JobOffers_JobOffer_Employee_Requirements": "Employee requirements:"
 }

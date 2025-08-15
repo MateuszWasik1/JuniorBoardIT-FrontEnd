@@ -210,5 +210,11 @@
   "JobOffers_JobOffer_ExpiresAt": "Data wygaśnięcia oferty",
   "JobOffers_JobOffer_ExpiresAt_Required": "Data wygaśnięcia oferty jest wymagana!",
   "JobOffers_JobOffer_Status": "Wybierz status oferty",
-  "JobOffers_JobOffer_Status_Required": "Status oferty jest wymagany!"
+  "JobOffers_JobOffer_Status_Required": "Status oferty jest wymagany!",
+  "JobOffers_JobOffer_Payment": "Wypłata:",
+  "JobOffers_JobOffer_Expirience": "Doświadczenie:",
+  "JobOffers_JobOffer_Expirience_Years": "Lata Doświadczenia:",
+  "JobOffers_JobOffer_Position": "Pozycja:",
+  "JobOffers_JobOffer_Work": "Tryb pracy:",
+  "JobOffers_JobOffer_Employee_Requirements": "Wymagania pracownika:"
 }
