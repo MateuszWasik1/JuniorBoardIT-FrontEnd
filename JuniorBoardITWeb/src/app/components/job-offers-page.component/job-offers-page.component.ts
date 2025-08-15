@@ -24,7 +24,7 @@ import {
   selectJobOffers,
   selectUserData
 } from './job-offers-page-state/job-offers-page-state.selectors';
-import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import { SelectModule } from 'primeng/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -46,8 +46,6 @@ import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
 import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
 import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
-import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
-import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 
 type FormReportModel = {
   RJOGID: FormControl<string>;
@@ -71,7 +69,6 @@ type FormUserDataModel = {
   standalone: true,
   imports: [
     AsyncPipe,
-    JsonPipe,
     PaginatorComponent,
     ReactiveFormsModule,
     SelectModule,
@@ -82,8 +79,7 @@ type FormUserDataModel = {
     SelectButtonModule,
     InputTextModule,
     FileUploadModule,
-    CardModule,
-    CommonModule
+    CardModule
   ]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
@@ -134,14 +130,6 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     { id: EducationEnum.HigherILevel, name: 'Wyższe pierwszego stopnia' },
     { id: EducationEnum.HigherIILevel, name: 'Wyższe drugiego stopnia' },
     { id: EducationEnum.All, name: 'Wszystkie' }
-  ];
-  public companyEmpNoTypes: SelectObjectModel[] = [
-    { id: CompanyEmpNoEnum.Microenterprise, name: 'Mikro przedsiębiorstwo (1-9) ' },
-    { id: CompanyEmpNoEnum.SmallEnterprise, name: 'Małe przedsiębiorstwo (10-49) ' },
-    { id: CompanyEmpNoEnum.MediumEnterprise, name: 'Średnie przedsiębiorstwo (50-249) ' },
-    { id: CompanyEmpNoEnum.LargeEnterprise, name: 'Duże przedsiębiorstwo (250-9999) ' },
-    { id: CompanyEmpNoEnum.EnormousEnterprise, name: 'Wielkie przedsiębiorstwo (1000-4999) ' },
-    { id: CompanyEmpNoEnum.GlobalEnterprise, name: 'Globalne przedsiębiorstwo (5000+) ' }
   ];
   public count: number = 0;
   public reportModalVisible: boolean = false;
@@ -259,8 +247,6 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public DisplaySalaryType = (salaryType: SalaryEnum) => this.salaryTypes[salaryType].name;
 
   public DisplayEducationType = (educationType: EducationEnum) => this.educationTypes[educationType].name;
-
-  public DisplayCompanySize = (companyEmpNo: CompanyEmpNoEnum) => this.companyEmpNoTypes[companyEmpNo].name;
 
   private InitReportForm = (): FormGroup<FormReportModel> => {
     return new FormGroup<FormReportModel>({

@@ -54,8 +54,6 @@
     } @else if (jobOffers.length != 0) {
       <div class="row padding-top-15 padding-bottom-15">
         @for (jobOffer of jobOffers; track jobOffer.JOGID) {
-          <pre>{{ jobOffer | json }}</pre>
-
           <p-card>
             <ng-template pTemplate="header">
               <div class="header-row">
