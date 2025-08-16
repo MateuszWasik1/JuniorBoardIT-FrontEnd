@@ -26,6 +26,8 @@ import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
 import { MessageModule } from 'primeng/message';
 import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { ReportTranslations } from '../reports-page.models';
 
 type FormModel = {
   JOTitle: FormControl<string>;
@@ -144,7 +146,8 @@ export class ReportPageComponent implements OnInit, OnDestroy {
     public translations: TranslationService,
     public route: ActivatedRoute,
     public router: Router,
-    public errorHandler: MainUIErrorHandler
+    public errorHandler: MainUIErrorHandler,
+    private formErrorsService: FormErrorsService
   ) {
     this.subscriptions = [];
 
@@ -237,6 +240,10 @@ export class ReportPageComponent implements OnInit, OnDestroy {
   }
 
   public ChangeReportStatus = (RGID: string, RStatus: ReportsStatusEnum): void => {
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', ReportTranslations);
+    }
+
     this.store.dispatch(changeReportStatus({ RGID: RGID, RStatus: RStatus }));
   };
 

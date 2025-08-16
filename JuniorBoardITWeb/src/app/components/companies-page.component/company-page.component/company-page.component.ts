@@ -22,6 +22,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectObjectModel } from 'src/app/models/general-models';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { CompanyTranslations } from '../companies-page.models';
 
 type FormModel = {
   CGID: FormControl<string>;
@@ -92,7 +94,8 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
     public translations: TranslationService,
     public route: ActivatedRoute,
     public router: Router,
-    public errorHandler: MainUIErrorHandler
+    public errorHandler: MainUIErrorHandler,
+    private formErrorsService: FormErrorsService
   ) {
     this.subscriptions = [];
     this.form = this.InitCompanyForm();
@@ -118,9 +121,21 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  public AddCompany = (): void => this.store.dispatch(addCompany({ Company: this.form.value }));
+  public AddCompany = (): void => {
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', CompanyTranslations);
+    }
 
-  public UpdateCompany = (): void => this.store.dispatch(updateCompany({ Company: this.form.value }));
+    this.store.dispatch(addCompany({ Company: this.form.value }));
+  };
+
+  public UpdateCompany = (): void => {
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', CompanyTranslations);
+    }
+
+    this.store.dispatch(updateCompany({ Company: this.form.value }));
+  };
 
   public Cancel = (): Promise<boolean> => this.router.navigate(['/companies']);
 

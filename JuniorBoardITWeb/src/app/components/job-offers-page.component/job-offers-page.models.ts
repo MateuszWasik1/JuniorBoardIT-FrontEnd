@@ -68,3 +68,24 @@ export interface Company {
   CFoundedYear: number;
   CEmployeesNo: CompanyEmpNoEnum;
 }
+
+export enum JobOfferTranslations {
+  'JOTitle' = 'JobOffers_JobOffer_Title',
+  'JOCompanyName' = 'JobOffers_JobOffer_CompanyName',
+  'JOLocationType' = 'JobOffers_JobOffer_LocationType',
+  'JOOfficeLocation' = 'JobOffers_JobOffer_OfficeLocation',
+  'JOEmploymentType' = 'JobOffers_JobOffer_EmploymentType',
+  'JOExpirenceLevel' = 'JobOffers_JobOffer_ExpirenceLevel',
+  'JOExpirenceYears' = 'JobOffers_JobOffer_ExpirenceYears',
+  'JOCategory' = 'JobOffers_JobOffer_Category',
+  'JOSalaryMin' = 'JobOffers_JobOffer_SalaryMin',
+  'JOSalaryMax' = 'JobOffers_JobOffer_SalaryMax',
+  'JOCurrency' = 'JobOffers_JobOffer_Currency',
+  'JOSalaryType' = 'JobOffers_JobOffer_SalaryType',
+  'JODescription' = 'JobOffers_JobOffer_Description',
+  'JORequirements' = 'JobOffers_JobOffer_Requirements',
+  'JOBenefits' = 'JobOffers_JobOffer_Benefits',
+  'JOEducation' = 'JobOffers_JobOffer_Education',
+  'JOPostedAt' = 'JobOffers_JobOffer_PostedAt',
+  'JOExpiresAt' = 'JobOffers_JobOffer_ExpiresAt'
+}

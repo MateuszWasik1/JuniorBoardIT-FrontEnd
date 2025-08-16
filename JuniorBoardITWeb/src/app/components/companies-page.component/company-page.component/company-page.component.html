@@ -19,7 +19,7 @@
       <p-button
         [label]="translations.Get('General_Save')"
         (click)="isNewCompanyView ? AddCompany() : UpdateCompany()"
-        [disabled]="form.invalid"
+        [class.disabled]="form.invalid"
       ></p-button>
     </div>
   </div>

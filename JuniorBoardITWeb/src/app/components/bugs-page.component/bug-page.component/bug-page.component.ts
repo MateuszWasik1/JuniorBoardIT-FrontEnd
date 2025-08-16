@@ -31,6 +31,8 @@ import { PaginatorComponent } from '../../shared/paginator.component/paginator.c
 import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
+import { BugNoteTranslations, BugTranslations } from '../bugs-page.models';
+import { FormErrorsService } from 'src/app/services/form-error.service';
 
 type FormBugModel = {
   BGID: FormControl<string>;
@@ -92,7 +94,8 @@ export class BugPageComponent implements OnInit, OnDestroy {
     public translations: TranslationService,
     public route: ActivatedRoute,
     public router: Router,
-    public errorHandler: MainUIErrorHandler
+    public errorHandler: MainUIErrorHandler,
+    private formErrorsService: FormErrorsService
   ) {
     this.subscriptions = [];
     this.form = this.InitBugForm();
@@ -145,13 +148,24 @@ export class BugPageComponent implements OnInit, OnDestroy {
     return color;
   };
 
-  public SaveBug = (): void => this.store.dispatch(saveBug({ bug: this.form.value }));
+  public SaveBug = (): void => {
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', BugTranslations);
+    }
+
+    this.store.dispatch(saveBug({ bug: this.form.value }));
+  };
 
   public AddBugNote = (): void => {
     let model = {
       BNBGID: this.form.controls.BGID?.value,
       BNText: this.formBugNote.controls.BugNote?.value
     };
+
+    if (this.formBugNote.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', BugNoteTranslations);
+    }
+
     this.store.dispatch(saveBugNote({ BugNote: model }));
   };
 
