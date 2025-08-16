@@ -18,8 +18,8 @@
       ></p-button>
       <p-button
         [label]="translations.Get('General_Save')"
+        [class.disabled]="form.invalid"
         (click)="SaveJobOffer()"
-        [disabled]="form.invalid"
       ></p-button>
     </div>
   </div>

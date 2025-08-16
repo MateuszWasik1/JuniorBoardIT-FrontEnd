@@ -39,7 +39,8 @@ import { TextareaModule } from 'primeng/textarea';
 import { Guid } from 'guid-typescript';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
-import { Company } from '../job-offers-page.models';
+import { Company, JobOfferTranslations } from '../job-offers-page.models';
+import { FormErrorsService } from 'src/app/services/form-error.service';
 
 type FormModel = {
   JOGID: FormControl<string>;
@@ -162,7 +163,8 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
     public translations: TranslationService,
     public route: ActivatedRoute,
     public router: Router,
-    public errorHandler: MainUIErrorHandler
+    public errorHandler: MainUIErrorHandler,
+    private formErrorsService: FormErrorsService
   ) {
     this.subscriptions = [];
     this.form = this.InitJobOfferForm();
@@ -204,6 +206,10 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
   }
 
   public SaveJobOffer = () => {
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', JobOfferTranslations);
+    }
+
     if (this.jogid == '0' || this.jogid == '') {
       this.form.patchValue({ JOGID: Guid.create().toString() });
       this.store.dispatch(addJobOffer({ JobOffer: this.form.value }));
