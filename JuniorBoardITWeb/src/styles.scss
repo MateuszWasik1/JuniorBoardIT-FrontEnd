@@ -329,6 +329,14 @@ body {
   width: 100% !important;
 }
 
+.disabled {
+  opacity: var(--p-disabled-opacity);
+
+  button {
+    cursor: default;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .col-lg-1 {
     width: 8.333%;

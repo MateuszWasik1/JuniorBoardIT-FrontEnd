@@ -11,21 +11,21 @@ export class FormErrorsService {
   ) {}
 
   getAllInvalidControls(form: FormGroup | FormArray, path: string = '', translationEnum?: any): void {
-    let invalid: any[] = [];
+    let invalidFields: any[] = [];
 
     Object.keys(form.controls).forEach((key) => {
       const control: AbstractControl | null = form.get(key);
       const controlPath = path ? `${path}.${key}` : key;
 
       if (control instanceof FormGroup || control instanceof FormArray) {
-        invalid = invalid.concat(this.getAllInvalidControls(control, controlPath));
+        invalidFields = invalidFields.concat(this.getAllInvalidControls(control, controlPath));
       } else if (control && control.invalid) {
-        invalid.push(controlPath);
+        invalidFields.push(controlPath);
       }
     });
 
     let invalidFieldTitles: string[] = [];
-    invalid.map((x) => invalidFieldTitles.push(this.translations.Get(translationEnum[x])));
+    invalidFields.map((invalidField) => invalidFieldTitles.push(this.translations.Get(translationEnum[invalidField])));
 
     this.snackbarService.warn(
       'Uwaga!',
