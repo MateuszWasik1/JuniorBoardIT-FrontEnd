@@ -26,3 +26,21 @@ export interface Filters {
   Skip: number;
   Take: number;
 }
+
+export enum CompanyTranslations {
+  'CName' = 'Companies_Company_Name',
+  'CIndustry' = 'Companies_Company_Industry',
+  'CDescription' = 'Companies_Company_Description',
+  'CEmail' = 'Companies_Company_Email',
+  'CAddress' = 'Companies_Company_Address',
+  'CCity' = 'Companies_Company_City',
+  'CCountry' = 'Companies_Company_Country',
+  'CPostalCode' = 'Companies_Company_PostalCode',
+  'CPhoneNumber' = 'Companies_Company_PhoneNumber',
+  'CNIP' = 'Companies_Company_NIP',
+  'CRegon' = 'Companies_Company_Regon',
+  'CKRS' = 'Companies_Company_KRS',
+  'CLI' = 'Companies_Company_LinkedIn',
+  'CFoundedYear' = 'Companies_Company_FoundedYear',
+  'CEmployeesNo' = 'Companies_Company_EmployeesNo'
+}

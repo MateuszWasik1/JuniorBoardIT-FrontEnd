@@ -38,3 +38,12 @@ export interface BugNotesFilters {
   Skip: number;
   Take: number;
 }
+
+export enum BugTranslations {
+  'BTitle' = 'Bugs_Title',
+  'BText' = 'Bugs_Text'
+}
+
+export enum BugNoteTranslations {
+  'BugNote' = 'Bugs_Bug_AddNoteTitle'
+}

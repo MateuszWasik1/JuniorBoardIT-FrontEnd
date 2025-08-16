@@ -17,7 +17,11 @@
         class="margin-right-15"
       ></p-button>
       @if (isNewBugView) {
-        <p-button [label]="translations.Get('General_Save')" (click)="SaveBug()" [disabled]="form.invalid"></p-button>
+        <p-button
+          [label]="translations.Get('General_Save')"
+          (click)="SaveBug()"
+          [class.disabled]="form.invalid"
+        ></p-button>
       }
     </div>
   </div>
@@ -125,7 +129,7 @@
           <p-button
             [label]="translations.Get('Bugs_Bug_AddNote')"
             (click)="AddBugNote()"
-            [disabled]="formBugNote.invalid"
+            [class.disabled]="formBugNote.invalid"
             class="margin-right-15"
           ></p-button>
         </div>
