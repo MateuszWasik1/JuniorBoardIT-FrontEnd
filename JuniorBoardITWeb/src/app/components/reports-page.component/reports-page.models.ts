@@ -32,3 +32,7 @@ export interface Filters {
   Take: number;
   ReportType: ReportsTypeEnum;
 }
+
+export enum ReportTranslations {
+  'ReportStatus' = 'Reports_Report_Card_New_Status'
+}

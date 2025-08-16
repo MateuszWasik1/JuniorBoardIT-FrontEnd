@@ -11,7 +11,11 @@
         class="margin-right-15"
       ></p-button>
       @if (IsAdminView) {
-        <p-button [label]="translations.Get('General_Save')" (click)="Save()" [disabled]="form.invalid"></p-button>
+        <p-button
+          [label]="translations.Get('General_Save')"
+          (click)="Save()"
+          [class.disabled]="form.invalid"
+        ></p-button>
       }
     </div>
   </div>

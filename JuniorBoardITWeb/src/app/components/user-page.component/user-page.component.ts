@@ -21,6 +21,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { AsyncPipe } from '@angular/common';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { UserTranslations } from './user-page.models';
 
 type FormModel = {
   UID: FormControl<number>;
@@ -60,7 +62,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public router: Router,
     public translations: TranslationService,
-    public errorHandler: MainUIErrorHandler
+    public errorHandler: MainUIErrorHandler,
+    private formErrorsService: FormErrorsService
   ) {
     this.subscriptions = [];
     this.form = this.InitUserForm();
@@ -110,6 +113,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
       UPhone: this.form.controls.UPhone.value,
       UCompanyGID: ''
     };
+
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', UserTranslations);
+    }
 
     if (this.IsAdminView) {
       model.UGID = this.form.controls.UGID.value;

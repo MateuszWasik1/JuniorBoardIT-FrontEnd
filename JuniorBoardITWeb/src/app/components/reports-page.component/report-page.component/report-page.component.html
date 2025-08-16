@@ -63,7 +63,7 @@
               <p-button
                 [label]="translations.Get('General_Save')"
                 (click)="ChangeReportStatus(report.RGID, reportForm.controls.ReportStatus.value)"
-                [disabled]="form.invalid"
+                [class.disabled]="form.invalid"
               ></p-button>
             </div>
           </div>
