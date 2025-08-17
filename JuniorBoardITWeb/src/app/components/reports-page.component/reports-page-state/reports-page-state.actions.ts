@@ -5,7 +5,7 @@ import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
 export const loadReport = createAction('[Reports Page] Load Report', props<{ RGID: any }>());
 export const loadReportSuccess = createAction(
   '[Reports Page] Load Report Success',
-  props<{ ReportModel: any; JobOfferModel: any }>()
+  props<{ ReportModel: any; JobOfferModel: any; CompanyModel: any }>()
 );
 export const loadReportError = createAction('[Reports Page] Load Report Error', props<{ error: any }>());
 

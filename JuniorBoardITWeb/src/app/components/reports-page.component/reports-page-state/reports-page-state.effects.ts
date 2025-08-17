@@ -26,7 +26,11 @@ export class ReportsEffects {
       switchMap((params) => {
         return this.reportsService.GetReport(params.RGID).pipe(
           map((result) =>
-            ReportsActions.loadReportSuccess({ ReportModel: result.ReportModel, JobOfferModel: result.JobOfferModel })
+            ReportsActions.loadReportSuccess({
+              ReportModel: result.ReportModel,
+              JobOfferModel: result.JobOfferModel,
+              CompanyModel: result.CompanyModel
+            })
           ),
           catchError((error) => of(ReportsActions.loadReportError({ error: this.errorHandler.handleAPIError(error) })))
         );
