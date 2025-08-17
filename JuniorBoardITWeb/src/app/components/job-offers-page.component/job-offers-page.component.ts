@@ -206,7 +206,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public ReportModalClose = () => (this.reportModalVisible = false);
 
   public ReportJobOffer = () => {
-    this.applicationModalVisible = false;
+    this.reportModalVisible = false;
     this.store.dispatch(saveReport({ Report: this.reportForm.value }));
   };
 
