@@ -11,6 +11,9 @@ import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 import { ReportsState } from './reports-page-state.state';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
+import { Guid } from 'guid-typescript';
+import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 
 var initialStateOfReportPage: ReportsState = {
   Reports: [],
@@ -49,6 +52,24 @@ var initialStateOfReportPage: ReportsState = {
     JOExpiresAt: new Date(),
     JOStatus: StatusEnum.Draft
   },
+  Company: {
+    CGID: '',
+    CName: '',
+    CIndustry: IndustryEnum.Industry,
+    CDescription: '',
+    CEmail: '',
+    CAddress: '',
+    CCity: '',
+    CCountry: '',
+    CPostalCode: '',
+    CPhoneNumber: '',
+    CNIP: '',
+    CRegon: '',
+    CKRS: '',
+    CLI: '',
+    CFoundedYear: 0,
+    CEmployeesNo: CompanyEmpNoEnum.Microenterprise
+  },
   Filters: {
     Skip: 0,
     Take: 10,
@@ -62,10 +83,11 @@ export const ReportsReducer = createReducer<ReportsState>(
   initialStateOfReportPage,
 
   //Load Report
-  on(Actions.loadReportSuccess, (state, { ReportModel, JobOfferModel }) => ({
+  on(Actions.loadReportSuccess, (state, { ReportModel, JobOfferModel, CompanyModel }) => ({
     ...state,
     Report: ReportModel,
-    JobOffer: JobOfferModel
+    JobOffer: JobOfferModel,
+    Company: CompanyModel
   })),
 
   on(Actions.loadReportError, (state, { error }) => ({
@@ -100,7 +122,8 @@ export const ReportsReducer = createReducer<ReportsState>(
     ...state,
     Report: {
       ...state.Report,
-      RStatus: RStatus
+      RStatus: RStatus,
+      RSupportGID: Guid.create().toString()
     }
   })),
 
@@ -164,6 +187,24 @@ export const ReportsReducer = createReducer<ReportsState>(
       JOPostedAt: new Date(),
       JOExpiresAt: new Date(),
       JOStatus: StatusEnum.Draft
+    },
+    Company: {
+      CGID: '',
+      CName: '',
+      CIndustry: IndustryEnum.Industry,
+      CDescription: '',
+      CEmail: '',
+      CAddress: '',
+      CCity: '',
+      CCountry: '',
+      CPostalCode: '',
+      CPhoneNumber: '',
+      CNIP: '',
+      CRegon: '',
+      CKRS: '',
+      CLI: '',
+      CFoundedYear: 0,
+      CEmployeesNo: CompanyEmpNoEnum.Microenterprise
     },
     Filters: {
       Skip: 0,
