@@ -35,12 +35,16 @@ export class AppComponent {
     });
 
     //Token
-    if (cookieService.get('token') == '' && !this.stopNavigate) this.router.navigate(['/login']);
+    if (cookieService.get('token') == '' && !this.stopNavigate) {
+      this.router.navigate(['/job-offers']);
+    }
 
     //Language
     translate.addLangs(['pl', 'en']);
 
-    if (cookieService.get('lang') == '') cookieService.set('lang', 'pl');
+    if (cookieService.get('lang') == '') {
+      cookieService.set('lang', 'pl');
+    }
 
     translate.setDefaultLang(cookieService.get('lang'));
     this.language = cookieService.get('lang');
@@ -56,7 +60,13 @@ export class AppComponent {
 
   public ToggleMobileMenu = () => (this.IsMobileMenuActive = !this.IsMobileMenuActive);
 
-  public GoToUser = () => this.router.navigate(['/user']);
+  public GoToUser = () => {
+    if (this.cookieService.get('token') == '') {
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/user']);
+    }
+  };
 
   public ChangeLanguage = (language: string) => {
     this.language = language;
@@ -66,14 +76,6 @@ export class AppComponent {
 
   public LogOut = () => {
     this.cookieService.set('token', '');
-    this.router.navigate(['login']);
+    this.router.navigate(['job-offers']);
   };
 }
-
-// Packages to update:
-// "chart.js": "^4.1.1",
-// "guid-typescript": "^1.0.9",
-// "moment": "^2.29.4",
-// "ng2-charts": "^4.1.1",
-// "ngx-cookie-service": "^15.0.0",
-// "ngx-mat-select-search": "^7.0.2",

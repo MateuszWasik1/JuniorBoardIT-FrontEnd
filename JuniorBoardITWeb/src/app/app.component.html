@@ -29,13 +29,35 @@
       </div>
     </div>
     <div class="side-menu">
-      <div class="user" (click)="GoToUser()"></div>
+      <div
+        class="user"
+        [pTooltip]="
+          (cookieService.get('token') == '' ? 'TopMenu_User_Login_Tooltip' : 'TopMenu_User_User_Tooltip') | translate
+        "
+        tooltipPosition="bottom"
+        (click)="GoToUser()"
+      ></div>
       @if (language == 'en') {
-        <div class="pl" (click)="ChangeLanguage('pl')"></div>
+        <div
+          class="pl"
+          [pTooltip]="'TopMenu_PL_Tooltip' | translate"
+          tooltipPosition="bottom"
+          (click)="ChangeLanguage('pl')"
+        ></div>
       } @else if (language == 'pl') {
-        <div class="en" (click)="ChangeLanguage('en')"></div>
+        <div
+          class="en"
+          [pTooltip]="'TopMenu_ENG_Tooltip' | translate"
+          tooltipPosition="bottom"
+          (click)="ChangeLanguage('en')"
+        ></div>
       }
-      <div class="logout" (click)="LogOut()"></div>
+      <div
+        class="logout"
+        [pTooltip]="'TopMenu_Logout_Tooltip' | translate"
+        tooltipPosition="bottom"
+        (click)="LogOut()"
+      ></div>
     </div>
   </div>
 }
