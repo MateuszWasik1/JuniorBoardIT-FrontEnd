@@ -50,7 +50,7 @@
       <p-button
         [label]="translations.Get('Account_Login_Button')"
         (click)="Login()"
-        [disabled]="form.invalid"
+        [class.disabled]="form.invalid"
       ></p-button>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-15">

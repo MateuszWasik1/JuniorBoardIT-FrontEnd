@@ -9,6 +9,7 @@ import { selectErrorMessage } from '../account-page-state/account-page-state.sel
 import { Subscription } from 'rxjs';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { ButtonModule } from 'primeng/button';
+import { FormErrorsService } from 'src/app/services/form-error.service';
 
 type FormModel = {
   UUserName: FormControl<string>;
@@ -27,13 +28,19 @@ export class LoginComponent implements OnInit {
 
   public form: FormGroup<FormModel>;
 
+  public LoginTranslations = {
+    UUserName: 'Account_Register_UserName',
+    UPassword: 'Account_Register_Password'
+  };
+
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor(
     public store: Store<AppState>,
     public translations: TranslationService,
     public router: Router,
-    public errorHandler: MainUIErrorHandler
+    public errorHandler: MainUIErrorHandler,
+    private formErrorsService: FormErrorsService
   ) {
     this.subscriptions = [];
     this.form = this.InitLoginForm();
@@ -49,7 +56,13 @@ export class LoginComponent implements OnInit {
 
   public Clear = () => this.form.reset();
 
-  public Login = () => this.store.dispatch(Login({ user: this.form.value }));
+  public Login = () => {
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', this.LoginTranslations);
+    }
+
+    this.store.dispatch(Login({ user: this.form.value }));
+  };
 
   private InitLoginForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({
