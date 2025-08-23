@@ -49,6 +49,7 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [AppComponent],
@@ -66,6 +67,7 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     MessageModule,
     BrowserAnimationsModule,
+    TooltipModule,
 
     TranslateModule.forRoot({
       loader: {
