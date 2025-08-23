@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
 import { ButtonModule } from 'primeng/button';
+import { FormErrorsService } from 'src/app/services/form-error.service';
 
 type FormModel = {
   UUserName: FormControl<string>;
@@ -34,11 +35,19 @@ export class RegisterComponent implements OnInit {
 
   public form: FormGroup<FormModel>;
 
+  public RegisterTranslations = {
+    UUserName: 'Account_Register_UserName',
+    UEmail: 'Account_Register_Email',
+    UPassword: 'Account_Register_Password',
+    UPassword2: 'Account_Register_Password_Repeat'
+  };
+
   constructor(
     public store: Store<AppState>,
     public translations: TranslationService,
     public router: Router,
-    public errorHandler: MainUIErrorHandler
+    public errorHandler: MainUIErrorHandler,
+    private formErrorsService: FormErrorsService
   ) {
     this.subscriptions = [];
     this.form = this.InitRegisterForm();
@@ -54,7 +63,13 @@ export class RegisterComponent implements OnInit {
 
   public Clear = () => this.form.reset();
 
-  public RegisterUser = () => this.store.dispatch(RegisterUser({ user: this.form.value }));
+  public RegisterUser = () => {
+    if (this.form.invalid) {
+      return this.formErrorsService.getAllInvalidControls(this.form, '', this.RegisterTranslations);
+    }
+
+    this.store.dispatch(RegisterUser({ user: this.form.value }));
+  };
 
   private InitRegisterForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>(

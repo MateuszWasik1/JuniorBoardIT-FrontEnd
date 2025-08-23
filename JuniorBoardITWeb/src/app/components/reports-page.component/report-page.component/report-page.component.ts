@@ -12,7 +12,6 @@ import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
 import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
 import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
-import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
