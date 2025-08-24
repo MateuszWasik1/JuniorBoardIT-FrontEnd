@@ -3,10 +3,14 @@
     <div class="left-panel"></div>
     <nav>
       <a href="job-offers">{{ 'TopMenu_JobOffers' | translate }}</a>
-      <a href="reports">{{ 'TopMenu_Reports' | translate }}</a>
-      <a href="bugs">{{ 'TopMenu_Bugs' | translate }}</a>
-      <a href="companies">{{ 'TopMenu_Companies' | translate }}</a>
-      <a href="stats">{{ 'TopMenu_Stats' | translate }}</a>
+      @if (IsUser) {
+        <a href="bugs">{{ 'TopMenu_Bugs' | translate }}</a>
+        <a href="stats">{{ 'TopMenu_Stats' | translate }}</a>
+      }
+      @if (IsRecruiter) {
+        <a href="reports">{{ 'TopMenu_Reports' | translate }}</a>
+        <a href="companies">{{ 'TopMenu_Companies' | translate }}</a>
+      }
       @if (IsAdmin) {
         <a href="users">{{ 'TopMenu_Users' | translate }}</a>
       }
@@ -18,10 +22,14 @@
       <div class="mobile-menu" [ngClass]="IsMobileMenuActive ? 'mobile-menu-active' : 'mobile-menu-inactive'">
         <div class="mobile-menu-container">
           <a href="job-offers">{{ 'TopMenu_JobOffers' | translate }}</a>
-          <a href="reports">{{ 'TopMenu_Reports' | translate }}</a>
-          <a href="bugs">{{ 'TopMenu_Bugs' | translate }}</a>
-          <a href="companies">{{ 'TopMenu_Companies' | translate }}</a>
-          <a href="stats">{{ 'TopMenu_Stats' | translate }}</a>
+          @if (IsUser) {
+            <a href="bugs">{{ 'TopMenu_Bugs' | translate }}</a>
+            <a href="stats">{{ 'TopMenu_Stats' | translate }}</a>
+          }
+          @if (IsRecruiter) {
+            <a href="reports">{{ 'TopMenu_Reports' | translate }}</a>
+            <a href="companies">{{ 'TopMenu_Companies' | translate }}</a>
+          }
           @if (IsAdmin) {
             <a href="users">{{ 'TopMenu_Users' | translate }}</a>
           }
@@ -52,12 +60,14 @@
           (click)="ChangeLanguage('en')"
         ></div>
       }
-      <div
-        class="logout"
-        [pTooltip]="'TopMenu_Logout_Tooltip' | translate"
-        tooltipPosition="bottom"
-        (click)="LogOut()"
-      ></div>
+      @if (IsUser) {
+        <div
+          class="logout"
+          [pTooltip]="'TopMenu_Logout_Tooltip' | translate"
+          tooltipPosition="bottom"
+          (click)="LogOut()"
+        ></div>
+      }
     </div>
   </div>
 }

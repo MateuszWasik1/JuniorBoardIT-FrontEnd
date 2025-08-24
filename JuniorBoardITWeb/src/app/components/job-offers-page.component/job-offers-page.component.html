@@ -1,395 +1,408 @@
 @if (JobOffers$ | async; as jobOffers) {
-  <section class="body">
-    <div class="row">
-      <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
-        <h1 class="page-title">{{ translations.Get('TopMenu_JobOffers') }}</h1>
-      </div>
-      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-        <p-button [label]="translations.Get('General_Add')" (click)="AddJobOffer()" />
-      </div>
-    </div>
-
-    <div class="row padding-top-15 filter-row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="row margin-bottom-15">
-          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('JobOffers_Education_Filter') }}:</div>
-          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" [formGroup]="formFilter">
-            <p-select
-              [options]="educationTypes"
-              [showClear]="false"
-              [filter]="true"
-              filterBy="name"
-              optionLabel="name"
-              optionValue="id"
-              [placeholder]="translations.Get('JobOffers_Education_Filter_Placeholder')"
-              aria-describedby="offer-status"
-              formControlName="education"
-              (onChange)="ChangeEducationFilterValue($event)"
-            />
-          </div>
-          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+  @if (Roles$ | async; as roles) {
+    <section class="body">
+      <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+          <h1 class="page-title">{{ translations.Get('TopMenu_JobOffers') }}</h1>
         </div>
-        <div class="row margin-top-15 margin-bottom-15">
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            {{ translations.Get('JobOffers_Choose_Only_Favorites') }}
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
-          </div>
-          <div class="col-lg-6 col-md-62 col-sm-12 col-xs-12"></div>
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+          @if (roles.IsRecruiter) {
+            <p-button [label]="translations.Get('General_Add')" (click)="AddJobOffer()" />
+          }
         </div>
       </div>
-    </div>
 
-    <div class="row margin-top-15 filter-row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <app-paginator [length]="count" (paginationData)="UpdatePaginationData($event)"></app-paginator>
-      </div>
-    </div>
-
-    @if (jobOffers.length == 0) {
-      <div class="row no-data-row">
-        <p>{{ translations.Get('JobOffers_NotFound') }}</p>
-      </div>
-    } @else if (jobOffers.length != 0) {
-      <div class="row padding-top-15 padding-bottom-15">
-        @for (jobOffer of jobOffers; track jobOffer.JOGID) {
-          <p-card>
-            <ng-template pTemplate="header">
-              <div class="header-row">
-                <span>{{ DisplayExpirenceType(jobOffer.JOExpirenceLevel) }}</span>
-                <span>{{ DisplayCategoryType(jobOffer.JOCategory) }}</span>
-                <span>{{ DisplayLocationType(jobOffer.JOLocationType) }}</span>
+      <div class="row padding-top-15 filter-row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="row margin-bottom-15">
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+              {{ translations.Get('JobOffers_Education_Filter') }}:
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" [formGroup]="formFilter">
+              <p-select
+                [options]="educationTypes"
+                [showClear]="false"
+                [filter]="true"
+                filterBy="name"
+                optionLabel="name"
+                optionValue="id"
+                [placeholder]="translations.Get('JobOffers_Education_Filter_Placeholder')"
+                aria-describedby="offer-status"
+                formControlName="education"
+                (onChange)="ChangeEducationFilterValue($event)"
+              />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+          </div>
+          @if (roles.IsUser) {
+            <div class="row margin-top-15 margin-bottom-15">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                {{ translations.Get('JobOffers_Choose_Only_Favorites') }}
               </div>
-            </ng-template>
-
-            <ng-template pTemplate="subtitle">
-              <div class="subtitle-row">
-                <span>{{ jobOffer.JOTitle }}</span>
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
               </div>
-            </ng-template>
+              <div class="col-lg-6 col-md-62 col-sm-12 col-xs-12"></div>
+            </div>
+          }
+        </div>
+      </div>
 
-            <ng-template pTemplate="content">
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="row margin-bottom-15">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_Expirience') }}
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span> {{ DisplayExpirenceType(jobOffer.JOExpirenceLevel) }}</span>
+      <div class="row margin-top-15 filter-row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <app-paginator [length]="count" (paginationData)="UpdatePaginationData($event)"></app-paginator>
+        </div>
+      </div>
+
+      @if (jobOffers.length == 0) {
+        <div class="row no-data-row">
+          <p>{{ translations.Get('JobOffers_NotFound') }}</p>
+        </div>
+      } @else if (jobOffers.length != 0) {
+        <div class="row padding-top-15 padding-bottom-15">
+          @for (jobOffer of jobOffers; track jobOffer.JOGID) {
+            <p-card>
+              <ng-template pTemplate="header">
+                <div class="header-row">
+                  <span>{{ DisplayExpirenceType(jobOffer.JOExpirenceLevel) }}</span>
+                  <span>{{ DisplayCategoryType(jobOffer.JOCategory) }}</span>
+                  <span>{{ DisplayLocationType(jobOffer.JOLocationType) }}</span>
+                </div>
+              </ng-template>
+
+              <ng-template pTemplate="subtitle">
+                <div class="subtitle-row">
+                  <span>{{ jobOffer.JOTitle }}</span>
+                </div>
+              </ng-template>
+
+              <ng-template pTemplate="content">
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row margin-bottom-15">
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_Expirience') }}
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <span> {{ DisplayExpirenceType(jobOffer.JOExpirenceLevel) }}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_Expirience_Years') }}
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_Expirience_Years') }}
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <span> {{ jobOffer.JOExpirenceYears }}</span>
+                          </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                          <span> {{ jobOffer.JOExpirenceYears }}</span>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_Position') }}
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <span> {{ DisplayCategoryType(jobOffer.JOCategory) }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_Work') }}
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <span> {{ DisplayLocationType(jobOffer.JOLocationType) }}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_Position') }}
+                    <div class="row margin-bottom-15">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                          <div class="col-lg-3 col-md-13 col-sm-3 col-xs-3 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_Employee_Requirements') }}
+                          </div>
+                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"></div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span> {{ DisplayCategoryType(jobOffer.JOCategory) }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_Work') }}
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span> {{ DisplayLocationType(jobOffer.JOLocationType) }}</span>
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ jobOffer.JORequirements }}</div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="row margin-bottom-15">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div class="row">
-                        <div class="col-lg-3 col-md-13 col-sm-3 col-xs-3 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_Employee_Requirements') }}
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"></div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ jobOffer.JORequirements }}</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row margin-bottom-15">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
-                          {{ translations.Get('JobOffers_Education_Filter') }}:
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span> {{ DisplayEducationType(jobOffer.JOEducation) }}</span>
+                    <div class="row margin-bottom-15">
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                            {{ translations.Get('JobOffers_Education_Filter') }}:
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <span> {{ DisplayEducationType(jobOffer.JOEducation) }}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_EmploymentType') }}:
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span> {{ DisplayEmploymentType(jobOffer.JOEmploymentType) }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_Payment') }}
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span> {{ jobOffer.JOSalaryMin }}</span> -
-                          <span> {{ jobOffer.JOSalaryMax }}</span>
-                          <span> {{ DisplayCurrencyType(jobOffer.JOCurrency) }}</span>
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_EmploymentType') }}:
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <span> {{ DisplayEmploymentType(jobOffer.JOEmploymentType) }}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
-                          {{ translations.Get('JobOffers_JobOffer_SalaryType') }}:
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_Payment') }}
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <span> {{ jobOffer.JOSalaryMin }}</span> -
+                            <span> {{ jobOffer.JOSalaryMax }}</span>
+                            <span> {{ DisplayCurrencyType(jobOffer.JOCurrency) }}</span>
+                          </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span> {{ DisplaySalaryType(jobOffer.JOSalaryType) }}</span>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 bold-text">
+                            {{ translations.Get('JobOffers_JobOffer_SalaryType') }}:
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <span> {{ DisplaySalaryType(jobOffer.JOSalaryType) }}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </ng-template>
+
+              <ng-template pTemplate="footer">
+                <div class="footer-row">
+                  @if (roles.IsUser) {
+                    <p-button
+                      [label]="
+                        jobOffer.JOFavorite
+                          ? translations.Get('JobOffers_Report_Favorite')
+                          : translations.Get('JobOffers_Report_AddToFavorite')
+                      "
+                      (click)="AddToFavorite(jobOffer.JOGID)"
+                    ></p-button>
+                  }
+                  <p-button
+                    [label]="translations.Get('JobOffers_Report_ReportOffer')"
+                    (click)="ReportModalOpen(jobOffer.JOGID)"
+                  ></p-button>
+
+                  <p-button
+                    [label]="translations.Get('JobOffers_Application_Apply')"
+                    (click)="ApplicationModalOpen(jobOffer.JOGID)"
+                  ></p-button>
+                </div>
+              </ng-template>
+            </p-card>
+          }
+        </div>
+
+        <p-dialog
+          [header]="translations.Get('JobOffers_Report_ReportOffer')"
+          [(visible)]="reportModalVisible"
+          [modal]="true"
+          [style]="{ width: '90vw' }"
+          [closable]="true"
+          [draggable]="false"
+          [dismissableMask]="true"
+          [formGroup]="reportForm"
+          (onHide)="ReportModalClose()"
+        >
+          <p>{{ translations.Get('JobOffers_Report_ReportReason') }}</p>
+          <p-selectbutton
+            [options]="reportReasons"
+            formControlName="RReasons"
+            optionLabel="name"
+            optionValue="value"
+            [multiple]="true"
+          />
+
+          <p>{{ translations.Get('JobOffers_Report_ReportAdditionalReason') }}</p>
+          <textarea
+            formControlName="RText"
+            maxlength="4000"
+            [placeholder]="translations.Get('JobOffers_Report_ReportAdditionalReason_Placeholder')"
+            class="report-textarea"
+            pTextarea
+          ></textarea>
+
+          <div class="row row-button margin-top-15">
+            <p-button [label]="translations.Get('General_Close')" (click)="ReportModalClose()" severity="secondary" />
+            <p-button [label]="translations.Get('JobOffers_Report_ReportOffer')" (click)="ReportJobOffer()" />
+          </div>
+        </p-dialog>
+
+        <p-dialog
+          [header]="translations.Get('JobOffers_Application_Apply_On_JobOffer')"
+          [(visible)]="applicationModalVisible"
+          [modal]="true"
+          [style]="{ width: '40vw' }"
+          [closable]="true"
+          [draggable]="false"
+          [dismissableMask]="true"
+          [formGroup]="userDataForm"
+          (onHide)="ApplicationModalClose()"
+        >
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="row d-flex">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                  <span class="data-input-text"> {{ translations.Get('User_First_Name') }}: </span>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                  <input
+                    pInputText
+                    type="text"
+                    class="data-input"
+                    [placeholder]="translations.Get('User_First_Name')"
+                    formControlName="UFirstName"
+                  />
+                  @if (userDataForm.controls.UFirstName.errors?.['required']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_Required') }}
+                    </div>
+                  }
+                  @if (userDataForm.controls.UFirstName.errors?.['maxlength']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_MaxLength50') }}
+                    </div>
+                  }
+                </div>
               </div>
-            </ng-template>
 
-            <ng-template pTemplate="footer">
-              <div class="footer-row">
-                <p-button
-                  [label]="
-                    jobOffer.JOFavorite
-                      ? translations.Get('JobOffers_Report_Favorite')
-                      : translations.Get('JobOffers_Report_AddToFavorite')
-                  "
-                  (click)="AddToFavorite(jobOffer.JOGID)"
-                ></p-button>
-                <p-button
-                  [label]="translations.Get('JobOffers_Report_ReportOffer')"
-                  (click)="ReportModalOpen(jobOffer.JOGID)"
-                ></p-button>
+              <div class="row d-flex">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                  <span class="data-input-text"> {{ translations.Get('User_Last_Name') }}: </span>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                  <input
+                    pInputText
+                    type="text"
+                    class="data-input"
+                    [placeholder]="translations.Get('User_Last_Name')"
+                    formControlName="ULastName"
+                  />
+                  @if (userDataForm.controls.ULastName.errors?.['required']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_Required') }}
+                    </div>
+                  }
+                  @if (userDataForm.controls.ULastName.errors?.['maxlength']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_MaxLength50') }}
+                    </div>
+                  }
+                </div>
+              </div>
 
+              <div class="row d-flex">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                  <span class="data-input-text"> {{ translations.Get('User_Email') }}: </span>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                  <input
+                    pInputText
+                    type="text"
+                    class="data-input"
+                    [placeholder]="translations.Get('User_Email')"
+                    formControlName="UEmail"
+                  />
+                  @if (userDataForm.controls.UEmail.errors?.['required']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_Required') }}
+                    </div>
+                  }
+                  @if (userDataForm.controls.UEmail.errors?.['email']) {
+                    <div class="error-row">
+                      {{ translations.Get('Account_Register_Validation_Email') }}
+                    </div>
+                  }
+                  @if (userDataForm.controls.UEmail.errors?.['maxlength']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_MaxLength100') }}
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="row d-flex">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                  <span class="data-input-text"> {{ translations.Get('User_Phone') }}: </span>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                  <input
+                    pInputText
+                    type="text"
+                    class="data-input"
+                    [placeholder]="translations.Get('User_Phone')"
+                    formControlName="UPhone"
+                  />
+                  @if (userDataForm.controls.UPhone.errors?.['required']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_Required') }}
+                    </div>
+                  }
+                  @if (userDataForm.controls.UPhone.errors?.['maxlength']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_MaxLength100') }}
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="row d-flex">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+                  <span class="data-input-text"> {{ translations.Get('User_CV') }}: </span>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+                  <p-fileupload
+                    mode="basic"
+                    name="demo[]"
+                    chooseIcon="pi pi-upload"
+                    accept=".pdf,.jpg,.docx"
+                    maxFileSize="1000000"
+                    (onSelect)="OnFileUpload($event)"
+                    [auto]="false"
+                    [chooseLabel]="translations.Get('User_Search')"
+                  />
+                  @if (userDataForm.controls.UCV.errors?.['required']) {
+                    <div class="error-row">
+                      {{ translations.Get('User_Error_Required') }}
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="row row-button margin-top-15">
+                <p-button
+                  severity="secondary"
+                  [label]="translations.Get('General_Close')"
+                  (click)="ApplicationModalClose()"
+                />
                 <p-button
                   [label]="translations.Get('JobOffers_Application_Apply')"
-                  (click)="ApplicationModalOpen(jobOffer.JOGID)"
-                ></p-button>
-              </div>
-            </ng-template>
-          </p-card>
-        }
-      </div>
-
-      <p-dialog
-        [header]="translations.Get('JobOffers_Report_ReportOffer')"
-        [(visible)]="reportModalVisible"
-        [modal]="true"
-        [style]="{ width: '90vw' }"
-        [closable]="true"
-        [draggable]="false"
-        [dismissableMask]="true"
-        [formGroup]="reportForm"
-        (onHide)="ReportModalClose()"
-      >
-        <p>{{ translations.Get('JobOffers_Report_ReportReason') }}</p>
-        <p-selectbutton
-          [options]="reportReasons"
-          formControlName="RReasons"
-          optionLabel="name"
-          optionValue="value"
-          [multiple]="true"
-        />
-
-        <p>{{ translations.Get('JobOffers_Report_ReportAdditionalReason') }}</p>
-        <textarea
-          formControlName="RText"
-          maxlength="4000"
-          [placeholder]="translations.Get('JobOffers_Report_ReportAdditionalReason_Placeholder')"
-          class="report-textarea"
-          pTextarea
-        ></textarea>
-
-        <div class="row row-button margin-top-15">
-          <p-button [label]="translations.Get('General_Close')" (click)="ReportModalClose()" severity="secondary" />
-          <p-button [label]="translations.Get('JobOffers_Report_ReportOffer')" (click)="ReportJobOffer()" />
-        </div>
-      </p-dialog>
-
-      <p-dialog
-        [header]="translations.Get('JobOffers_Application_Apply_On_JobOffer')"
-        [(visible)]="applicationModalVisible"
-        [modal]="true"
-        [style]="{ width: '40vw' }"
-        [closable]="true"
-        [draggable]="false"
-        [dismissableMask]="true"
-        [formGroup]="userDataForm"
-        (onHide)="ApplicationModalClose()"
-      >
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="row d-flex">
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
-                <span class="data-input-text"> {{ translations.Get('User_First_Name') }}: </span>
-              </div>
-              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-                <input
-                  pInputText
-                  type="text"
-                  class="data-input"
-                  [placeholder]="translations.Get('User_First_Name')"
-                  formControlName="UFirstName"
+                  (click)="ApplicationForJobOffer()"
                 />
-                @if (userDataForm.controls.UFirstName.errors?.['required']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_Required') }}
-                  </div>
-                }
-                @if (userDataForm.controls.UFirstName.errors?.['maxlength']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_MaxLength50') }}
-                  </div>
-                }
               </div>
-            </div>
-
-            <div class="row d-flex">
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
-                <span class="data-input-text"> {{ translations.Get('User_Last_Name') }}: </span>
-              </div>
-              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-                <input
-                  pInputText
-                  type="text"
-                  class="data-input"
-                  [placeholder]="translations.Get('User_Last_Name')"
-                  formControlName="ULastName"
-                />
-                @if (userDataForm.controls.ULastName.errors?.['required']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_Required') }}
-                  </div>
-                }
-                @if (userDataForm.controls.ULastName.errors?.['maxlength']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_MaxLength50') }}
-                  </div>
-                }
-              </div>
-            </div>
-
-            <div class="row d-flex">
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
-                <span class="data-input-text"> {{ translations.Get('User_Email') }}: </span>
-              </div>
-              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-                <input
-                  pInputText
-                  type="text"
-                  class="data-input"
-                  [placeholder]="translations.Get('User_Email')"
-                  formControlName="UEmail"
-                />
-                @if (userDataForm.controls.UEmail.errors?.['required']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_Required') }}
-                  </div>
-                }
-                @if (userDataForm.controls.UEmail.errors?.['email']) {
-                  <div class="error-row">
-                    {{ translations.Get('Account_Register_Validation_Email') }}
-                  </div>
-                }
-                @if (userDataForm.controls.UEmail.errors?.['maxlength']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_MaxLength100') }}
-                  </div>
-                }
-              </div>
-            </div>
-
-            <div class="row d-flex">
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
-                <span class="data-input-text"> {{ translations.Get('User_Phone') }}: </span>
-              </div>
-              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-                <input
-                  pInputText
-                  type="text"
-                  class="data-input"
-                  [placeholder]="translations.Get('User_Phone')"
-                  formControlName="UPhone"
-                />
-                @if (userDataForm.controls.UPhone.errors?.['required']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_Required') }}
-                  </div>
-                }
-                @if (userDataForm.controls.UPhone.errors?.['maxlength']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_MaxLength100') }}
-                  </div>
-                }
-              </div>
-            </div>
-
-            <div class="row d-flex">
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
-                <span class="data-input-text"> {{ translations.Get('User_CV') }}: </span>
-              </div>
-              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-                <p-fileupload
-                  mode="basic"
-                  name="demo[]"
-                  chooseIcon="pi pi-upload"
-                  accept=".pdf,.jpg,.docx"
-                  maxFileSize="1000000"
-                  (onSelect)="OnFileUpload($event)"
-                  [auto]="false"
-                  [chooseLabel]="translations.Get('User_Search')"
-                />
-                @if (userDataForm.controls.UCV.errors?.['required']) {
-                  <div class="error-row">
-                    {{ translations.Get('User_Error_Required') }}
-                  </div>
-                }
-              </div>
-            </div>
-
-            <div class="row row-button margin-top-15">
-              <p-button
-                severity="secondary"
-                [label]="translations.Get('General_Close')"
-                (click)="ApplicationModalClose()"
-              />
-              <p-button [label]="translations.Get('JobOffers_Application_Apply')" (click)="ApplicationForJobOffer()" />
             </div>
           </div>
-        </div>
-      </p-dialog>
-    }
-  </section>
+        </p-dialog>
+      }
+    </section>
+  }
 }

@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 import { ApplyService } from 'src/app/services/apply.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { FavoriteJobOffersService } from 'src/app/services/favorite-job-offers.service';
+import { RolesService } from 'src/app/services/roles.service';
 
 @Injectable()
 export class JobOffersEffects {
@@ -27,7 +28,8 @@ export class JobOffersEffects {
     private userService: UserService,
     private applyService: ApplyService,
     private companiesService: CompaniesService,
-    private favoriteJobOffersService: FavoriteJobOffersService
+    private favoriteJobOffersService: FavoriteJobOffersService,
+    public rolesService: RolesService
   ) {}
 
   loadJobOffer = createEffect(() => {
@@ -85,6 +87,18 @@ export class JobOffersEffects {
           catchError((error) =>
             of(JobOffersActions.loadCompanyError({ error: this.errorHandler.handleAPIError(error) }))
           )
+        );
+      })
+    );
+  });
+
+  loadRoles = createEffect(() => {
+    return this.actions.pipe(
+      ofType(JobOffersActions.loadRoles),
+      switchMap(() => {
+        return this.rolesService.GetUserRoles().pipe(
+          map((result) => JobOffersActions.loadRolesSuccess({ Roles: result })),
+          catchError((error) => of(JobOffersActions.loadRolesError({ error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );

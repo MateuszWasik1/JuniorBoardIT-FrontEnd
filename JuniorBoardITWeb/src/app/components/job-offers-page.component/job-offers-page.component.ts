@@ -22,6 +22,7 @@ import {
   selectErrorMessage,
   selectFilters,
   selectJobOffers,
+  selectRoles,
   selectUserData
 } from './job-offers-page-state/job-offers-page-state.selectors';
 import { AsyncPipe } from '@angular/common';
@@ -156,6 +157,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public JobOffers$ = this.store.select(selectJobOffers);
   public UserData$ = this.store.select(selectUserData);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
+  public Roles$ = this.store.select(selectRoles);
 
   constructor(
     public store: Store<AppState>,

@@ -11,6 +11,8 @@ export const selectUserData = createSelector(selectJobOffersState, (state: JobOf
 
 export const selectCompany = createSelector(selectJobOffersState, (state: JobOffersState) => state.Company);
 
+export const selectRoles = createSelector(selectJobOffersState, (state: JobOffersState) => state.Roles);
+
 export const selectFilters = createSelector(selectJobOffersState, (state: JobOffersState) => state.Filters);
 
 export const selectCount = createSelector(selectJobOffersState, (state: JobOffersState) => state.JobOffersCount);

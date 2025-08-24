@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { RolesService } from './services/roles.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,11 @@ export class AppComponent {
   public mainClass: string = 'container';
   public IsAdmin: boolean = false;
   public IsSupport: boolean = false;
+  public IsRecruiter: boolean = false;
+  public IsUser: boolean = false;
   public IsMobileMenuActive: boolean = false;
+
+  public subscriptions: Subscription[];
 
   constructor(
     public translate: TranslateService,
@@ -25,6 +30,8 @@ export class AppComponent {
     public router: Router,
     public route: ActivatedRoute
   ) {
+    this.subscriptions = [];
+
     //routing - find if in component login or register
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
@@ -51,10 +58,14 @@ export class AppComponent {
 
     //GetUserRoles
     if (!this.hideMenu) {
-      this.rolesService.GetUserRoles().subscribe((x) => {
-        this.IsAdmin = x.isAdmin;
-        this.IsSupport = x.isSupport;
-      });
+      this.subscriptions.push(
+        this.rolesService.GetUserRoles().subscribe((roles) => {
+          this.IsAdmin = roles.IsAdmin;
+          this.IsSupport = roles.IsSupport;
+          this.IsRecruiter = roles.IsRecruiter;
+          this.IsUser = roles.IsUser;
+        })
+      );
     }
   }
 
