@@ -69,6 +69,13 @@ var initialStateOfJobOfferPage: JobOffersState = {
     CFoundedYear: 0,
     CEmployeesNo: CompanyEmpNoEnum.Microenterprise
   },
+  Roles: {
+    IsAdmin: false,
+    IsPremium: false,
+    IsRecruiter: false,
+    IsSupport: false,
+    IsUser: false
+  },
   JobOffersCount: 0,
   ErrorMessage: ''
 };
@@ -118,6 +125,17 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   })),
 
   on(Actions.loadCompanyError, (state, { error }) => ({
+    ...state,
+    ErrorMessage: error
+  })),
+
+  //Load Roles
+  on(Actions.loadRolesSuccess, (state, { Roles }) => ({
+    ...state,
+    Roles: Roles
+  })),
+
+  on(Actions.loadRolesError, (state, { error }) => ({
     ...state,
     ErrorMessage: error
   })),
@@ -252,6 +270,13 @@ export const JobOfferReducer = createReducer<JobOffersState>(
       CLI: '',
       CFoundedYear: 0,
       CEmployeesNo: CompanyEmpNoEnum.Microenterprise
+    },
+    Roles: {
+      IsAdmin: false,
+      IsPremium: false,
+      IsRecruiter: false,
+      IsSupport: false,
+      IsUser: false
     },
     JobOffersCount: 0,
     ErrorMessage: ''

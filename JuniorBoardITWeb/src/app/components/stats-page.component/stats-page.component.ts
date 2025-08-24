@@ -106,7 +106,6 @@ export class StatsPageComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.Filters$.subscribe((filters) => {
-        console.log(filters.CGID);
         this.filterForm.patchValue({
           StartDate: filters.StartDate,
           EndDate: filters.EndDate,

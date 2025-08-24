@@ -69,6 +69,14 @@ export interface Company {
   CEmployeesNo: CompanyEmpNoEnum;
 }
 
+export interface Roles {
+  IsAdmin: boolean;
+  IsPremium: boolean;
+  IsRecruiter: boolean;
+  IsSupport: boolean;
+  IsUser: boolean;
+}
+
 export enum JobOfferTranslations {
   'JOTitle' = 'JobOffers_JobOffer_Title',
   'JOCompanyName' = 'JobOffers_JobOffer_CompanyName',
