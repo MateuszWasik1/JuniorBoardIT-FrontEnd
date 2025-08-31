@@ -62,6 +62,7 @@
   "User_Error_MaxLength50": "You have exceeded the number of characters! The maximum number of characters is 50!",
   "User_Error_MaxLength100": "You have exceeded the number of characters! The maximum number of characters is 100!",
   "Users_User_Company": "Recruiter company",
+  "Users_User_Company_Not_Found": "Company was not assigned to user",
   "ErrorHandler_ErrorOccured": "Error occured",
   "ErrorHandler_ErrorContent": "Error",
   "Paginator_FirstPage": "First page",
