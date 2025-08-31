@@ -87,6 +87,7 @@ export class AppComponent {
 
   public LogOut = () => {
     this.cookieService.set('token', '');
+    window.location.reload();
     this.router.navigate(['job-offers']);
   };
 }
