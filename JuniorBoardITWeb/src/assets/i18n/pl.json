@@ -64,6 +64,7 @@
   "User_Error_MaxLength50": "Przekroczyłeś liczbę znaków! Maksymalna liczba znaków to 50!",
   "User_Error_MaxLength100": "Przekroczyłeś liczbę znaków! Maksymalna liczba znaków to 100!",
   "Users_User_Company": "Firma rekrutera",
+  "Users_User_Company_Not_Found": "Firma nie została przypisana do użytkownika",
   "ErrorHandler_ErrorOccured": "Wystąpił błąd",
   "ErrorHandler_ErrorContent": "Treść błędu",
   "Paginator_FirstPage": "Pierwsza strona",
