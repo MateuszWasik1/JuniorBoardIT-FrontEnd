@@ -46,7 +46,8 @@ export class AccountEffects {
         return this.accountService.Login(params.user).pipe(
           map((result) => AccountActions.LoginSuccess({ token: result.toString() })),
           tap((result) => this.cookieService.set('token', result.token)),
-          tap(() => this.router.navigate(['/books'])),
+          tap(() => this.router.navigate(['/job-offers'])),
+          tap(() => setTimeout(() => window.location.reload(), 500)),
           catchError((error) => of(AccountActions.LoginError({ error: this.errorHandler.handleAPIError(error) })))
         );
       })
