@@ -2,7 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { cleanState, deleteUser, loadUsers, updatePaginationData } from './users-page-state/users-page-state.actions';
+import {
+  changeHasCompanyFilterValue,
+  changeNameFilterValue,
+  changeUserRoleFilterValue,
+  cleanState,
+  deleteUser,
+  loadUsers,
+  updatePaginationData
+} from './users-page-state/users-page-state.actions';
 import {
   selectCount,
   selectErrorMessage,
@@ -16,24 +24,47 @@ import { RolesEnum } from 'src/app/enums/RolesEnum';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import { AsyncPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { SelectModule } from 'primeng/select';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-users-page',
   templateUrl: './users-page.component.html',
   styleUrls: ['./users-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, PaginatorComponent, ButtonModule]
+  imports: [
+    AsyncPipe,
+    ReactiveFormsModule,
+    PaginatorComponent,
+    SelectModule,
+    CheckboxModule,
+    InputTextModule,
+    ButtonModule
+  ]
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public roles: any;
+  public roles: any = [
+    { id: '0', name: 'Wszyscy' },
+    { id: '1', name: RolesEnum.User },
+    { id: '2', name: RolesEnum.Premium },
+    { id: '3', name: RolesEnum.Recruiter },
+    { id: '4', name: RolesEnum.Support },
+    { id: '5', name: RolesEnum.Admin }
+  ];
 
   public count: number = 0;
+
+  public formFilter: FormGroup = new FormGroup({});
 
   public Users$ = this.store.select(selectUsers);
   public Filters$ = this.store.select(selectFilters);
   public Count$ = this.store.select(selectCount);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
+
+  private debounceTimer: any;
 
   constructor(
     public store: Store<AppState>,
@@ -42,17 +73,12 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     public errorHandler: MainUIErrorHandler
   ) {
     this.subscriptions = [];
+    this.formFilter = new FormGroup({
+      role: new FormControl(this.roles[0].id)
+    });
   }
 
   ngOnInit(): void {
-    this.roles = [
-      { id: '1', name: RolesEnum.User },
-      { id: '2', name: RolesEnum.Premium },
-      { id: '3', name: RolesEnum.Recruiter },
-      { id: '4', name: RolesEnum.Support },
-      { id: '5', name: RolesEnum.Admin }
-    ];
-
     this.subscriptions.push(
       this.ErrorMessage$.subscribe((error) => {
         this.errorHandler.HandleException(error);
@@ -66,9 +92,25 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   public GoToUser = (ugid: string) => this.router.navigate([`/user/${ugid}`]);
 
-  public DisplayRoles = (role: number) => this.roles[role - 1].name;
+  public DisplayRoles = (role: number) => this.roles[role].name;
 
   public DeleteUser = (ugid: string) => this.store.dispatch(deleteUser({ ugid: ugid }));
+
+  public ChangeUserRoleFilterValue = (role: number) =>
+    this.store.dispatch(changeUserRoleFilterValue({ userRole: role }));
+
+  public ChangeHasCompanyFilterValue = (hasCompany: boolean) =>
+    this.store.dispatch(changeHasCompanyFilterValue({ hasCompany: hasCompany }));
+
+  public ChangeNameFilterValue = (event: Event) => {
+    const name = (event.target as HTMLInputElement).value;
+
+    clearTimeout(this.debounceTimer);
+
+    this.debounceTimer = setTimeout(() => {
+      this.store.dispatch(changeNameFilterValue({ name: name }));
+    }, 1000);
+  };
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));

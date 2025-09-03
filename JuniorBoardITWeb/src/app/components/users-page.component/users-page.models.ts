@@ -14,4 +14,7 @@ export interface Users {
 export interface Filters {
   Skip: number;
   Take: number;
+  Name: string;
+  HasCompany: boolean;
+  Role: number;
 }

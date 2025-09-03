@@ -15,8 +15,13 @@ export class UserService {
     private cookiesService: CookieService
   ) {}
 
-  GetAllUsers(Skip: number, Take: number): Observable<any> {
-    let params = new HttpParams().set('skip', Skip).set('take', Take);
+  GetAllUsers(Skip: number, Take: number, Name: string, HasCompany: boolean, Role: number): Observable<any> {
+    let params = new HttpParams()
+      .set('skip', Skip)
+      .set('take', Take)
+      .set('name', Name)
+      .set('hasCompany', HasCompany)
+      .set('role', Role);
 
     return this.http.get<any>(this.apiUrl + 'api/User/GetAllUsers', {
       params: params,
