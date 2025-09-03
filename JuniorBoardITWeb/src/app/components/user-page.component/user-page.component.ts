@@ -133,8 +133,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   private InitUserForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({
-      UID: new FormControl<number>(0, { validators: [], nonNullable: true }),
-      UGID: new FormControl<string>('', { validators: [], nonNullable: true }),
+      UID: new FormControl<number>({ value: 0, disabled: true }, { validators: [], nonNullable: true }),
+      UGID: new FormControl<string>({ value: '', disabled: true }, { validators: [], nonNullable: true }),
       URID: new FormControl<number>(1, { validators: [], nonNullable: true }),
       UFirstName: new FormControl<string>('', { validators: [Validators.maxLength(50)], nonNullable: true }),
       ULastName: new FormControl<string>('', { validators: [Validators.maxLength(50)], nonNullable: true }),
