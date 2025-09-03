@@ -25,10 +25,12 @@ export class UsersEffects {
       ofType(UsersActions.loadUsers),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.userService.GetAllUsers(params[1].Skip, params[1].Take).pipe(
-          map((result) => UsersActions.loadUsersSuccess({ Users: result })),
-          catchError((error) => of(UsersActions.loadUsersError({ error: this.errorHandler.handleAPIError(error) })))
-        );
+        return this.userService
+          .GetAllUsers(params[1].Skip, params[1].Take, params[1].Name, params[1].HasCompany, params[1].Role)
+          .pipe(
+            map((result) => UsersActions.loadUsersSuccess({ Users: result })),
+            catchError((error) => of(UsersActions.loadUsersError({ error: this.errorHandler.handleAPIError(error) })))
+          );
       })
     );
   });

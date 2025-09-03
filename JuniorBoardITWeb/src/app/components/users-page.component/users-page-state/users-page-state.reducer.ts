@@ -6,7 +6,10 @@ var initialStateOfUsersPage: UsersState = {
   Users: [],
   Filters: {
     Skip: 0,
-    Take: 10
+    Take: 10,
+    Name: '',
+    HasCompany: false,
+    Role: 0
   },
   UsersCount: 0,
   ErrorMessage: ''
@@ -41,6 +44,31 @@ export const UsersReducer = createReducer<UsersState>(
     ErrorMessage: error
   })),
 
+  //Filters
+  on(Actions.changeUserRoleFilterValue, (state, { userRole }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Role: userRole
+    }
+  })),
+
+  on(Actions.changeHasCompanyFilterValue, (state, { hasCompany }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      HasCompany: hasCompany
+    }
+  })),
+
+  on(Actions.changeNameFilterValue, (state, { name }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Name: name
+    }
+  })),
+
   on(Actions.updatePaginationData, (state, { PaginationData }) => ({
     ...state,
     Filters: {
@@ -50,12 +78,16 @@ export const UsersReducer = createReducer<UsersState>(
     }
   })),
 
+  //Others
   on(Actions.cleanState, (state) => ({
     ...state,
     Users: [],
     Filters: {
       Skip: 0,
-      Take: 10
+      Take: 10,
+      Name: '',
+      HasCompany: false,
+      Role: 0
     },
     UsersCount: 0,
     ErrorMessage: ''
