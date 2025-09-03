@@ -189,7 +189,6 @@
           <span class="data-input-text"> {{ translations.Get('Users_User_Company') }}: </span>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-          {{ IsAdminView }}
           @if (IsAdminView) {
             @if (Companies$ | async; as companies) {
               <p-select
