@@ -39,7 +39,12 @@
         <div class="row margin-bottom-15">
           <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Users_Search_User') }}:</div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <input pInputText [placeholder]="translations.Get('Users_Search_User')" maxlength="255" />
+            <input
+              pInputText
+              [placeholder]="translations.Get('Users_Search_User')"
+              maxlength="255"
+              (keyup)="ChangeNameFilterValue($event)"
+            />
           </div>
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
         </div>

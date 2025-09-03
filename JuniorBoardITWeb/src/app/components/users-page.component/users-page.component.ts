@@ -64,6 +64,8 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   public Count$ = this.store.select(selectCount);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
+  private debounceTimer: any;
+
   constructor(
     public store: Store<AppState>,
     public translations: TranslationService,
@@ -90,7 +92,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   public GoToUser = (ugid: string) => this.router.navigate([`/user/${ugid}`]);
 
-  public DisplayRoles = (role: number) => this.roles[role - 1].name;
+  public DisplayRoles = (role: number) => this.roles[role].name;
 
   public DeleteUser = (ugid: string) => this.store.dispatch(deleteUser({ ugid: ugid }));
 
@@ -100,7 +102,15 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   public ChangeHasCompanyFilterValue = (hasCompany: boolean) =>
     this.store.dispatch(changeHasCompanyFilterValue({ hasCompany: hasCompany }));
 
-  public ChangeNameFilterValue = (name: string) => this.store.dispatch(changeNameFilterValue({ name: name }));
+  public ChangeNameFilterValue = (event: Event) => {
+    const name = (event.target as HTMLInputElement).value;
+
+    clearTimeout(this.debounceTimer);
+
+    this.debounceTimer = setTimeout(() => {
+      this.store.dispatch(changeNameFilterValue({ name: name }));
+    }, 1000);
+  };
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));
