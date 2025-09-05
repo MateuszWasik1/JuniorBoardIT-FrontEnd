@@ -23,13 +23,14 @@ import { PaginatorComponent } from '../shared/paginator.component/paginator.comp
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-companies-page',
   templateUrl: './companies-page.component.html',
   styleUrls: ['./companies-page.component.scss'],
   standalone: true,
-  imports: [PaginatorComponent, AsyncPipe, ButtonModule, SelectModule, InputTextModule]
+  imports: [PaginatorComponent, AsyncPipe, ButtonModule, SelectModule, InputTextModule, TooltipModule]
 })
 export class CompaniesPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
