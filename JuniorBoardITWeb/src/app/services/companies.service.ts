@@ -24,8 +24,8 @@ export class CompaniesService {
     });
   }
 
-  GetCompanies(Skip: number, Take: number): Observable<any> {
-    let params = new HttpParams().set('skip', Skip).set('take', Take);
+  GetCompanies(Skip: number, Take: number, Name: string): Observable<any> {
+    let params = new HttpParams().set('skip', Skip).set('take', Take).set('name', Name);
 
     return this.http.get<any>(this.apiUrl + 'api/Companies/GetCompanies', {
       params: params,

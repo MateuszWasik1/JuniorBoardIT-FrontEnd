@@ -28,6 +28,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-users-page',
@@ -41,7 +42,8 @@ import { InputTextModule } from 'primeng/inputtext';
     SelectModule,
     CheckboxModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    TooltipModule
   ]
 })
 export class UsersPageComponent implements OnInit, OnDestroy {

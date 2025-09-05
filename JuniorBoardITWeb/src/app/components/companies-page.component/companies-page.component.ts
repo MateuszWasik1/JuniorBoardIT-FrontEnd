@@ -10,6 +10,7 @@ import {
   selectFilters
 } from './companies-page-state/companies-page-state.selectors';
 import {
+  changeNameFilterValue,
   cleanState,
   deleteCompany,
   loadCompanies,
@@ -21,13 +22,15 @@ import { AsyncPipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-companies-page',
   templateUrl: './companies-page.component.html',
   styleUrls: ['./companies-page.component.scss'],
   standalone: true,
-  imports: [PaginatorComponent, AsyncPipe, ButtonModule, SelectModule]
+  imports: [PaginatorComponent, AsyncPipe, ButtonModule, SelectModule, InputTextModule, TooltipModule]
 })
 export class CompaniesPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
@@ -37,6 +40,8 @@ export class CompaniesPageComponent implements OnInit, OnDestroy {
   public Filters$ = this.store.select(selectFilters);
   public Count$ = this.store.select(selectCompaniesCount);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
+
+  private debounceTimer: any;
 
   constructor(
     public store: Store<AppState>,
@@ -63,6 +68,16 @@ export class CompaniesPageComponent implements OnInit, OnDestroy {
   public ModifyCompany = (CGID: string) => this.router.navigate([`company/${CGID}`]);
 
   public DeleteCompany = (CGID: string) => this.store.dispatch(deleteCompany({ CGID: CGID }));
+
+  public ChangeNameFilterValue = (event: Event) => {
+    const name = (event.target as HTMLInputElement).value;
+
+    clearTimeout(this.debounceTimer);
+
+    this.debounceTimer = setTimeout(() => {
+      this.store.dispatch(changeNameFilterValue({ name: name }));
+    }, 1000);
+  };
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));

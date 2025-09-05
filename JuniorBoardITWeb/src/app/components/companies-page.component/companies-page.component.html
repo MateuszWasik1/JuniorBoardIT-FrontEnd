@@ -9,6 +9,25 @@
       </div>
     </div>
 
+    <div class="row padding-top-15 filter-row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row margin-bottom-15">
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" [pTooltip]="translations.Get('Companies_Search_Tooltip')">
+            {{ translations.Get('Companies_Search') }}:
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <input
+              pInputText
+              [placeholder]="translations.Get('Companies_Search')"
+              maxlength="255"
+              (keyup)="ChangeNameFilterValue($event)"
+            />
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="row margin-top-15 filter-row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <app-paginator [length]="count" (paginationData)="UpdatePaginationData($event)"></app-paginator>

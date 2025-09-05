@@ -23,6 +23,11 @@ export const deleteCompany = createAction('[Companies Page] Delete Company', pro
 export const deleteCompanySuccess = createAction('Companies Page] Delete Company Success', props<{ CGID: any }>());
 export const deleteCompanyError = createAction('[Companies Page] Delete Company Error', props<{ error: any }>());
 
+export const changeNameFilterValue = createAction(
+  '[Companies Page] Change Name Filter Value',
+  props<{ name: string }>()
+);
+
 export const updatePaginationData = createAction(
   '[Companies Page] Update Pagination Data',
   props<{ PaginationData: any }>()
