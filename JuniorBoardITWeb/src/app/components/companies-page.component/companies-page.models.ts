@@ -25,6 +25,7 @@ export interface Company {
 export interface Filters {
   Skip: number;
   Take: number;
+  Name: string;
 }
 
 export enum CompanyTranslations {

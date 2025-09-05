@@ -27,7 +27,7 @@ export class CompaniesEffects {
       ofType(CompaniesActions.loadCompanies),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.companiesService.GetCompanies(params[1].Skip, params[1].Take).pipe(
+        return this.companiesService.GetCompanies(params[1].Skip, params[1].Take, params[1].Name).pipe(
           map((result) => CompaniesActions.loadCompaniesSuccess({ Companies: result })),
           catchError((error) =>
             of(CompaniesActions.loadCompaniesError({ error: this.errorHandler.handleAPIError(error) }))

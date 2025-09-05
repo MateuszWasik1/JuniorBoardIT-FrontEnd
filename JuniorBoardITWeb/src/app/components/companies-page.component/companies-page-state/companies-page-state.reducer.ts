@@ -28,7 +28,8 @@ var initialStateOfCompaniesPage: CompaniesState = {
   },
   Filters: {
     Skip: 0,
-    Take: 10
+    Take: 10,
+    Name: ''
   },
   CompaniesCount: 0,
   ErrorMessage: ''
@@ -81,6 +82,15 @@ export const CompaniesReducer = createReducer<CompaniesState>(
     ErrorMessage: error
   })),
 
+  //Filters
+  on(Actions.changeNameFilterValue, (state, { name }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Name: name
+    }
+  })),
+
   on(Actions.updatePaginationData, (state, { PaginationData }) => ({
     ...state,
     Filters: {
@@ -90,6 +100,7 @@ export const CompaniesReducer = createReducer<CompaniesState>(
     }
   })),
 
+  //Others
   on(Actions.cleanState, (state) => ({
     ...state,
     Companies: [],
@@ -115,7 +126,8 @@ export const CompaniesReducer = createReducer<CompaniesState>(
     },
     Filters: {
       Skip: 0,
-      Take: 10
+      Take: 10,
+      Name: ''
     },
     CompaniesCount: 0,
     ErrorMessage: ''
