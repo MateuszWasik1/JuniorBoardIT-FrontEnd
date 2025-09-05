@@ -23,8 +23,8 @@ var initialStateOfCompaniesPage: CompaniesState = {
     CLI: '',
     CFoundedYear: 0,
     CEmployeesNo: CompanyEmpNoEnum.Microenterprise,
-    CCreatedAt: new Date(),
-    CUpdatedAt: new Date()
+    CCreatedAt: null,
+    CUpdatedAt: null
   },
   Filters: {
     Skip: 0,
@@ -121,8 +121,8 @@ export const CompaniesReducer = createReducer<CompaniesState>(
       CLI: '',
       CFoundedYear: 0,
       CEmployeesNo: CompanyEmpNoEnum.Microenterprise,
-      CCreatedAt: new Date(),
-      CUpdatedAt: new Date()
+      CCreatedAt: null,
+      CUpdatedAt: null
     },
     Filters: {
       Skip: 0,

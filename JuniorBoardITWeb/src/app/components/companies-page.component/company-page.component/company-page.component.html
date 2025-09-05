@@ -206,13 +206,7 @@
           <span class="data-input-text"> {{ translations.Get('Companies_Company_PostalCode') }}: </span>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-          <input
-            pInputText
-            formControlName="CPostalCode"
-            [placeholder]="translations.Get('Companies_Company_PostalCode')"
-            required
-            maxlength="255"
-          />
+          <p-inputMask formControlName="CPostalCode" required minlength="10" maxlength="10" mask="99-999"></p-inputMask>
           @if (form.controls.CPostalCode.errors?.['required']) {
             <div class="error-row">
               {{ translations.Get('Companies_Company_PostalCode_Required') }}
@@ -268,9 +262,16 @@
               {{ translations.Get('Companies_Company_NIP_Required') }}
             </div>
           }
+
+          @if (form.controls.CNIP.errors?.['minlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_NIP_Min10') }}
+            </div>
+          }
+
           @if (form.controls.CNIP.errors?.['maxlength']) {
             <div class="error-row">
-              {{ translations.Get('Companies_Company_NIP_Max255') }}
+              {{ translations.Get('Companies_Company_NIP_Max10') }}
             </div>
           }
         </div>
@@ -293,9 +294,16 @@
               {{ translations.Get('Companies_Company_Regon_Required') }}
             </div>
           }
+
+          @if (form.controls.CRegon.errors?.['minlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_Regon_Min9') }}
+            </div>
+          }
+
           @if (form.controls.CRegon.errors?.['maxlength']) {
             <div class="error-row">
-              {{ translations.Get('Companies_Company_Regon_Max200') }}
+              {{ translations.Get('Companies_Company_Regon_Max14') }}
             </div>
           }
         </div>
@@ -317,9 +325,14 @@
               {{ translations.Get('Companies_Company_KRS_Required') }}
             </div>
           }
+          @if (form.controls.CKRS.errors?.['minlength']) {
+            <div class="error-row">
+              {{ translations.Get('Companies_Company_KRS_Min10') }}
+            </div>
+          }
           @if (form.controls.CKRS.errors?.['maxlength']) {
             <div class="error-row">
-              {{ translations.Get('Companies_Company_KRS_Max255') }}
+              {{ translations.Get('Companies_Company_KRS_Max10') }}
             </div>
           }
         </div>
@@ -334,14 +347,8 @@
             pInputText
             formControlName="CLI"
             [placeholder]="translations.Get('Companies_Company_LinkedIn')"
-            required
             maxlength="255"
           />
-          @if (form.controls.CLI.errors?.['required']) {
-            <div class="error-row">
-              {{ translations.Get('Companies_Company_LinkedIn_Required') }}
-            </div>
-          }
           @if (form.controls.CLI.errors?.['maxlength']) {
             <div class="error-row">
               {{ translations.Get('Companies_Company_LinkedIn_Max255') }}
@@ -403,6 +410,28 @@
           }
         </div>
       </div>
+
+      @if (form.controls.CCreatedAt.value) {
+        <div class="row d-flex">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+            <span class="data-input-text"> {{ translations.Get('Companies_Company_CCreatedAt') }}: </span>
+          </div>
+          <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+            {{ form.controls.CCreatedAt.value | date: 'yyyy-MM-dd hh:mm:ss' }}
+          </div>
+        </div>
+      }
+
+      @if (form.controls.CUpdatedAt.value) {
+        <div class="row d-flex">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 row-textarea">
+            <span class="data-input-text"> {{ translations.Get('Companies_Company_CUpdatedAt') }}: </span>
+          </div>
+          <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
+            {{ form.controls.CUpdatedAt.value | date: 'yyyy-MM-dd hh:mm:ss' }}
+          </div>
+        </div>
+      }
     </div>
   </div>
 </section>

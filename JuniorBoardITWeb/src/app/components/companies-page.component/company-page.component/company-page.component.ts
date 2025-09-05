@@ -13,7 +13,7 @@ import { selectCompany, selectErrorMessage } from '../companies-page-state/compa
 import { TranslationService } from 'src/app/services/translate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
 import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
@@ -24,6 +24,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectObjectModel } from 'src/app/models/general-models';
 import { FormErrorsService } from 'src/app/services/form-error.service';
 import { CompanyTranslations } from '../companies-page.models';
+import { InputMaskModule } from 'primeng/inputmask';
 
 type FormModel = {
   CGID: FormControl<string>;
@@ -42,8 +43,8 @@ type FormModel = {
   CLI: FormControl<string>;
   CFoundedYear: FormControl<number>;
   CEmployeesNo: FormControl<CompanyEmpNoEnum>;
-  CCreatedAt: FormControl<Date>;
-  CUpdatedAt: FormControl<Date>;
+  CCreatedAt: FormControl<Date | null>;
+  CUpdatedAt: FormControl<Date | null>;
 };
 
 @Component({
@@ -54,11 +55,13 @@ type FormModel = {
   imports: [
     ReactiveFormsModule,
     AsyncPipe,
+    DatePipe,
     ButtonModule,
     InputTextModule,
     SelectModule,
     TextareaModule,
-    InputNumberModule
+    InputNumberModule,
+    InputMaskModule
   ]
 })
 export class CompanyPageComponent implements OnInit, OnDestroy {
@@ -179,19 +182,19 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
         nonNullable: true
       }),
       CNIP: new FormControl<string>('', {
-        validators: [Validators.required, Validators.maxLength(255)],
+        validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)],
         nonNullable: true
       }),
       CRegon: new FormControl<string>('', {
-        validators: [Validators.required, Validators.maxLength(255)],
+        validators: [Validators.required, Validators.minLength(9), Validators.maxLength(14)],
         nonNullable: true
       }),
       CKRS: new FormControl<string>('', {
-        validators: [Validators.required, Validators.maxLength(255)],
+        validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)],
         nonNullable: true
       }),
       CLI: new FormControl<string>('', {
-        validators: [Validators.required, Validators.maxLength(255)],
+        validators: [Validators.maxLength(255)],
         nonNullable: true
       }),
       CFoundedYear: new FormControl<number>(0, {
@@ -202,8 +205,8 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.maxLength(200)],
         nonNullable: true
       }),
-      CCreatedAt: new FormControl<Date>(new Date(), { validators: [Validators.required], nonNullable: true }),
-      CUpdatedAt: new FormControl<Date>(new Date(), { validators: [Validators.required], nonNullable: true })
+      CCreatedAt: new FormControl<Date | null>(null, { validators: [Validators.required], nonNullable: false }),
+      CUpdatedAt: new FormControl<Date | null>(null, { validators: [Validators.required], nonNullable: false })
     });
   };
 
