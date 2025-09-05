@@ -18,8 +18,8 @@ export interface Company {
   CLI: string;
   CFoundedYear: number;
   CEmployeesNo: CompanyEmpNoEnum;
-  CCreatedAt: Date;
-  CUpdatedAt: Date;
+  CCreatedAt: Date | null;
+  CUpdatedAt: Date | null;
 }
 
 export interface Filters {
