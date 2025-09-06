@@ -187,7 +187,7 @@
 
               <ng-template pTemplate="footer">
                 <div class="footer-row">
-                  @if (roles.IsUser) {
+                  @if (roles.IsUser || roles.IsRecruiter || roles.IsAdmin) {
                     <p-button
                       [label]="
                         jobOffer.JOFavorite
