@@ -27,6 +27,7 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-bugs-page',
@@ -41,7 +42,8 @@ import { TooltipModule } from 'primeng/tooltip';
     ButtonModule,
     SelectModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    InputTextModule
   ]
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
