@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 import {
+  changeMessageFilterValue,
   ChangeReportTypeFilterValue,
   cleanState,
   loadReports,
@@ -28,6 +29,9 @@ import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 
 import { MessageModule } from 'primeng/message';
 import { SelectObjectModel } from 'src/app/models/general-models';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputTextModule } from 'primeng/inputtext';
+
 type FormFilterModel = {
   ReportType: FormControl<ReportsTypeEnum>;
 };
@@ -45,7 +49,9 @@ type FormFilterModel = {
     SelectModule,
     ReactiveFormsModule,
     ButtonModule,
-    MessageModule
+    MessageModule,
+    TooltipModule,
+    InputTextModule
   ]
 })
 export class ReportsPageComponent implements OnInit, OnDestroy {
@@ -69,6 +75,8 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
   public Count$ = this.store.select(selectCount);
   public Reports$ = this.store.select(selectReports);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
+
+  private debounceTimer: any;
 
   constructor(
     public store: Store<AppState>,
@@ -114,6 +122,16 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
 
   public ChangeReportTypeFilterValue = (event: any) =>
     this.store.dispatch(ChangeReportTypeFilterValue({ ReportType: event.value as ReportsTypeEnum }));
+
+  public ChangeMessageFilterValue = (event: Event) => {
+    const message = (event.target as HTMLInputElement).value;
+
+    clearTimeout(this.debounceTimer);
+
+    this.debounceTimer = setTimeout(() => {
+      this.store.dispatch(changeMessageFilterValue({ Message: message }));
+    }, 1000);
+  };
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationDataReports({ PaginationData: PaginationData }));

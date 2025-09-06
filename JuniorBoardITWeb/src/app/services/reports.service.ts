@@ -25,8 +25,12 @@ export class ReportsService {
     });
   }
 
-  GetReports(Skip: number, Take: number, ReportType: ReportsTypeEnum): Observable<any> {
-    let params = new HttpParams().set('skip', Skip).set('take', Take).set('reportType', ReportType);
+  GetReports(Skip: number, Take: number, ReportType: ReportsTypeEnum, Message: string): Observable<any> {
+    let params = new HttpParams()
+      .set('skip', Skip)
+      .set('take', Take)
+      .set('reportType', ReportType)
+      .set('message', Message);
 
     return this.http.get<any>(this.apiUrl + 'api/Reports/GetReports', {
       params: params,

@@ -73,7 +73,8 @@ var initialStateOfReportPage: ReportsState = {
   Filters: {
     Skip: 0,
     Take: 10,
-    ReportType: ReportsTypeEnum.New
+    ReportType: ReportsTypeEnum.New,
+    Message: ''
   },
   ReportsCount: 0,
   ErrorMessage: ''
@@ -141,6 +142,14 @@ export const ReportsReducer = createReducer<ReportsState>(
     }
   })),
 
+  on(Actions.changeMessageFilterValue, (state, { Message }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Message: Message
+    }
+  })),
+
   on(Actions.updatePaginationDataReports, (state, { PaginationData }) => ({
     ...state,
     Filters: {
@@ -150,6 +159,7 @@ export const ReportsReducer = createReducer<ReportsState>(
     }
   })),
 
+  //Others
   on(Actions.cleanState, (state) => ({
     ...state,
     Reports: [],
@@ -209,7 +219,8 @@ export const ReportsReducer = createReducer<ReportsState>(
     Filters: {
       Skip: 0,
       Take: 10,
-      ReportType: ReportsTypeEnum.New
+      ReportType: ReportsTypeEnum.New,
+      Message: ''
     },
     ReportsCount: 0,
     ErrorMessage: ''
