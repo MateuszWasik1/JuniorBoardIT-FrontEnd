@@ -35,6 +35,11 @@ export const ChangeReportTypeFilterValue = createAction(
   props<{ ReportType: ReportsTypeEnum }>()
 );
 
+export const changeMessageFilterValue = createAction(
+  '[Reports Page] Change Message Filter Value',
+  props<{ Message: string }>()
+);
+
 export const updatePaginationDataReports = createAction(
   '[Reports Page] Update Pagination Data Reports',
   props<{ PaginationData: any }>()

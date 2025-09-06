@@ -7,7 +7,9 @@
     </div>
 
     <div class="row padding-top-15 filter-row">
-      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Reports_ReportStatus') }}:</div>
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" [pTooltip]="translations.Get('Reports_ReportStatus_Tooltip')">
+        {{ translations.Get('Reports_ReportStatus') }}:
+      </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" [formGroup]="formFilter">
         <p-select
           [options]="reportsType"
@@ -22,7 +24,17 @@
           (onChange)="ChangeReportTypeFilterValue($event)"
         />
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" [pTooltip]="translations.Get('Reports_Search_Tooltip')">
+        {{ translations.Get('Reports_Search') }}:
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <input
+          pInputText
+          [placeholder]="translations.Get('Reports_Search')"
+          maxlength="255"
+          (keyup)="ChangeMessageFilterValue($event)"
+        />
+      </div>
     </div>
 
     <div class="row margin-top-15 filter-row">

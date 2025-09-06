@@ -31,6 +31,7 @@ export interface Filters {
   Skip: number;
   Take: number;
   ReportType: ReportsTypeEnum;
+  Message: string;
 }
 
 export enum ReportTranslations {
