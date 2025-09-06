@@ -134,7 +134,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     { id: SalaryEnum.Weekly, name: 'Tygodniówka' },
     { id: SalaryEnum.Monthly, name: 'Miesięcznie' },
     { id: SalaryEnum.Yearly, name: 'Rocznie' },
-    { id: SalaryEnum.All, name: 'wszystkie' }
+    { id: SalaryEnum.All, name: 'Wszystkie' }
   ];
   public educationTypes: SelectObjectModel[] = [
     { id: EducationEnum.Elementary, name: 'Podstawowe' },
