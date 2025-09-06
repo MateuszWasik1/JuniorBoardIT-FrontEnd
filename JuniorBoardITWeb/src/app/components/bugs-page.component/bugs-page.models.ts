@@ -32,6 +32,7 @@ export interface BugFilters {
   BugType: BugTypeEnum;
   Skip: number;
   Take: number;
+  Message: string;
 }
 
 export interface BugNotesFilters {

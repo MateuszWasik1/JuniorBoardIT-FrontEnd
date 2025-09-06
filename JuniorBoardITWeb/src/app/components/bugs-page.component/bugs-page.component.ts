@@ -12,6 +12,7 @@ import {
 } from './bugs-page-state/bugs-page-state.selectors';
 import {
   changeBugsType,
+  changeMessageFilterValue,
   cleanState,
   loadBugs,
   loadUserRoles,
@@ -25,13 +26,23 @@ import { PaginatorComponent } from '../shared/paginator.component/paginator.comp
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-bugs-page',
   templateUrl: './bugs-page.component.html',
   styleUrls: ['./bugs-page.component.scss'],
   standalone: true,
-  imports: [PaginatorComponent, AsyncPipe, DatePipe, NgClass, ButtonModule, SelectModule, ReactiveFormsModule]
+  imports: [
+    PaginatorComponent,
+    AsyncPipe,
+    DatePipe,
+    NgClass,
+    ButtonModule,
+    SelectModule,
+    ReactiveFormsModule,
+    TooltipModule
+  ]
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
@@ -64,6 +75,8 @@ export class BugsPageComponent implements OnInit, OnDestroy {
     { id: '4', name: 'W naprawie' },
     { id: '5', name: 'Naprawiony' }
   ];
+
+  private debounceTimer: any;
 
   constructor(
     public store: Store<AppState>,
@@ -98,6 +111,16 @@ export class BugsPageComponent implements OnInit, OnDestroy {
 
   public ChangeBugsType = (BugType: SelectChangeEvent) =>
     this.store.dispatch(changeBugsType({ BugType: BugType.value }));
+
+  public ChangeMessageFilterValue = (event: Event) => {
+    const message = (event.target as HTMLInputElement).value;
+
+    clearTimeout(this.debounceTimer);
+
+    this.debounceTimer = setTimeout(() => {
+      this.store.dispatch(changeMessageFilterValue({ Message: message }));
+    }, 1000);
+  };
 
   public UpdatePaginationData = (PaginationData: any) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));

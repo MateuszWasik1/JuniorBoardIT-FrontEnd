@@ -29,7 +29,7 @@ export class BugsEffects {
       ofType(BugsActions.loadBugs),
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
-        return this.bugsService.GetBugs(params[1].BugType, params[1].Skip, params[1].Take).pipe(
+        return this.bugsService.GetBugs(params[1].BugType, params[1].Skip, params[1].Take, params[1].Message).pipe(
           map((result) => BugsActions.loadBugsSuccess({ Bugs: result })),
           catchError((error) => of(BugsActions.loadBugsError({ error: this.errorHandler.handleAPIError(error) })))
         );
