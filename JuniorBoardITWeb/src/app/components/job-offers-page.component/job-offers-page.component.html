@@ -6,53 +6,158 @@
           <h1 class="page-title">{{ translations.Get('TopMenu_JobOffers') }}</h1>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-          @if (roles.IsRecruiter) {
+          @if (roles.IsRecruiter || roles.IsSupport || roles.IsAdmin) {
             <p-button [label]="translations.Get('General_Add')" (click)="AddJobOffer()" />
           }
         </div>
       </div>
 
-      <div class="row padding-top-15 filter-row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="row margin-bottom-15">
-            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-              {{ translations.Get('JobOffers_Education_Filter') }}:
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" [formGroup]="formFilter">
-              <p-select
-                [options]="educationTypes"
-                [showClear]="false"
-                [filter]="true"
-                filterBy="name"
-                optionLabel="name"
-                optionValue="id"
-                [placeholder]="translations.Get('JobOffers_Education_Filter_Placeholder')"
-                aria-describedby="offer-status"
-                formControlName="education"
-                (onChange)="ChangeEducationFilterValue($event)"
-              />
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
-          </div>
-          @if (roles.IsUser) {
-            <div class="row margin-top-15 margin-bottom-15">
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                {{ translations.Get('JobOffers_Choose_Only_Favorites') }}
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
-              </div>
-              <div class="col-lg-6 col-md-62 col-sm-12 col-xs-12"></div>
-            </div>
-          }
+      <!-- Start of filters -->
+
+      <div class="row padding-top-15 filter-row" [formGroup]="formFilter">
+        <div
+          class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+          [pTooltip]="translations.Get('JobOffers_Expirence_Filter_Tooltip')"
+        >
+          {{ translations.Get('JobOffers_Expirence_Filter') }}:
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <p-select
+            [options]="expirenceTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="translations.Get('JobOffers_Expirence_Filter_Tooltip')"
+            formControlName="expirence"
+            (onChange)="ChangeExpirienceFilterValue($event.value)"
+          />
+        </div>
+        <div
+          class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+          [pTooltip]="translations.Get('JobOffers_Category_Filter_Tooltip')"
+        >
+          {{ translations.Get('JobOffers_Category_Filter') }}:
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <p-select
+            [options]="categoryTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="translations.Get('JobOffers_Category_Filter_Tooltip')"
+            formControlName="category"
+            (onChange)="ChangeCategoryFilterValue($event.value)"
+          />
         </div>
       </div>
+
+      <div class="row padding-top-15 filter-row" [formGroup]="formFilter">
+        <div
+          class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+          [pTooltip]="translations.Get('JobOffers_Location_Filter_Tooltip')"
+        >
+          {{ translations.Get('JobOffers_Location_Filter') }}:
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <p-select
+            [options]="locationTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="translations.Get('JobOffers_Location_Filter_Tooltip')"
+            formControlName="location"
+            (onChange)="ChangeLocationFilterValue($event.value)"
+          />
+        </div>
+        <div
+          class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+          [pTooltip]="translations.Get('JobOffers_Education_Filter_Tooltip')"
+        >
+          {{ translations.Get('JobOffers_Education_Filter') }}:
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <p-select
+            [options]="educationTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="translations.Get('JobOffers_Education_Filter_Tooltip')"
+            aria-describedby="offer-status"
+            formControlName="education"
+            (onChange)="ChangeEducationFilterValue($event.value)"
+          />
+        </div>
+      </div>
+
+      <div class="row padding-top-15 filter-row" [formGroup]="formFilter">
+        <div
+          class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+          [pTooltip]="translations.Get('JobOffers_EmploymentType_Filter_Tooltip')"
+        >
+          {{ translations.Get('JobOffers_EmploymentTypes_Filter') }}:
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <p-select
+            [options]="employmentTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="translations.Get('JobOffers_EmploymentType_Filter_Tooltip')"
+            formControlName="employmentType"
+            (onChange)="ChangeEmploymentTypeFilterValue($event.value)"
+          />
+        </div>
+        <div
+          class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+          [pTooltip]="translations.Get('JobOffers_Salary_Filter_Tooltip')"
+        >
+          {{ translations.Get('JobOffers_Salary_Filter') }}:
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <p-select
+            [options]="salaryTypes"
+            [showClear]="false"
+            [filter]="true"
+            filterBy="name"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="translations.Get('JobOffers_Salary_Filter_Tooltip')"
+            aria-describedby="offer-status"
+            formControlName="salary"
+            (onChange)="ChangeSalaryFilterValue($event.value)"
+          />
+        </div>
+      </div>
+
+      @if (roles.IsUser || roles.IsPremium || roles.IsRecruiter || roles.IsSupport || roles.IsAdmin) {
+        <div class="row padding-top-15 filter-row">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            {{ translations.Get('JobOffers_Choose_Only_Favorites') }}
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <p-checkbox [binary]="true" (onChange)="ChangeFavoriteFilterValue($event.checked)"> </p-checkbox>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+        </div>
+      }
 
       <div class="row margin-top-15 filter-row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <app-paginator [length]="count" (paginationData)="UpdatePaginationData($event)"></app-paginator>
         </div>
       </div>
+
+      <!-- End of filters -->
 
       @if (jobOffers.length == 0) {
         <div class="row no-data-row">
@@ -187,7 +292,7 @@
 
               <ng-template pTemplate="footer">
                 <div class="footer-row">
-                  @if (roles.IsUser || roles.IsRecruiter || roles.IsAdmin) {
+                  @if (roles.IsUser || roles.IsPremium || roles.IsRecruiter || roles.IsSupport || roles.IsAdmin) {
                     <p-button
                       [label]="
                         jobOffer.JOFavorite

@@ -52,7 +52,17 @@ export class JobOffersEffects {
       withLatestFrom(this.store.select(selectFilters)),
       switchMap((params) => {
         return this.jobOffersService
-          .GetAllJobOffers(params[1].Skip, params[1].Take, params[1].Education, params[1].Favorite)
+          .GetAllJobOffers(
+            params[1].Skip,
+            params[1].Take,
+            params[1].Expirence,
+            params[1].Category,
+            params[1].Location,
+            params[1].Education,
+            params[1].EmploymentType,
+            params[1].Salary,
+            params[1].Favorite
+          )
           .pipe(
             map((result) => JobOffersActions.loadJobOffersSuccess({ JobOffers: result })),
             catchError((error) =>

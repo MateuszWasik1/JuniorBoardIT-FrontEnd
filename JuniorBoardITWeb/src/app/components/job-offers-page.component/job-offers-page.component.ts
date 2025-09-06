@@ -8,8 +8,13 @@ import { Router } from '@angular/router';
 import {
   addToFavorite,
   applyForJobOffer,
-  ChangeEducationFilterValue,
-  ChangeFavoriteFilterValue,
+  changeCategoryFilterValue,
+  changeEducationFilterValue,
+  changeEmploymentTypeFilterValue,
+  changeExpirenceFilterValue,
+  changeFavoriteFilterValue,
+  changeLocationFilterValue,
+  changeSalaryFilterValue,
   cleanState,
   deleteJobOffer,
   loadJobOffers,
@@ -47,6 +52,7 @@ import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
 import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
 import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { TooltipModule } from 'primeng/tooltip';
 
 type FormReportModel = {
   RJOGID: FormControl<string>;
@@ -80,7 +86,8 @@ type FormUserDataModel = {
     SelectButtonModule,
     InputTextModule,
     FileUploadModule,
-    CardModule
+    CardModule,
+    TooltipModule
   ]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
@@ -89,27 +96,31 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public locationTypes: SelectObjectModel[] = [
     { id: LocationEnum.Remote, name: 'Zdalnie' },
     { id: LocationEnum.Hybrid, name: 'Hybrydowo' },
-    { id: LocationEnum.Stationary, name: 'Stacjonarnie' }
+    { id: LocationEnum.Stationary, name: 'Stacjonarnie' },
+    { id: LocationEnum.All, name: 'Wszystkie' }
   ];
   public employmentTypes: SelectObjectModel[] = [
     { id: EmploymentTypeEnum.UoP, name: 'UoP' },
     { id: EmploymentTypeEnum.UZ, name: 'UZ' },
     { id: EmploymentTypeEnum.UD, name: 'UD' },
-    { id: EmploymentTypeEnum.B2B, name: 'B2B' }
+    { id: EmploymentTypeEnum.B2B, name: 'B2B' },
+    { id: EmploymentTypeEnum.All, name: 'Wszystkie' }
   ];
   public expirenceTypes: SelectObjectModel[] = [
     { id: ExpirenceEnum.Junior, name: 'Junior' },
     { id: ExpirenceEnum.Mid, name: 'Mid' },
     { id: ExpirenceEnum.Regular, name: 'Regular' },
     { id: ExpirenceEnum.Senior, name: 'Senior' },
-    { id: ExpirenceEnum.Lead, name: 'Lead' }
+    { id: ExpirenceEnum.Lead, name: 'Lead' },
+    { id: ExpirenceEnum.All, name: 'Wszystkie' }
   ];
   public categoryTypes: SelectObjectModel[] = [
     { id: CategoryEnum.FrontEnd, name: 'FrontEnd' },
     { id: CategoryEnum.BackEnd, name: 'BackEnd' },
     { id: CategoryEnum.DevOps, name: 'DevOps' },
     { id: CategoryEnum.QA, name: 'QA' },
-    { id: CategoryEnum.UX, name: 'UX' }
+    { id: CategoryEnum.UX, name: 'UX' },
+    { id: CategoryEnum.All, name: 'Wszystkie' }
   ];
   public currencyTypes: SelectObjectModel[] = [
     { id: CurrencyEnum.PLN, name: 'PLN' },
@@ -122,7 +133,8 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     { id: SalaryEnum.Daily, name: 'Dniówka' },
     { id: SalaryEnum.Weekly, name: 'Tygodniówka' },
     { id: SalaryEnum.Monthly, name: 'Miesięcznie' },
-    { id: SalaryEnum.Yearly, name: 'Rocznie' }
+    { id: SalaryEnum.Yearly, name: 'Rocznie' },
+    { id: SalaryEnum.All, name: 'wszystkie' }
   ];
   public educationTypes: SelectObjectModel[] = [
     { id: EducationEnum.Elementary, name: 'Podstawowe' },
@@ -167,7 +179,12 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptions = [];
     this.formFilter = new FormGroup({
-      education: new FormControl(this.educationTypes[5].id)
+      expirence: new FormControl(this.expirenceTypes[5].id),
+      category: new FormControl(this.categoryTypes[5].id),
+      location: new FormControl(this.locationTypes[3].id),
+      education: new FormControl(this.educationTypes[5].id),
+      employmentType: new FormControl(this.employmentTypes[4].id),
+      salary: new FormControl(this.salaryTypes[4].id)
     });
     this.reportForm = this.InitReportForm();
     this.userDataForm = this.InitUserDataForm();
@@ -185,20 +202,35 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.Count$.subscribe((count) => (this.count = count)));
   }
 
-  public ChangeEducationFilterValue = (event: any) =>
-    this.store.dispatch(ChangeEducationFilterValue({ value: event.value }));
+  public ChangeExpirienceFilterValue = (expirence: ExpirenceEnum) =>
+    this.store.dispatch(changeExpirenceFilterValue({ Expirence: expirence }));
+
+  public ChangeCategoryFilterValue = (category: CategoryEnum) =>
+    this.store.dispatch(changeCategoryFilterValue({ Category: category }));
+
+  public ChangeLocationFilterValue = (location: LocationEnum) =>
+    this.store.dispatch(changeLocationFilterValue({ Location: location }));
+
+  public ChangeEducationFilterValue = (education: EducationEnum) =>
+    this.store.dispatch(changeEducationFilterValue({ Education: education }));
+
+  public ChangeEmploymentTypeFilterValue = (employmentType: EmploymentTypeEnum) =>
+    this.store.dispatch(changeEmploymentTypeFilterValue({ EmploymentType: employmentType }));
+
+  public ChangeSalaryFilterValue = (salary: SalaryEnum) =>
+    this.store.dispatch(changeSalaryFilterValue({ Salary: salary }));
 
   public ChangeFavoriteFilterValue = (checked: boolean) =>
-    this.store.dispatch(ChangeFavoriteFilterValue({ checked: checked }));
+    this.store.dispatch(changeFavoriteFilterValue({ checked: checked }));
+
+  public UpdatePaginationData = (PaginationData: any) =>
+    this.store.dispatch(updatePaginationDataJobOffers({ PaginationData: PaginationData }));
 
   public AddJobOffer = () => this.router.navigate(['job-offer/0']);
 
   public ModifyJobOffer = (JOGID: string) => this.router.navigate([`job-offer/${JOGID}`]);
 
   public DeleteJobOffer = (JOGID: string) => this.store.dispatch(deleteJobOffer({ JOGID: JOGID }));
-
-  public UpdatePaginationData = (PaginationData: any) =>
-    this.store.dispatch(updatePaginationDataJobOffers({ PaginationData: PaginationData }));
 
   public ReportModalOpen = (JOGID: string) => {
     this.reportForm.patchValue({ RJOGID: JOGID });

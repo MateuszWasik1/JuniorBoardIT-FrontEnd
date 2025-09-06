@@ -38,7 +38,12 @@ export interface JobOffer {
 export interface Filters {
   Skip: number;
   Take: number;
+  Expirence: ExpirenceEnum;
+  Category: CategoryEnum;
+  Location: LocationEnum;
   Education: EducationEnum;
+  EmploymentType: EmploymentTypeEnum;
+  Salary: SalaryEnum;
   Favorite: boolean;
 }
 
