@@ -1,4 +1,4 @@
-import { createAction, props } from '@ngrx/store'
+import { createAction, props } from '@ngrx/store';
 
 export const loadBugs = createAction('[Bugs Page] Load Bugs');
 export const loadBugsSuccess = createAction('[Bugs Page] Load Bugs Success', props<{ Bugs: any }>());
@@ -26,11 +26,22 @@ export const changeBugStatusError = createAction('[Bugs Page] Change Bug Status 
 
 export const changeBugsType = createAction('[Bugs Page] Change Bugs Type', props<{ BugType: any }>());
 
+export const changeMessageFilterValue = createAction(
+  '[Bugs Page] Change Message Filter Value',
+  props<{ Message: string }>()
+);
+
 export const loadUserRoles = createAction('[Bugs Page] Load User Roles');
 export const loadUserRolesSuccess = createAction('[Bugs Page] Load User Roles Success', props<{ UserRoles: any }>());
 export const loadUserRolesError = createAction('[Bugs Page] Load User Roles Error', props<{ error: any }>());
 
-export const updatePaginationData = createAction('[Bugs Page] Update Pagination Data', props<{ PaginationData: any }>());
-export const updateBugNotesPaginationData = createAction('[Bugs Page] Update Bug Notes Pagination Data', props<{ PaginationData: any }>());
+export const updatePaginationData = createAction(
+  '[Bugs Page] Update Pagination Data',
+  props<{ PaginationData: any }>()
+);
+export const updateBugNotesPaginationData = createAction(
+  '[Bugs Page] Update Bug Notes Pagination Data',
+  props<{ PaginationData: any }>()
+);
 
 export const cleanState = createAction('[Bugs Page] Clean State');

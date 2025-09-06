@@ -17,7 +17,8 @@ var initialStateOfBugsPage: BugsState = {
   Filters: {
     BugType: BugTypeEnum.New,
     Skip: 0,
-    Take: 10
+    Take: 10,
+    Message: ''
   },
   FiltersBugNotes: {
     Skip: 0,
@@ -144,6 +145,15 @@ export const BugsReducer = createReducer<BugsState>(
     }
   })),
 
+  //Filters
+  on(Actions.changeMessageFilterValue, (state, { Message }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Message: Message
+    }
+  })),
+
   on(Actions.updatePaginationData, (state, { PaginationData }) => ({
     ...state,
     Filters: {
@@ -175,7 +185,8 @@ export const BugsReducer = createReducer<BugsState>(
     Filters: {
       BugType: BugTypeEnum.New,
       Skip: 0,
-      Take: 10
+      Take: 10,
+      Message: ''
     },
     FiltersBugNotes: {
       Skip: 0,

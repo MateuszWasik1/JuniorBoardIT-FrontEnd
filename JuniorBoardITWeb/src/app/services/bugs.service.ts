@@ -16,8 +16,8 @@ export class BugsService {
     private cookiesService: CookieService
   ) {}
 
-  GetBugs(BugType: BugTypeEnum, Skip: number, Take: number): Observable<any> {
-    let params = new HttpParams().set('bugType', BugType).set('skip', Skip).set('take', Take);
+  GetBugs(BugType: BugTypeEnum, Skip: number, Take: number, Message: string): Observable<any> {
+    let params = new HttpParams().set('bugType', BugType).set('skip', Skip).set('take', Take).set('message', Message);
 
     return this.http.get<any>(this.apiUrl + 'api/Bugs/GetBugs', {
       params: params,
