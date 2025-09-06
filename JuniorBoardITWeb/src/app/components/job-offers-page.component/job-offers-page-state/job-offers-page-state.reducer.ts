@@ -48,7 +48,12 @@ var initialStateOfJobOfferPage: JobOffersState = {
   Filters: {
     Skip: 0,
     Take: 10,
+    Expirence: ExpirenceEnum.All,
+    Category: CategoryEnum.All,
+    Location: LocationEnum.All,
     Education: EducationEnum.All,
+    EmploymentType: EmploymentTypeEnum.All,
+    Salary: SalaryEnum.All,
     Favorite: false
   },
   Company: {
@@ -195,15 +200,55 @@ export const JobOfferReducer = createReducer<JobOffersState>(
   })),
 
   //Filters
-  on(Actions.ChangeEducationFilterValue, (state, { value }) => ({
+  on(Actions.changeExpirenceFilterValue, (state, { Expirence }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      Education: parseInt(value)
+      Expirence: Expirence
     }
   })),
 
-  on(Actions.ChangeFavoriteFilterValue, (state, { checked }) => ({
+  on(Actions.changeCategoryFilterValue, (state, { Category }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Category: Category
+    }
+  })),
+
+  on(Actions.changeLocationFilterValue, (state, { Location }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Location: Location
+    }
+  })),
+
+  on(Actions.changeEducationFilterValue, (state, { Education }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Education: Education
+    }
+  })),
+
+  on(Actions.changeEmploymentTypeFilterValue, (state, { EmploymentType }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      EmploymentType: EmploymentType
+    }
+  })),
+
+  on(Actions.changeSalaryFilterValue, (state, { Salary }) => ({
+    ...state,
+    Filters: {
+      ...state.Filters,
+      Salary: Salary
+    }
+  })),
+
+  on(Actions.changeFavoriteFilterValue, (state, { checked }) => ({
     ...state,
     Filters: {
       ...state.Filters,
@@ -250,7 +295,12 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     Filters: {
       Skip: 0,
       Take: 10,
+      Expirence: ExpirenceEnum.All,
+      Category: CategoryEnum.All,
+      Location: LocationEnum.All,
       Education: EducationEnum.All,
+      EmploymentType: EmploymentTypeEnum.All,
+      Salary: SalaryEnum.All,
       Favorite: false
     },
     Company: {

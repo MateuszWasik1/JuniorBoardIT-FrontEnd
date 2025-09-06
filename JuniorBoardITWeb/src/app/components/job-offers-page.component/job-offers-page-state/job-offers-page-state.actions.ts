@@ -1,5 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { Roles } from '../job-offers-page.models';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 
 export const loadJobOffer = createAction('[JobOffers Page] Load JobOffer', props<{ JOGID: any }>());
 export const loadJobOfferSuccess = createAction('[JobOffers Page] Load JobOffer Success', props<{ JobOffer: any }>());
@@ -47,12 +53,37 @@ export const deleteJobOffer = createAction('[JobOffers Page] Delete JobOffer', p
 export const deleteJobOfferSuccess = createAction('JobOffers Page] Delete JobOffer Success', props<{ JOGID: any }>());
 export const deleteJobOfferError = createAction('[JobOffers Page] Delete JobOffer Error', props<{ error: any }>());
 
-export const ChangeEducationFilterValue = createAction(
-  '[JobOffers Page] Change Education Filter Value',
-  props<{ value: any }>()
+export const changeExpirenceFilterValue = createAction(
+  '[JobOffers Page] Change Expirence Filter Value',
+  props<{ Expirence: ExpirenceEnum }>()
 );
 
-export const ChangeFavoriteFilterValue = createAction(
+export const changeCategoryFilterValue = createAction(
+  '[JobOffers Page] Change Category Filter Value',
+  props<{ Category: CategoryEnum }>()
+);
+
+export const changeLocationFilterValue = createAction(
+  '[JobOffers Page] Change Location Filter Value',
+  props<{ Location: LocationEnum }>()
+);
+
+export const changeEducationFilterValue = createAction(
+  '[JobOffers Page] Change Education Filter Value',
+  props<{ Education: EducationEnum }>()
+);
+
+export const changeEmploymentTypeFilterValue = createAction(
+  '[JobOffers Page] Change EmploymentType Filter Value',
+  props<{ EmploymentType: EmploymentTypeEnum }>()
+);
+
+export const changeSalaryFilterValue = createAction(
+  '[JobOffers Page] Change Salary Filter Value',
+  props<{ Salary: SalaryEnum }>()
+);
+
+export const changeFavoriteFilterValue = createAction(
   '[JobOffers Page] Change Favorite Filter Value',
   props<{ checked: any }>()
 );
