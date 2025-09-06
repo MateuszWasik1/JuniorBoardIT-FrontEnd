@@ -18,6 +18,7 @@ import {
   cleanState,
   deleteJobOffer,
   loadJobOffers,
+  loadRoles,
   loadUserData,
   updatePaginationDataJobOffers
 } from './job-offers-page-state/job-offers-page-state.actions';
@@ -192,6 +193,8 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(loadUserData());
+
+    this.store.dispatch(loadRoles());
 
     this.subscriptions.push(this.Filters$.subscribe(() => this.store.dispatch(loadJobOffers())));
 
