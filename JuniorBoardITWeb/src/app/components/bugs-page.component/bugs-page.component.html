@@ -5,11 +5,9 @@
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
           <h1 class="page-title">{{ translations.Get('TopMenu_Bugs') }}</h1>
         </div>
-        @if (!ShowAddModal) {
-          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-            <p-button [label]="translations.Get('General_Add')" (click)="AddBug()" class="margin-right-15"></p-button>
-          </div>
-        }
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+          <p-button [label]="translations.Get('General_Add')" (click)="AddBug()" class="margin-right-15"></p-button>
+        </div>
       </div>
 
       @if (userRoles.IsSupport || userRoles.IsAdmin) {

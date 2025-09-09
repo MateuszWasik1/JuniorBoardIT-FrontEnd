@@ -51,7 +51,6 @@ import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription[];
-  public ShowAddModal: boolean = false;
   public count: number = 0;
 
   public formFilter: FormGroup = new FormGroup({});
