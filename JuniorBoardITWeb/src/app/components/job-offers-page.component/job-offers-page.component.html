@@ -289,16 +289,16 @@
 
               <ng-template pTemplate="footer">
                 <div class="footer-row">
-                  @if (roles.IsUser || roles.IsPremium || roles.IsRecruiter || roles.IsSupport || roles.IsAdmin) {
-                    <p-button
-                      [label]="
-                        jobOffer.JOFavorite
-                          ? translations.Get('JobOffers_Report_Favorite')
-                          : translations.Get('JobOffers_Report_AddToFavorite')
-                      "
-                      (click)="AddToFavorite(jobOffer.JOGID)"
-                    ></p-button>
-                  }
+                  <!-- @if (roles.IsUser || roles.IsPremium || roles.IsRecruiter || roles.IsSupport || roles.IsAdmin) { -->
+                  <p-button
+                    [label]="
+                      jobOffer.JOFavorite
+                        ? translations.Get('JobOffers_Report_Favorite')
+                        : translations.Get('JobOffers_Report_AddToFavorite')
+                    "
+                    (click)="AddToFavorite(jobOffer.JOGID)"
+                  ></p-button>
+                  <!-- } -->
                   <p-button
                     [label]="translations.Get('JobOffers_Report_ReportOffer')"
                     (click)="ReportModalOpen(jobOffer.JOGID)"
