@@ -109,7 +109,7 @@
                   <p>{{ bug.BDate | date: 'yyyy-MM-dd HH:mm' }}</p>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                  <p>{{ DisplayStatus(bug.BStatus) }}</p>
+                  <p-message [severity]="DisplaySeverity(bug.BStatus)">{{ DisplayStatus(bug.BStatus) }}</p-message>
                 </div>
               </div>
               <div class="row margin-top-15 margin-bottom-15">

@@ -28,6 +28,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 
 @Component({
   selector: 'app-bugs-page',
@@ -43,7 +45,8 @@ import { InputTextModule } from 'primeng/inputtext';
     SelectModule,
     ReactiveFormsModule,
     TooltipModule,
-    InputTextModule
+    InputTextModule,
+    MessageModule
   ]
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
@@ -106,6 +109,32 @@ export class BugsPageComponent implements OnInit, OnDestroy {
   }
 
   public DisplayStatus = (status: number) => this.bugStatuses[status].name;
+
+  public DisplaySeverity = (bugStatus: BugStatusEnum) => {
+    switch (bugStatus) {
+      case BugStatusEnum.New: {
+        return 'secondary';
+      }
+      case BugStatusEnum.InVerification: {
+        return 'info';
+      }
+      case BugStatusEnum.Rejected: {
+        return 'error';
+      }
+      case BugStatusEnum.Accepted: {
+        return 'info';
+      }
+      case BugStatusEnum.InDevelopment: {
+        return 'warn';
+      }
+      case BugStatusEnum.Fixed: {
+        return 'success';
+      }
+      default: {
+        return 'secondary';
+      }
+    }
+  };
 
   public AddBug = () => this.router.navigate(['bug/0']);
 
