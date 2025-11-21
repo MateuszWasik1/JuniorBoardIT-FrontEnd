@@ -26,6 +26,14 @@ module.exports = tseslint.config(
       // functional: pluginFunctional,
       prettier: pluginPrettier
     },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json'
+        }
+      }
+    },
     rules: {
       '@angular-eslint/directive-selector': [
         'error',
