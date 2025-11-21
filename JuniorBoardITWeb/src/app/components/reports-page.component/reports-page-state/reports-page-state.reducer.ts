@@ -1,21 +1,23 @@
 import { createReducer, on } from '@ngrx/store';
-import * as Actions from './reports-page-state.actions';
-import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { Guid } from 'guid-typescript';
+
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
 import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
-import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
-import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
-import { ReportsState } from './reports-page-state.state';
-import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
 import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
-import { Guid } from 'guid-typescript';
-import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
-import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 
-var initialStateOfReportPage: ReportsState = {
+import * as Actions from './reports-page-state.actions';
+import { ReportsState } from './reports-page-state.state';
+
+const initialStateOfReportPage: ReportsState = {
   Reports: [],
   Report: {
     RID: 0,

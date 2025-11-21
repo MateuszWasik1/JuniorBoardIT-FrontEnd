@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import * as StatsActions from './stats-page-state.actions';
+
 import { AppState } from 'src/app/app.state';
-import { Store } from '@ngrx/store';
-import { selectFilters } from './stats-page-state.selectors';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
-import { StatsService } from 'src/app/services/stats.service';
 import { CompaniesService } from 'src/app/services/companies.service';
+import { StatsService } from 'src/app/services/stats.service';
+
+import * as StatsActions from './stats-page-state.actions';
+import { selectFilters } from './stats-page-state.selectors';
 
 @Injectable()
 export class StatsEffects {
-  constructor(
-    private actions: Actions,
-    private store: Store<AppState>,
-    private statsService: StatsService,
-    private errorHandler: APIErrorHandler,
-    private companiesService: CompaniesService
-  ) {}
+  private actions = inject(Actions);
+  private store = inject(Store<AppState>);
+  private statsService = inject(StatsService);
+  private errorHandler = inject(APIErrorHandler);
+  private companiesService = inject(CompaniesService);
 
   loadNumberOfRecruiterPublishedOfferts = createEffect(() => {
     return this.actions.pipe(

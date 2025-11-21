@@ -1,8 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
+
 import * as Actions from './users-page-state.actions';
 import { UsersState } from './users-page-state.state';
 
-var initialStateOfUsersPage: UsersState = {
+const initialStateOfUsersPage: UsersState = {
   Users: [],
   Filters: {
     Skip: 0,
@@ -30,9 +31,9 @@ export const UsersReducer = createReducer<UsersState>(
   })),
 
   on(Actions.deleteUserSuccess, (state, { ugid }) => {
-    let users = [...state.Users];
+    const users = [...state.Users];
 
-    let deletedUserIndex = users.findIndex((x) => x.UGID == ugid);
+    const deletedUserIndex = users.findIndex((x) => x.UGID == ugid);
 
     users.splice(deletedUserIndex, 1);
 

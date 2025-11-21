@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslationService } from 'src/app/services/translate.service';
-import { RegisterUser } from '../account-page-state/account-page-state.actions';
-import { PasswordConsistency, PatternValidator } from 'src/app/validators/forms.validator';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
+import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
-import { FormErrorsService } from 'src/app/services/form-error.service';
+import { Subscription } from 'rxjs';
 
-type FormModel = {
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { TranslationService } from 'src/app/services/translate.service';
+import { PasswordConsistency, PatternValidator } from 'src/app/validators/forms.validator';
+
+import { AppState } from '../../../app.state';
+import { RegisterUser } from '../account-page-state/account-page-state.actions';
+import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
+
+interface FormModel {
   UUserName: FormControl<string>;
   UEmail: FormControl<string>;
   UPassword: FormControl<string>;
   UPassword2: FormControl<string>;
-};
+}
 
 @Component({
   selector: 'app-register-page',
@@ -27,9 +29,15 @@ type FormModel = {
   imports: [ReactiveFormsModule, ButtonModule]
 })
 export class RegisterComponent implements OnInit {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+  private formErrorsService = inject(FormErrorsService);
+
   public subscriptions: Subscription[];
 
-  public IsPasswordsEqual: boolean = true;
+  public IsPasswordsEqual = true;
 
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
@@ -42,13 +50,7 @@ export class RegisterComponent implements OnInit {
     UPassword2: 'Account_Register_Password_Repeat'
   };
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler,
-    private formErrorsService: FormErrorsService
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.form = this.InitRegisterForm();
   }

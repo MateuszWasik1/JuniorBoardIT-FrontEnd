@@ -1,4 +1,5 @@
 import { BubbleDataPoint, ChartData, ChartTypeRegistry, Point } from 'chart.js';
+
 import { Companies, Filters } from '../stats-page.model';
 
 export const featureKeyStatsState = 'stats-page-state';

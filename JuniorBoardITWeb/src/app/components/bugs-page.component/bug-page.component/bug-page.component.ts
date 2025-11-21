@@ -1,16 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  selectBug,
-  selectBugNotes,
-  selectBugsNotesCount,
-  selectErrorMessage,
-  selectFiltersBugNotes,
-  selectUserRoles
-} from '../bugs-page-state/bugs-page-state.selectors';
+import { MatFormField } from '@angular/material/form-field';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { TextareaModule } from 'primeng/textarea';
+import { Subscription } from 'rxjs';
+
+import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { TranslationService } from 'src/app/services/translate.service';
+
+import { AppState } from '../../../app.state';
+import { PaginatorComponent } from '../../shared/paginator.component/paginator.component';
 import {
   changeBugStatus,
   cleanState,
@@ -21,29 +26,26 @@ import {
   saveBugNote,
   updateBugNotesPaginationData
 } from '../bugs-page-state/bugs-page-state.actions';
-import { TranslationService } from 'src/app/services/translate.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { MatFormField } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
-import { PaginatorComponent } from '../../shared/paginator.component/paginator.component';
-import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { TextareaModule } from 'primeng/textarea';
+import {
+  selectBug,
+  selectBugNotes,
+  selectBugsNotesCount,
+  selectErrorMessage,
+  selectFiltersBugNotes,
+  selectUserRoles
+} from '../bugs-page-state/bugs-page-state.selectors';
 import { BugNoteTranslations, BugTranslations } from '../bugs-page.models';
-import { FormErrorsService } from 'src/app/services/form-error.service';
 
-type FormBugModel = {
+interface FormBugModel {
   BGID: FormControl<string>;
   BTitle: FormControl<string>;
   BText: FormControl<string>;
   BStatus: FormControl<BugStatusEnum>;
-};
+}
 
-type FormBugNoteModel = {
+interface FormBugNoteModel {
   BugNote: FormControl<string>;
-};
+}
 
 @Component({
   selector: 'app-bug-page',
@@ -65,12 +67,19 @@ type FormBugNoteModel = {
   ]
 })
 export class BugPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+  private formErrorsService = inject(FormErrorsService);
+
   public subscriptions: Subscription[];
   public form: FormGroup<FormBugModel>;
   public formBugNote: FormGroup<FormBugNoteModel>;
-  public bgid: string = '';
-  public count: number = 0;
-  public isNewBugView: boolean = true;
+  public bgid = '';
+  public count = 0;
+  public isNewBugView = true;
   public selectedBugStatus: any;
   public bugStatusAdmin = [
     { id: '0', name: 'Nowy' },
@@ -89,14 +98,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
   public UserRoles$ = this.store.select(selectUserRoles);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public route: ActivatedRoute,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler,
-    private formErrorsService: FormErrorsService
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.form = this.InitBugForm();
     this.formBugNote = this.InitBugNoteForm();
@@ -134,7 +136,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
   public ChangeColor = (IsStatusChange: boolean, status: number): string => {
     if (!IsStatusChange) return '';
 
-    let statuses = [
+    const statuses = [
       { status: BugStatusEnum.New, color: 'Status-New' },
       { status: BugStatusEnum.InVerification, color: 'Status-InVerification' },
       { status: BugStatusEnum.Rejected, color: 'Status-Rejected' },
@@ -143,7 +145,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
       { status: BugStatusEnum.Fixed, color: 'Status-Fixed' }
     ];
 
-    let color = statuses[statuses.findIndex((x) => x.status == status)].color;
+    const color = statuses[statuses.findIndex((x) => x.status == status)].color;
 
     return color;
   };
@@ -157,7 +159,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
   };
 
   public AddBugNote = (): void => {
-    let model = {
+    const model = {
       BNBGID: this.form.controls.BGID?.value,
       BNText: this.formBugNote.controls.BugNote?.value
     };
@@ -170,7 +172,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
   };
 
   public ChangeBugStatus = (event: any): void => {
-    let model = {
+    const model = {
       BGID: this.form.controls.BGID?.value,
       Status: event.value
     };

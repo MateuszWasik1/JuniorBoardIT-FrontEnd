@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
-import { RolesService } from './services/roles.service';
 import { Subscription } from 'rxjs';
+
+import { RolesService } from './services/roles.service';
 
 @Component({
   selector: 'app-root',
@@ -11,25 +12,25 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public language: string = 'pl';
-  public stopNavigate: boolean = false;
-  public hideMenu: boolean = false;
-  public mainClass: string = 'container';
-  public IsAdmin: boolean = false;
-  public IsSupport: boolean = false;
-  public IsRecruiter: boolean = false;
-  public IsUser: boolean = false;
-  public IsMobileMenuActive: boolean = false;
+  public translate = inject(TranslateService);
+  public cookieService = inject(CookieService);
+  public rolesService = inject(RolesService);
+  public router = inject(Router);
+  public route = inject(ActivatedRoute);
+
+  public language = 'pl';
+  public stopNavigate = false;
+  public hideMenu = false;
+  public mainClass = 'container';
+  public IsAdmin = false;
+  public IsSupport = false;
+  public IsRecruiter = false;
+  public IsUser = false;
+  public IsMobileMenuActive = false;
 
   public subscriptions: Subscription[];
 
-  constructor(
-    public translate: TranslateService,
-    public cookieService: CookieService,
-    public rolesService: RolesService,
-    public router: Router,
-    public route: ActivatedRoute
-  ) {
+  constructor() {
     this.subscriptions = [];
 
     //routing - find if in component login or register
@@ -42,19 +43,19 @@ export class AppComponent {
     });
 
     //Token
-    if (cookieService.get('token') == '' && !this.stopNavigate) {
+    if (this.cookieService.get('token') == '' && !this.stopNavigate) {
       this.router.navigate(['/job-offers']);
     }
 
     //Language
-    translate.addLangs(['pl', 'en']);
+    this.translate.addLangs(['pl', 'en']);
 
-    if (cookieService.get('lang') == '') {
-      cookieService.set('lang', 'pl');
+    if (this.cookieService.get('lang') == '') {
+      this.cookieService.set('lang', 'pl');
     }
 
-    translate.setDefaultLang(cookieService.get('lang'));
-    this.language = cookieService.get('lang');
+    this.translate.setDefaultLang(this.cookieService.get('lang'));
+    this.language = this.cookieService.get('lang');
 
     //GetUserRoles
     if (!this.hideMenu) {

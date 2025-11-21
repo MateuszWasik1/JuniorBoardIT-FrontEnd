@@ -1,18 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
-import * as Actions from './job-offers-page-state.actions';
-import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
-import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
-import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
-import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
-import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
-import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
-import { JobOffersState } from './job-offers-page-state.state';
-import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
-import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+
 import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
+import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 
-var initialStateOfJobOfferPage: JobOffersState = {
+import * as Actions from './job-offers-page-state.actions';
+import { JobOffersState } from './job-offers-page-state.state';
+
+const initialStateOfJobOfferPage: JobOffersState = {
   JobOffers: [],
   JobOffer: {
     JOGID: '',
@@ -187,9 +189,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
 
   //Delete Task
   on(Actions.deleteJobOfferSuccess, (state, { JOGID }) => {
-    let newJobOffers = [...state.JobOffers];
+    const newJobOffers = [...state.JobOffers];
 
-    let jobOffersWithoutDeletedTask = newJobOffers.filter((x) => x.JOGID != JOGID);
+    const jobOffersWithoutDeletedTask = newJobOffers.filter((x) => x.JOGID != JOGID);
 
     return { ...state, JobOffers: jobOffersWithoutDeletedTask };
   }),

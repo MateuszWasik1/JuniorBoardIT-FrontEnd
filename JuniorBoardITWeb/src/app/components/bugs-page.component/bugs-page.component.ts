@@ -1,15 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { SelectChangeEvent, SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
+import { Subscription } from 'rxjs';
+
+import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
+import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { TranslationService } from 'src/app/services/translate.service';
-import {
-  selectBugs,
-  selectErrorMessage,
-  selectFilters,
-  selectUserRoles,
-  selectBugsCount
-} from './bugs-page-state/bugs-page-state.selectors';
+
 import {
   changeBugsType,
   changeMessageFilterValue,
@@ -18,18 +23,15 @@ import {
   loadUserRoles,
   updatePaginationData
 } from './bugs-page-state/bugs-page-state.actions';
-import { Router } from '@angular/router';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
-import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
+import {
+  selectBugs,
+  selectErrorMessage,
+  selectFilters,
+  selectUserRoles,
+  selectBugsCount
+} from './bugs-page-state/bugs-page-state.selectors';
+import { AppState } from '../../app.state';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
-import { SelectChangeEvent, SelectModule } from 'primeng/select';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { TooltipModule } from 'primeng/tooltip';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 
 @Component({
   selector: 'app-bugs-page',
@@ -50,8 +52,13 @@ import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
   ]
 })
 export class BugsPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+
   public subscriptions: Subscription[];
-  public count: number = 0;
+  public count = 0;
 
   public formFilter: FormGroup = new FormGroup({});
 
@@ -82,12 +89,7 @@ export class BugsPageComponent implements OnInit, OnDestroy {
 
   private debounceTimer: any;
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.formFilter = new FormGroup({
       filter: new FormControl(this.bugsTypes[3].value)

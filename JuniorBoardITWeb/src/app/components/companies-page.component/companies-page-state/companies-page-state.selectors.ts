@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { CompaniesState, featureKeyCompaniesState } from './companies-page-state.state';
 
 const selectCompaniesState = createFeatureSelector<CompaniesState>(featureKeyCompaniesState);

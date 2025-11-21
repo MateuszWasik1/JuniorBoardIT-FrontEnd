@@ -1,22 +1,23 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetToken } from '../helpers/request.service';
+import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
+import { GetToken } from '../helpers/request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolesService {
   public apiUrl = environment.apiUrl;
-  constructor(
-    private http: HttpClient,
-    private cookiesService: CookieService
-  ) {}
+
+  private http = inject(HttpClient);
+  private cookiesService = inject(CookieService);
 
   GetUserRoles(): Observable<any> {
-    let params = new HttpParams();
+    const params = new HttpParams();
 
     return this.http.get<any>(this.apiUrl + 'api/Roles/GetUserRoles', {
       params: params,
@@ -25,7 +26,7 @@ export class RolesService {
   }
 
   GetIsUserAdmin(): Observable<any> {
-    let params = new HttpParams();
+    const params = new HttpParams();
 
     return this.http.get<any>(this.apiUrl + 'api/Roles/GetIsUserAdmin', {
       params: params,
@@ -34,7 +35,7 @@ export class RolesService {
   }
 
   GetIsUserSupport(): Observable<any> {
-    let params = new HttpParams();
+    const params = new HttpParams();
 
     return this.http.get<any>(this.apiUrl + 'api/Roles/GetIsUserSupport', {
       params: params,

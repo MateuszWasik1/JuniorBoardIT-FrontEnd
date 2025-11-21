@@ -1,10 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
+
+import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
+import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
+
 import * as Actions from './stats-page-state.actions';
 import { StatsState } from './stats-page-state.state';
-import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
-import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
 
-var initialStateOfStatsPage: StatsState = {
+const initialStateOfStatsPage: StatsState = {
   Stats: {
     labels: [],
     datasets: []

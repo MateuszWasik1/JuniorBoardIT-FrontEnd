@@ -1,20 +1,22 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetToken } from '../helpers/request.service';
+import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
+import { GetToken } from '../helpers/request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoriteJobOffersService {
   public apiUrl = environment.apiUrl;
-  constructor(
-    private http: HttpClient,
-    private cookiesService: CookieService
-  ) {}
-  AddFavoriteJobOffer(jogid: any): Observable<any> {
+
+  private http = inject(HttpClient);
+  private cookiesService = inject(CookieService);
+
+  public AddFavoriteJobOffer(jogid: any): Observable<any> {
     return this.http.post<any>(
       this.apiUrl + 'api/FavoriteJobOffers/AddFavoriteJobOffer',
       { jogid: jogid },
@@ -24,7 +26,7 @@ export class FavoriteJobOffersService {
     );
   }
 
-  DeleteFavoriteJobOffer(FJOGID: any): Observable<any> {
+  public DeleteFavoriteJobOffer(FJOGID: any): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}api/FavoriteJobOffers/DeleteFavoriteJobOffer/${FJOGID}`, {
       headers: GetToken(this.cookiesService)
     });

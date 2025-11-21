@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { CookieService } from 'ngx-cookie-service';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import * as AccountActions from './account-page-state.actions';
-import { AccountsService } from 'src/app/services/accounts.service';
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
+import { AccountsService } from 'src/app/services/accounts.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+
+import * as AccountActions from './account-page-state.actions';
 
 @Injectable()
 export class AccountEffects {
-  constructor(
-    private actions: Actions,
-    private accountService: AccountsService,
-    private cookieService: CookieService,
-    private router: Router,
-    private errorHandler: APIErrorHandler,
-    private snackbarService: SnackBarService
-  ) {}
+  private actions = inject(Actions);
+  private accountService = inject(AccountsService);
+  private cookieService = inject(CookieService);
+  private router = inject(Router);
+  private errorHandler = inject(APIErrorHandler);
+  private snackbarService = inject(SnackBarService);
 
   RegisterUser = createEffect(() => {
     return this.actions.pipe(

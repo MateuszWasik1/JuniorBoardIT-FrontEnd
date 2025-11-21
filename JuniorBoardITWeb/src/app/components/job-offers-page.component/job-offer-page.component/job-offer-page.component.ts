@@ -1,11 +1,33 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslationService } from 'src/app/services/translate.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Guid } from 'guid-typescript';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputNumber } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { TextareaModule } from 'primeng/textarea';
+import { Subscription } from 'rxjs';
+
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
+import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { SelectObjectModel } from 'src/app/models/general-models';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { TranslationService } from 'src/app/services/translate.service';
+
+import { AppState } from '../../../app.state';
 import {
   addJobOffer,
   cleanState,
@@ -20,29 +42,9 @@ import {
   selectJobOffer,
   selectUserData
 } from '../job-offers-page-state/job-offers-page-state.selectors';
-import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
-import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
-import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
-import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
-import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
-import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
-import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
-import { AsyncPipe } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumber } from 'primeng/inputnumber';
-import { DatePickerModule } from 'primeng/datepicker';
-import { SelectModule } from 'primeng/select';
-import { ButtonModule } from 'primeng/button';
-import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
-import { SelectObjectModel } from 'src/app/models/general-models';
-import { TextareaModule } from 'primeng/textarea';
-import { Guid } from 'guid-typescript';
-import { CheckboxModule } from 'primeng/checkbox';
-import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 import { Company, JobOfferTranslations } from '../job-offers-page.models';
-import { FormErrorsService } from 'src/app/services/form-error.service';
 
-type FormModel = {
+interface FormModel {
   JOGID: FormControl<string>;
   JOCGID: FormControl<string>;
   JOTitle: FormControl<string>;
@@ -64,7 +66,7 @@ type FormModel = {
   JOPostedAt: FormControl<Date>;
   JOExpiresAt: FormControl<Date>;
   JOStatus: FormControl<StatusEnum>;
-};
+}
 
 @Component({
   selector: 'app-job-offer-page',
@@ -84,6 +86,13 @@ type FormModel = {
   ]
 })
 export class JobOfferPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+  private formErrorsService = inject(FormErrorsService);
+
   public subscriptions: Subscription[];
 
   public locationTypes: SelectObjectModel[] = [
@@ -149,23 +158,16 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
 
   public form: FormGroup<FormModel>;
 
-  public jogid: string = '';
-  public isNewJobOfferView: boolean = true;
-  public offerForCompany: boolean = false;
+  public jogid = '';
+  public isNewJobOfferView = true;
+  public offerForCompany = false;
 
   public JobOffer$ = this.store.select(selectJobOffer);
   public UserData$ = this.store.select(selectUserData);
   public Company$ = this.store.select(selectCompany);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public route: ActivatedRoute,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler,
-    private formErrorsService: FormErrorsService
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.form = this.InitJobOfferForm();
   }

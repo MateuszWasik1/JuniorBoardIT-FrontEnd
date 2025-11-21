@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from './components/account-page.component/register-page.component/register-page.component';
+
 import { LoginComponent } from './components/account-page.component/login-page.component/login-page.component';
-import { UserPageComponent } from './components/user-page.component/user-page.component';
-import { UsersPageComponent } from './components/users-page.component/users-page.component';
-import { JobOffersPageComponent } from './components/job-offers-page.component/job-offers-page.component';
-import { JobOfferPageComponent } from './components/job-offers-page.component/job-offer-page.component/job-offer-page.component';
-import { ReportsPageComponent } from './components/reports-page.component/reports-page.component';
-import { ReportPageComponent } from './components/reports-page.component/report-page.component/report-page.component';
+import { RegisterComponent } from './components/account-page.component/register-page.component/register-page.component';
 import { BugPageComponent } from './components/bugs-page.component/bug-page.component/bug-page.component';
 import { BugsPageComponent } from './components/bugs-page.component/bugs-page.component';
 import { CompaniesPageComponent } from './components/companies-page.component/companies-page.component';
 import { CompanyPageComponent } from './components/companies-page.component/company-page.component/company-page.component';
+import { JobOfferPageComponent } from './components/job-offers-page.component/job-offer-page.component/job-offer-page.component';
+import { JobOffersPageComponent } from './components/job-offers-page.component/job-offers-page.component';
+import { ReportPageComponent } from './components/reports-page.component/report-page.component/report-page.component';
+import { ReportsPageComponent } from './components/reports-page.component/reports-page.component';
 import { StatsPageComponent } from './components/stats-page.component/stats-page.component';
+import { UserPageComponent } from './components/user-page.component/user-page.component';
+import { UsersPageComponent } from './components/users-page.component/users-page.component';
 
 const routes: Routes = [
   {

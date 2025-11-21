@@ -1,22 +1,23 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetToken } from '../helpers/request.service';
+import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
+import { GetToken } from '../helpers/request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   public apiUrl = environment.apiUrl;
-  constructor(
-    private http: HttpClient,
-    private cookiesService: CookieService
-  ) {}
+
+  private http = inject(HttpClient);
+  private cookiesService = inject(CookieService);
 
   GetAllUsers(Skip: number, Take: number, Name: string, HasCompany: boolean, Role: number): Observable<any> {
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('skip', Skip)
       .set('take', Take)
       .set('name', Name)
@@ -30,7 +31,7 @@ export class UserService {
   }
 
   GetUserByAdmin(ugid: any): Observable<any> {
-    let params = new HttpParams();
+    const params = new HttpParams();
 
     return this.http.get<any>(this.apiUrl + 'api/User/GetUserByAdmin/' + ugid, {
       params: params,
@@ -39,7 +40,7 @@ export class UserService {
   }
 
   GetUser(): Observable<any> {
-    let params = new HttpParams();
+    const params = new HttpParams();
 
     return this.http.get<any>(this.apiUrl + 'api/User/GetUser', {
       params: params,

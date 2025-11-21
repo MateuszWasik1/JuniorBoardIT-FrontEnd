@@ -5,9 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class APIErrorHandler {
-  constructor() {}
-
-  handleAPIError(error: HttpErrorResponse) {
+  public handleAPIError(error: HttpErrorResponse) {
     if (error.status === 401) return 'Użytkownik nie zautoryzowany!';
 
     let errorMessage;

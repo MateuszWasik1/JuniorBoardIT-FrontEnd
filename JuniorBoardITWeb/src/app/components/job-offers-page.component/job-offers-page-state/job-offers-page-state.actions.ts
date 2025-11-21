@@ -1,11 +1,13 @@
 import { createAction, props } from '@ngrx/store';
-import { Roles } from '../job-offers-page.models';
-import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+
 import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
 import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
-import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
+
+import { Roles } from '../job-offers-page.models';
 
 export const loadJobOffer = createAction('[JobOffers Page] Load JobOffer', props<{ JOGID: any }>());
 export const loadJobOfferSuccess = createAction('[JobOffers Page] Load JobOffer Success', props<{ JobOffer: any }>());

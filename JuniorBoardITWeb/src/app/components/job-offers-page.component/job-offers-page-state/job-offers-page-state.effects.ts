@@ -1,36 +1,36 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import * as JobOffersActions from './job-offers-page-state.actions';
-import { JobOffersService } from 'src/app/services/job-offers.service';
-import { selectFilters } from './job-offers-page-state.selectors';
-import { Store } from '@ngrx/store';
+
 import { AppState } from 'src/app/app.state';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
-import { Router } from '@angular/router';
-import { SnackBarService } from 'src/app/services/snackbar.service';
-import { UserService } from 'src/app/services/user.service';
 import { ApplyService } from 'src/app/services/apply.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { FavoriteJobOffersService } from 'src/app/services/favorite-job-offers.service';
+import { JobOffersService } from 'src/app/services/job-offers.service';
 import { RolesService } from 'src/app/services/roles.service';
+import { SnackBarService } from 'src/app/services/snackbar.service';
+import { UserService } from 'src/app/services/user.service';
+
+import * as JobOffersActions from './job-offers-page-state.actions';
+import { selectFilters } from './job-offers-page-state.selectors';
 
 @Injectable()
 export class JobOffersEffects {
-  constructor(
-    public store: Store<AppState>,
-    private actions: Actions,
-    private router: Router,
-    private jobOffersService: JobOffersService,
-    private errorHandler: APIErrorHandler,
-    private snackbarService: SnackBarService,
-    private userService: UserService,
-    private applyService: ApplyService,
-    private companiesService: CompaniesService,
-    private favoriteJobOffersService: FavoriteJobOffersService,
-    public rolesService: RolesService
-  ) {}
+  public store = inject(Store<AppState>);
+  private actions = inject(Actions);
+  private router = inject(Router);
+  private jobOffersService = inject(JobOffersService);
+  private errorHandler = inject(APIErrorHandler);
+  private snackbarService = inject(SnackBarService);
+  private userService = inject(UserService);
+  private applyService = inject(ApplyService);
+  private companiesService = inject(CompaniesService);
+  private favoriteJobOffersService = inject(FavoriteJobOffersService);
+  public rolesService = inject(RolesService);
 
   loadJobOffer = createEffect(() => {
     return this.actions.pipe(

@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { JobOffersState, featureKeyJobOffersState } from './job-offers-page-state.state';
 
 const selectJobOffersState = createFeatureSelector<JobOffersState>(featureKeyJobOffersState);

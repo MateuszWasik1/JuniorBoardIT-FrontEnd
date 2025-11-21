@@ -1,22 +1,23 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetToken } from '../helpers/request.service';
+import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
+import { GetToken } from '../helpers/request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatsService {
   public apiUrl = environment.apiUrl;
-  constructor(
-    private http: HttpClient,
-    private cookiesService: CookieService
-  ) {}
+
+  private http = inject(HttpClient);
+  private cookiesService = inject(CookieService);
 
   GetNumberOfRecruiterPublishedOfferts(startDate: Date, endDate: Date): Observable<any> {
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('startDate', this.DateToString(new Date(startDate)))
       .set('endDate', this.DateToString(new Date(endDate)));
 
@@ -27,7 +28,7 @@ export class StatsService {
   }
 
   GetNumberOfCompanyPublishedOfferts(startDate: Date, endDate: Date, cgid: string): Observable<any> {
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('startDate', this.DateToString(new Date(startDate)))
       .set('endDate', this.DateToString(new Date(endDate)))
       .set('cgid', cgid);
@@ -39,7 +40,7 @@ export class StatsService {
   }
 
   GetNumberOfCompaniesPublishedOfferts(startDate: Date, endDate: Date): Observable<any> {
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('startDate', this.DateToString(new Date(startDate)))
       .set('endDate', this.DateToString(new Date(endDate)));
 
@@ -50,7 +51,7 @@ export class StatsService {
   }
 
   GetNumberOfActiveCompaniesOfferts(date: Date, cgid: string): Observable<any> {
-    let params = new HttpParams().set('date', this.DateToString(new Date(date))).set('cgid', cgid);
+    const params = new HttpParams().set('date', this.DateToString(new Date(date))).set('cgid', cgid);
 
     return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfActiveCompaniesOfferts', {
       params: params,
@@ -59,7 +60,7 @@ export class StatsService {
   }
 
   GetNumberOfCompanyRecruiters(cgid: string): Observable<any> {
-    let params = new HttpParams().set('cgid', cgid);
+    const params = new HttpParams().set('cgid', cgid);
 
     return this.http.get<any>(this.apiUrl + 'api/Stats/GetNumberOfCompanyRecruiters', {
       params: params,
