@@ -1,8 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
+
 import * as Actions from './user-page-state.actions';
 import { UserState } from './user-page-state.state';
 
-var initialStateOfUserPage: UserState = {
+const initialStateOfUserPage: UserState = {
   User: {
     UID: 0,
     UGID: '',

@@ -1,9 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { Subscription } from 'rxjs';
+
+import { RolesEnum } from 'src/app/enums/RolesEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { FormErrorsService } from 'src/app/services/form-error.service';
 import { TranslationService } from 'src/app/services/translate.service';
+
 import {
   cleanState,
   loadCompanies,
@@ -13,18 +23,10 @@ import {
   saveUserByAdmin
 } from './user-page-state/user-page-state.actions';
 import { selectCompanies, selectErrorMessage, selectUser } from './user-page-state/user-page-state.selectors';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { RolesEnum } from 'src/app/enums/RolesEnum';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { SelectModule } from 'primeng/select';
-import { AsyncPipe } from '@angular/common';
-import { FormErrorsService } from 'src/app/services/form-error.service';
 import { UserTranslations } from './user-page.models';
+import { AppState } from '../../app.state';
 
-type FormModel = {
+interface FormModel {
   UID: FormControl<number>;
   UGID: FormControl<string>;
   URID: FormControl<number>;
@@ -35,7 +37,7 @@ type FormModel = {
   UPhone: FormControl<string>;
   UCompany: FormControl<string>;
   UCompanyGID: FormControl<string>;
-};
+}
 
 @Component({
   selector: 'app-user-page',
@@ -45,7 +47,14 @@ type FormModel = {
   imports: [AsyncPipe, ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, SelectModule]
 })
 export class UserPageComponent implements OnInit, OnDestroy {
-  public IsAdminView: boolean = false;
+  public store = inject(Store<AppState>);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public translations = inject(TranslationService);
+  public errorHandler = inject(MainUIErrorHandler);
+  private formErrorsService = inject(FormErrorsService);
+
+  public IsAdminView = false;
   public roles: any;
   public selectedRole: any;
   public selectedFilterRole: any;
@@ -57,14 +66,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   public Companies$ = this.store.select(selectCompanies);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  constructor(
-    public store: Store<AppState>,
-    public route: ActivatedRoute,
-    public router: Router,
-    public translations: TranslationService,
-    public errorHandler: MainUIErrorHandler,
-    private formErrorsService: FormErrorsService
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.form = this.InitUserForm();
   }
@@ -103,7 +105,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   }
 
   public Save = () => {
-    let model = {
+    const model = {
       UGID: '',
       URID: '',
       UFirstName: this.form.controls.UFirstName.value,

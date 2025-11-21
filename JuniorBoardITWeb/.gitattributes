@@ -1,0 +1,10 @@
+# Wszystkie pliki tekstowe → LF
+* text=auto eol=lf
+
+# Konkretnie TS, HTML, CSS/SCSS, JSON
+*.ts text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.json text eol=lf
+*.md text eol=lf

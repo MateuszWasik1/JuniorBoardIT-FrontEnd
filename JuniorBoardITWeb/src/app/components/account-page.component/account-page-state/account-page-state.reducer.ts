@@ -1,8 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
+
 import * as Actions from './account-page-state.actions';
 import { AccountState } from './account-page-state.state';
 
-var initialStateOfAccountPage: AccountState = {
+const initialStateOfAccountPage: AccountState = {
   ErrorMessage: ''
 };
 

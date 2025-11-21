@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { TranslationService } from 'src/app/services/translate.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { TranslationService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-paginator',
@@ -11,14 +12,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   imports: [MatPaginatorModule]
 })
 export class PaginatorComponent {
-  @Input() length: number = 50;
+  @Input() length = 50;
   @Output() paginationData = new EventEmitter<object>();
 
-  public pageSizeOptions: number[] = [1, 3, 5, 10, 15, 20, 25, 50, 100];
-  public pageSize: number = 10;
-  public pageIndex: number = 0;
+  public translations = inject(TranslationService);
 
-  constructor(public translations: TranslationService) {}
+  public pageSizeOptions: number[] = [1, 3, 5, 10, 15, 20, 25, 50, 100];
+  public pageSize = 10;
+  public pageIndex = 0;
 
   HandlePageEvent(e: PageEvent) {
     this.pageSize = e.pageSize;

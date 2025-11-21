@@ -1,8 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { TextareaModule } from 'primeng/textarea';
+import { Subscription } from 'rxjs';
+
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { SelectObjectModel } from 'src/app/models/general-models';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { TranslationService } from 'src/app/services/translate.service';
+
+import { AppState } from '../../../app.state';
 import {
   addCompany,
   cleanState,
@@ -10,23 +26,9 @@ import {
   updateCompany
 } from '../companies-page-state/companies-page-state.actions';
 import { selectCompany, selectErrorMessage } from '../companies-page-state/companies-page-state.selectors';
-import { TranslationService } from 'src/app/services/translate.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { TextareaModule } from 'primeng/textarea';
-import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
-import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
-import { InputTextModule } from 'primeng/inputtext';
-import { SelectModule } from 'primeng/select';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { SelectObjectModel } from 'src/app/models/general-models';
-import { FormErrorsService } from 'src/app/services/form-error.service';
 import { CompanyTranslations } from '../companies-page.models';
-import { InputMaskModule } from 'primeng/inputmask';
 
-type FormModel = {
+interface FormModel {
   CGID: FormControl<string>;
   CName: FormControl<string>;
   CIndustry: FormControl<IndustryEnum>;
@@ -45,7 +47,7 @@ type FormModel = {
   CEmployeesNo: FormControl<CompanyEmpNoEnum>;
   CCreatedAt: FormControl<Date | null>;
   CUpdatedAt: FormControl<Date | null>;
-};
+}
 
 @Component({
   selector: 'app-company-page',
@@ -65,10 +67,17 @@ type FormModel = {
   ]
 })
 export class CompanyPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+  private formErrorsService = inject(FormErrorsService);
+
   public subscriptions: Subscription[];
   public form: FormGroup<FormModel>;
-  public cgid: string = '';
-  public isNewCompanyView: boolean = true;
+  public cgid = '';
+  public isNewCompanyView = true;
   public industryTypes: SelectObjectModel[] = [
     { id: IndustryEnum.Industry, name: 'Przemysł' },
     { id: IndustryEnum.Trade, name: 'Handel' },
@@ -92,14 +101,7 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
   public Company$ = this.store.select(selectCompany);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public route: ActivatedRoute,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler,
-    private formErrorsService: FormErrorsService
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.form = this.InitCompanyForm();
   }

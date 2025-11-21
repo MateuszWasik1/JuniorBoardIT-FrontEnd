@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import * as UsersActions from './users-page-state.actions';
-import { UserService } from 'src/app/services/user.service';
-import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
+
 import { AppState } from 'src/app/app.state';
-import { Store } from '@ngrx/store';
-import { selectFilters } from './users-page-state.selectors';
+import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+import { UserService } from 'src/app/services/user.service';
+
+import * as UsersActions from './users-page-state.actions';
+import { selectFilters } from './users-page-state.selectors';
 
 @Injectable()
 export class UsersEffects {
-  constructor(
-    private actions: Actions,
-    private store: Store<AppState>,
-    private userService: UserService,
-    private errorHandler: APIErrorHandler,
-    private snackbarService: SnackBarService
-  ) {}
+  private actions = inject(Actions);
+  private store = inject(Store<AppState>);
+  private userService = inject(UserService);
+  private errorHandler = inject(APIErrorHandler);
+  private snackbarService = inject(SnackBarService);
 
   loadUsers = createEffect(() => {
     return this.actions.pipe(

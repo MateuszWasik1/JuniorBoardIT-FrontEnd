@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
 

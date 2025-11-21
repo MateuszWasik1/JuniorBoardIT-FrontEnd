@@ -1,14 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
+import { Subscription } from 'rxjs';
+
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
 import { TranslationService } from 'src/app/services/translate.service';
-import {
-  selectCompaniesCount,
-  selectCompenies,
-  selectErrorMessage,
-  selectFilters
-} from './companies-page-state/companies-page-state.selectors';
+
+import { AppState } from '../../app.state';
 import {
   changeNameFilterValue,
   cleanState,
@@ -16,14 +19,13 @@ import {
   loadCompanies,
   updatePaginationData
 } from './companies-page-state/companies-page-state.actions';
-import { Router } from '@angular/router';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { AsyncPipe } from '@angular/common';
+import {
+  selectCompaniesCount,
+  selectCompenies,
+  selectErrorMessage,
+  selectFilters
+} from './companies-page-state/companies-page-state.selectors';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
-import { SelectModule } from 'primeng/select';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-companies-page',
@@ -33,8 +35,13 @@ import { TooltipModule } from 'primeng/tooltip';
   imports: [PaginatorComponent, AsyncPipe, ButtonModule, SelectModule, InputTextModule, TooltipModule]
 })
 export class CompaniesPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+
   public subscriptions: Subscription[];
-  public count: number = 0;
+  public count = 0;
 
   public Companies$ = this.store.select(selectCompenies);
   public Filters$ = this.store.select(selectFilters);
@@ -43,12 +50,7 @@ export class CompaniesPageComponent implements OnInit, OnDestroy {
 
   private debounceTimer: any;
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler
-  ) {
+  constructor() {
     this.subscriptions = [];
   }
   ngOnInit(): void {

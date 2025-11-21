@@ -1,28 +1,28 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import * as BugsActions from './bugs-page-state.actions';
-import { BugsService } from 'src/app/services/bugs.service';
-import { Router } from '@angular/router';
-import { RolesService } from 'src/app/services/roles.service';
+
 import { AppState } from 'src/app/app.state';
-import { Store } from '@ngrx/store';
-import { selectFilters, selectFiltersBugNotes } from './bugs-page-state.selectors';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
+import { BugsService } from 'src/app/services/bugs.service';
+import { RolesService } from 'src/app/services/roles.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+
+import * as BugsActions from './bugs-page-state.actions';
+import { selectFilters, selectFiltersBugNotes } from './bugs-page-state.selectors';
 
 @Injectable()
 export class BugsEffects {
-  constructor(
-    private actions: Actions,
-    private router: Router,
-    private store: Store<AppState>,
-    private bugsService: BugsService,
-    private rolesService: RolesService,
-    private errorHandler: APIErrorHandler,
-    private snackbarService: SnackBarService
-  ) {}
+  private actions = inject(Actions);
+  private router = inject(Router);
+  private store = inject(Store<AppState>);
+  private bugsService = inject(BugsService);
+  private rolesService = inject(RolesService);
+  private errorHandler = inject(APIErrorHandler);
+  private snackbarService = inject(SnackBarService);
 
   loadBugs = createEffect(() => {
     return this.actions.pipe(

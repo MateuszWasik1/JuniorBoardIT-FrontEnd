@@ -1,6 +1,19 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { ChartData, ChartOptions } from 'chart.js';
+import { ChartModule } from 'primeng/chart';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
+import { Subscription } from 'rxjs';
+
+import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
+import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { SelectObjectModel } from 'src/app/models/general-models';
+import { TranslationService } from 'src/app/services/translate.service';
+
 import { AppState } from '../../app.state';
 import {
   changeCGIDFilter,
@@ -23,26 +36,15 @@ import {
   selectFilters,
   selectStats
 } from './stats-page-state/stats-page-state.selectors';
-import { ChartData, ChartOptions } from 'chart.js';
-import { TranslationService } from 'src/app/services/translate.service';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { ChartModule } from 'primeng/chart';
-import { AsyncPipe } from '@angular/common';
-import { SelectObjectModel } from 'src/app/models/general-models';
-import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
-import { DatePickerModule } from 'primeng/datepicker';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
-import { SelectModule } from 'primeng/select';
 
-type FormModel = {
+interface FormModel {
   StartDate: FormControl<Date>;
   EndDate: FormControl<Date>;
   Date: FormControl<Date>;
   ChartType: FormControl<StatsChartTypeEnum>;
   DataType: FormControl<StatsTypeEnum>;
   CGID: FormControl<string>;
-};
+}
 
 @Component({
   selector: 'app-stats-page',
@@ -52,6 +54,11 @@ type FormModel = {
   imports: [AsyncPipe, ChartModule, ReactiveFormsModule, SelectModule, DatePickerModule]
 })
 export class StatsPageComponent implements OnInit, OnDestroy {
+  public translations = inject(TranslationService);
+  private store = inject(Store<AppState>);
+  private errorHandler = inject(MainUIErrorHandler);
+  private cdr = inject(ChangeDetectorRef);
+
   public subscriptions: Subscription[];
   public basicData: any;
 
@@ -90,12 +97,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
   public Companies$ = this.store.select(selectCompanies);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  constructor(
-    public translations: TranslationService,
-    private store: Store<AppState>,
-    private errorHandler: MainUIErrorHandler,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     this.subscriptions = [];
 
     this.filterForm = this.InitJobOfferForm();

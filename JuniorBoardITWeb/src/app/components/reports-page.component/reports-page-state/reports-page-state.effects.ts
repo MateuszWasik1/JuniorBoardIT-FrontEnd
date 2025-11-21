@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import * as ReportsActions from './reports-page-state.actions';
-import { ReportsService } from 'src/app/services/reports.service';
-import { selectFilters } from './reports-page-state.selectors';
 import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+
 import { AppState } from 'src/app/app.state';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
+import { ReportsService } from 'src/app/services/reports.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+
+import * as ReportsActions from './reports-page-state.actions';
+import { selectFilters } from './reports-page-state.selectors';
 
 @Injectable()
 export class ReportsEffects {
-  constructor(
-    public store: Store<AppState>,
-    private actions: Actions,
-    private reportsService: ReportsService,
-    private errorHandler: APIErrorHandler,
-    private snackbarService: SnackBarService
-  ) {}
+  public store = inject(Store<AppState>);
+  private actions = inject(Actions);
+  private reportsService = inject(ReportsService);
+  private errorHandler = inject(APIErrorHandler);
+  private snackbarService = inject(SnackBarService);
 
   loadReport = createEffect(() => {
     return this.actions.pipe(

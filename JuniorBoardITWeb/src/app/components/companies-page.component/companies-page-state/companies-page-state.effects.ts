@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import * as CompaniesActions from './companies-page-state.actions';
-import { Router } from '@angular/router';
+
 import { AppState } from 'src/app/app.state';
-import { Store } from '@ngrx/store';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { CompaniesService } from 'src/app/services/companies.service';
-import { selectFilters } from './companies-page-state.selectors';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+
+import * as CompaniesActions from './companies-page-state.actions';
+import { selectFilters } from './companies-page-state.selectors';
 
 @Injectable()
 export class CompaniesEffects {
-  constructor(
-    private actions: Actions,
-    private router: Router,
-    private store: Store<AppState>,
-    private companiesService: CompaniesService,
-    private errorHandler: APIErrorHandler,
-    private snackbarService: SnackBarService
-  ) {}
+  private actions = inject(Actions);
+  private router = inject(Router);
+  private store = inject(Store<AppState>);
+  private companiesService = inject(CompaniesService);
+  private errorHandler = inject(APIErrorHandler);
+  private snackbarService = inject(SnackBarService);
 
   loadCompanies = createEffect(() => {
     return this.actions.pipe(

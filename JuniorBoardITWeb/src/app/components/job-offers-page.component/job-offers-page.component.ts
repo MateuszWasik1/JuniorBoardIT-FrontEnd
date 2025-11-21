@@ -1,10 +1,33 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
-import { TranslationService } from 'src/app/services/translate.service';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TextareaModule } from 'primeng/textarea';
+import { TooltipModule } from 'primeng/tooltip';
+import { Subscription } from 'rxjs';
+
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
+import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
+import { TranslationService } from 'src/app/services/translate.service';
+
+import { AppState } from '../../app.state';
 import {
   addToFavorite,
   applyForJobOffer,
@@ -22,7 +45,6 @@ import {
   loadUserData,
   updatePaginationDataJobOffers
 } from './job-offers-page-state/job-offers-page-state.actions';
-import { cleanState as cleanStateReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
 import {
   selectCount,
   selectErrorMessage,
@@ -31,44 +53,24 @@ import {
   selectRoles,
   selectUserData
 } from './job-offers-page-state/job-offers-page-state.selectors';
-import { AsyncPipe } from '@angular/common';
-import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
-import { SelectModule } from 'primeng/select';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { TextareaModule } from 'primeng/textarea';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
-import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
+import { cleanState as cleanStateReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
 import { saveReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
-import { InputTextModule } from 'primeng/inputtext';
-import { FileUploadModule } from 'primeng/fileupload';
-import { CardModule } from 'primeng/card';
-import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
-import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
-import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
-import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
-import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
-import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
-import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
-import { TooltipModule } from 'primeng/tooltip';
+import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 
-type FormReportModel = {
+interface FormReportModel {
   RJOGID: FormControl<string>;
   RReasons: FormControl<object>;
   RText: FormControl<string>;
-};
+}
 
-type FormUserDataModel = {
+interface FormUserDataModel {
   UFirstName: FormControl<string>;
   ULastName: FormControl<string>;
   UEmail: FormControl<string>;
   UPhone: FormControl<string>;
   UCV: FormControl<string>;
   JOGID: FormControl<string>;
-};
+}
 
 @Component({
   selector: 'app-tasks-page',
@@ -92,6 +94,11 @@ type FormUserDataModel = {
   ]
 })
 export class JobOffersPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public router = inject(Router);
+  public translations = inject(TranslationService);
+  public errorHandler = inject(MainUIErrorHandler);
+
   public subscriptions: Subscription[];
 
   public locationTypes: SelectObjectModel[] = [
@@ -145,9 +152,9 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
     { id: EducationEnum.HigherIILevel, name: 'Wyższe drugiego stopnia' },
     { id: EducationEnum.All, name: 'Wszystkie' }
   ];
-  public count: number = 0;
-  public reportModalVisible: boolean = false;
-  public applicationModalVisible: boolean = false;
+  public count = 0;
+  public reportModalVisible = false;
+  public applicationModalVisible = false;
   public reportReasons: ReportReasonsModel[] = [
     { name: 'Błędne widełki płacy', value: ReportsReasonsEnum.Reason0 },
     { name: 'Błędny opis względem wprowadzonych danych', value: ReportsReasonsEnum.Reason1 },
@@ -172,12 +179,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public ErrorMessage$ = this.store.select(selectErrorMessage);
   public Roles$ = this.store.select(selectRoles);
 
-  constructor(
-    public store: Store<AppState>,
-    public router: Router,
-    public translations: TranslationService,
-    public errorHandler: MainUIErrorHandler
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.formFilter = new FormGroup({
       expirence: new FormControl(this.expirenceTypes[5].id),

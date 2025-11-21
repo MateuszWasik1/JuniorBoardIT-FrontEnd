@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslationService } from 'src/app/services/translate.service';
-import { Login } from '../account-page-state/account-page-state.actions';
 import { Router } from '@angular/router';
-import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
-import { Subscription } from 'rxjs';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
-import { FormErrorsService } from 'src/app/services/form-error.service';
+import { Subscription } from 'rxjs';
 
-type FormModel = {
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { TranslationService } from 'src/app/services/translate.service';
+
+import { AppState } from '../../../app.state';
+import { Login } from '../account-page-state/account-page-state.actions';
+import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
+
+interface FormModel {
   UUserName: FormControl<string>;
   UPassword: FormControl<string>;
-};
+}
 
 @Component({
   selector: 'app-login-page',
@@ -24,6 +26,12 @@ type FormModel = {
   imports: [ReactiveFormsModule, ButtonModule]
 })
 export class LoginComponent implements OnInit {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+  private formErrorsService = inject(FormErrorsService);
+
   public subscriptions: Subscription[];
 
   public form: FormGroup<FormModel>;
@@ -35,13 +43,7 @@ export class LoginComponent implements OnInit {
 
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler,
-    private formErrorsService: FormErrorsService
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.form = this.InitLoginForm();
   }

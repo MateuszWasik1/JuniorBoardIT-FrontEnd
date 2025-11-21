@@ -1,22 +1,23 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetToken } from '../helpers/request.service';
+import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
+import { GetToken } from '../helpers/request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompaniesService {
   public apiUrl = environment.apiUrl;
-  constructor(
-    private http: HttpClient,
-    private cookiesService: CookieService
-  ) {}
+
+  private http = inject(HttpClient);
+  private cookiesService = inject(CookieService);
 
   GetCompany(CGID: any): Observable<any> {
-    let params = new HttpParams().set('cgid', CGID);
+    const params = new HttpParams().set('cgid', CGID);
 
     return this.http.get<any>(this.apiUrl + 'api/Companies/GetCompany', {
       params: params,
@@ -25,7 +26,7 @@ export class CompaniesService {
   }
 
   GetCompanies(Skip: number, Take: number, Name: string): Observable<any> {
-    let params = new HttpParams().set('skip', Skip).set('take', Take).set('name', Name);
+    const params = new HttpParams().set('skip', Skip).set('take', Take).set('name', Name);
 
     return this.http.get<any>(this.apiUrl + 'api/Companies/GetCompanies', {
       params: params,

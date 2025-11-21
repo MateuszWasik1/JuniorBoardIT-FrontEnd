@@ -2,7 +2,6 @@ import { ErrorHandler, Injectable } from '@angular/core';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor() {}
-
-  handleError(error: any): void {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public handleError(): void {}
 }

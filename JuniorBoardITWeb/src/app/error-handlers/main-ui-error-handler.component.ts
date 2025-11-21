@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { UIErrorHandler } from './ui-error-handler/ui-error-handler.component';
+import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+
+import { UIErrorHandler } from './ui-error-handler/ui-error-handler.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainUIErrorHandler {
-  constructor(private dialog: MatDialog) {}
+  private dialog = inject(MatDialog);
 
-  HandleException(error: any) {
+  public HandleException(error: any) {
     if (error) {
       this.dialog.open(UIErrorHandler, {
         minWidth: '658px',

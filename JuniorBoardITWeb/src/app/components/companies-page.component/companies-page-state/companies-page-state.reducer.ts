@@ -1,10 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
+
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
+
 import * as Actions from './companies-page-state.actions';
 import { CompaniesState } from './companies-page-state.state';
-import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
-import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 
-var initialStateOfCompaniesPage: CompaniesState = {
+const initialStateOfCompaniesPage: CompaniesState = {
   Companies: [],
   Company: {
     CGID: '',
@@ -70,9 +72,9 @@ export const CompaniesReducer = createReducer<CompaniesState>(
   })),
 
   on(Actions.deleteCompanySuccess, (state, { CGID }) => {
-    let newCompanies = [...state.Companies];
+    const newCompanies = [...state.Companies];
 
-    let companiesWithoutDeletedCompany = newCompanies.filter((x) => x.CGID != CGID);
+    const companiesWithoutDeletedCompany = newCompanies.filter((x) => x.CGID != CGID);
 
     return { ...state, Companies: companiesWithoutDeletedCompany };
   }),

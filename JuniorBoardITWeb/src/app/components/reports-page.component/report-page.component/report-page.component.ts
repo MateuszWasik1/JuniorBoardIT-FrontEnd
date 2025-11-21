@@ -1,23 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslationService } from 'src/app/services/translate.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
-import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
-import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
-import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
-import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
-import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
-import { DatePickerModule } from 'primeng/datepicker';
-import { SelectModule } from 'primeng/select';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
+import { Subscription } from 'rxjs';
+
+import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
+import { CategoryEnum } from 'src/app/enums/JobOffers/CategoryEnum';
+import { CurrencyEnum } from 'src/app/enums/JobOffers/CurrencyEnum';
+import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
+import { EmploymentTypeEnum } from 'src/app/enums/JobOffers/EmploymentTypeEnum';
+import { ExpirenceEnum } from 'src/app/enums/JobOffers/ExpirenceEnum';
+import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
+import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
+import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
+import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
+import { FormErrorsService } from 'src/app/services/form-error.service';
+import { TranslationService } from 'src/app/services/translate.service';
+
+import { AppState } from '../../../app.state';
 import { changeReportStatus, cleanState, loadReport } from '../reports-page-state/reports-page-state.actions';
 import {
   selectCompany,
@@ -25,18 +34,11 @@ import {
   selectJobOffer,
   selectReport
 } from '../reports-page-state/reports-page-state.selectors';
-import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
-import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
-import { MessageModule } from 'primeng/message';
-import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
-import { FormErrorsService } from 'src/app/services/form-error.service';
 import { ReportTranslations } from '../reports-page.models';
-import { EducationEnum } from 'src/app/enums/JobOffers/EducationEnum';
-import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 
-type FormReportModel = {
+interface FormReportModel {
   ReportStatus: FormControl<ReportsStatusEnum>;
-};
+}
 
 @Component({
   selector: 'app-task-page',
@@ -56,6 +58,13 @@ type FormReportModel = {
   ]
 })
 export class ReportPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+  private formErrorsService = inject(FormErrorsService);
+
   public subscriptions: Subscription[];
   public locationTypes: SelectObjectModel[] = [
     { id: 0, name: 'Zdalnie' },
@@ -141,19 +150,13 @@ export class ReportPageComponent implements OnInit, OnDestroy {
   public Company$ = this.store.select(selectCompany);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public route: ActivatedRoute,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler,
-    private formErrorsService: FormErrorsService
-  ) {
+  constructor() {
     this.subscriptions = [];
 
     this.form = this.InitReportForm();
   }
-  ngOnInit(): void {
+
+  public ngOnInit(): void {
     this.store.dispatch(loadReport({ RGID: this.route.snapshot.paramMap.get('rgid') }));
 
     this.subscriptions.push(

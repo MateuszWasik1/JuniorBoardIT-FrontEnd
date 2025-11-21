@@ -1,6 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
+import { Subscription } from 'rxjs';
+
+import { RolesEnum } from 'src/app/enums/RolesEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { TranslationService } from 'src/app/services/translate.service';
+
 import { AppState } from '../../app.state';
 import {
   changeHasCompanyFilterValue,
@@ -17,18 +30,7 @@ import {
   selectFilters,
   selectUsers
 } from './users-page-state/users-page-state.selectors';
-import { TranslationService } from 'src/app/services/translate.service';
-import { Router } from '@angular/router';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { RolesEnum } from 'src/app/enums/RolesEnum';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
-import { AsyncPipe } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SelectModule } from 'primeng/select';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-users-page',
@@ -47,6 +49,11 @@ import { TooltipModule } from 'primeng/tooltip';
   ]
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public translations = inject(TranslationService);
+  public router = inject(Router);
+  public errorHandler = inject(MainUIErrorHandler);
+
   public subscriptions: Subscription[];
   public roles: any = [
     { id: '0', name: 'Wszyscy' },
@@ -57,7 +64,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     { id: '5', name: RolesEnum.Admin }
   ];
 
-  public count: number = 0;
+  public count = 0;
 
   public formFilter: FormGroup = new FormGroup({});
 
@@ -68,12 +75,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   private debounceTimer: any;
 
-  constructor(
-    public store: Store<AppState>,
-    public translations: TranslationService,
-    public router: Router,
-    public errorHandler: MainUIErrorHandler
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.formFilter = new FormGroup({
       role: new FormControl(this.roles[0].id)

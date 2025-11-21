@@ -1,23 +1,24 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetToken } from '../helpers/request.service';
+import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
 import { BugTypeEnum } from '../enums/Bugs/BugTypeEnum';
+import { GetToken } from '../helpers/request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BugsService {
   public apiUrl = environment.apiUrl;
-  constructor(
-    private http: HttpClient,
-    private cookiesService: CookieService
-  ) {}
 
-  GetBugs(BugType: BugTypeEnum, Skip: number, Take: number, Message: string): Observable<any> {
-    let params = new HttpParams().set('bugType', BugType).set('skip', Skip).set('take', Take).set('message', Message);
+  private http = inject(HttpClient);
+  private cookiesService = inject(CookieService);
+
+  public GetBugs(BugType: BugTypeEnum, Skip: number, Take: number, Message: string): Observable<any> {
+    const params = new HttpParams().set('bugType', BugType).set('skip', Skip).set('take', Take).set('message', Message);
 
     return this.http.get<any>(this.apiUrl + 'api/Bugs/GetBugs', {
       params: params,
@@ -25,8 +26,8 @@ export class BugsService {
     });
   }
 
-  GetBug(bgid: any): Observable<any> {
-    let params = new HttpParams().set('bgid', bgid);
+  public GetBug(bgid: any): Observable<any> {
+    const params = new HttpParams().set('bgid', bgid);
 
     return this.http.get<any>(this.apiUrl + 'api/Bugs/GetBug', {
       params: params,
@@ -34,8 +35,8 @@ export class BugsService {
     });
   }
 
-  GetBugNotes(bgid: any, Skip: number, Take: number): Observable<any> {
-    let params = new HttpParams().set('bgid', bgid).set('skip', Skip).set('take', Take);
+  public GetBugNotes(bgid: any, Skip: number, Take: number): Observable<any> {
+    const params = new HttpParams().set('bgid', bgid).set('skip', Skip).set('take', Take);
 
     return this.http.get<any>(this.apiUrl + 'api/BugsNotes/GetBugNotes', {
       params: params,
@@ -43,17 +44,17 @@ export class BugsService {
     });
   }
 
-  SaveBug(model: any): Observable<any> {
+  public SaveBug(model: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'api/Bugs/SaveBug', model, { headers: GetToken(this.cookiesService) });
   }
 
-  SaveBugNote(model: any): Observable<any> {
+  public SaveBugNote(model: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'api/BugsNotes/SaveBugNote', model, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  ChangeBugStatus(model: any): Observable<any> {
+  public ChangeBugStatus(model: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'api/Bugs/ChangeBugStatus', model, {
       headers: GetToken(this.cookiesService)
     });

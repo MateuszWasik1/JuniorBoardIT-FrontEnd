@@ -1,12 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
-import { TranslationService } from 'src/app/services/translate.service';
-import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { Router } from '@angular/router';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
+import { Subscription } from 'rxjs';
+
+import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
+import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
+import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { SelectObjectModel } from 'src/app/models/general-models';
+import { TranslationService } from 'src/app/services/translate.service';
+
+import { AppState } from '../../app.state';
 import {
   changeMessageFilterValue,
   ChangeReportTypeFilterValue,
@@ -20,21 +31,11 @@ import {
   selectFilters,
   selectReports
 } from './reports-page-state/reports-page-state.selectors';
-import { CardModule } from 'primeng/card';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
-import { SelectModule } from 'primeng/select';
-import { ButtonModule } from 'primeng/button';
-import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
+import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 
-import { MessageModule } from 'primeng/message';
-import { SelectObjectModel } from 'src/app/models/general-models';
-import { TooltipModule } from 'primeng/tooltip';
-import { InputTextModule } from 'primeng/inputtext';
-
-type FormFilterModel = {
+interface FormFilterModel {
   ReportType: FormControl<ReportsTypeEnum>;
-};
+}
 
 @Component({
   selector: 'app-tasks-page',
@@ -55,6 +56,11 @@ type FormFilterModel = {
   ]
 })
 export class ReportsPageComponent implements OnInit, OnDestroy {
+  public store = inject(Store<AppState>);
+  public router = inject(Router);
+  public translations = inject(TranslationService);
+  public errorHandler = inject(MainUIErrorHandler);
+
   public subscriptions: Subscription[];
   public reportsStatusType: SelectObjectModel[] = [
     { id: ReportsStatusEnum.New, name: 'Nowe' },
@@ -67,7 +73,7 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
     { id: ReportsTypeEnum.ImVerificator, name: 'Jestem weryfikatorem' },
     { id: ReportsTypeEnum.All, name: 'Wszystkie' }
   ];
-  public count: number = 0;
+  public count = 0;
 
   public formFilter: FormGroup<FormFilterModel>;
 
@@ -78,12 +84,7 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
 
   private debounceTimer: any;
 
-  constructor(
-    public store: Store<AppState>,
-    public router: Router,
-    public translations: TranslationService,
-    public errorHandler: MainUIErrorHandler
-  ) {
+  constructor() {
     this.subscriptions = [];
     this.formFilter = this.InitReportForm();
   }

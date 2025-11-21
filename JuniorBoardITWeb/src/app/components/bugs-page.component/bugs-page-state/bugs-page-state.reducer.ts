@@ -1,11 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
-import * as Actions from './bugs-page-state.actions';
-import { BugsState } from './bugs-page-state.state';
-import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 import { Guid } from 'guid-typescript';
+
+import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
 
-var initialStateOfBugsPage: BugsState = {
+import * as Actions from './bugs-page-state.actions';
+import { BugsState } from './bugs-page-state.state';
+
+const initialStateOfBugsPage: BugsState = {
   Bugs: [],
   Bug: {
     BGID: Guid.create().toString(),
@@ -87,9 +89,9 @@ export const BugsReducer = createReducer<BugsState>(
   })),
 
   on(Actions.saveBugNoteSuccess, (state, { BugNote }) => {
-    let newBugNotes = [...state.BugNotes];
+    const newBugNotes = [...state.BugNotes];
 
-    let newModel = {
+    const newModel = {
       BNGID: '',
       BNDate: new Date(),
       BNText: BugNote.BNText,
@@ -109,9 +111,9 @@ export const BugsReducer = createReducer<BugsState>(
   })),
 
   on(Actions.changeBugStatusSuccess, (state, { status }) => {
-    let newBugNotes = [...state.BugNotes];
+    const newBugNotes = [...state.BugNotes];
 
-    let newModel = {
+    const newModel = {
       BNGID: '',
       BNDate: new Date(),
       BNText: 'Status został zmieniony',
