@@ -8,15 +8,15 @@ export const loadReportSuccess = createAction(
   '[Reports Page] Load Report Success',
   props<{ ReportModel: any; JobOfferModel: any; CompanyModel: any }>()
 );
-export const loadReportError = createAction('[Reports Page] Load Report Error', props<{ error: any }>());
+export const loadReportError = createAction('[Reports Page] Load Report Error', props<{ error: string }>());
 
 export const loadReports = createAction('[Reports Page] Load Reports');
 export const loadReportsSuccess = createAction('[Reports Page] Load Reports Success', props<{ Reports: any }>());
-export const loadReportsError = createAction('[Reports Page] Load Reports Error', props<{ error: any }>());
+export const loadReportsError = createAction('[Reports Page] Load Reports Error', props<{ error: string }>());
 
 export const saveReport = createAction('[Reports Page] Save Report', props<{ Report: any }>());
 export const saveReportSuccess = createAction('Reports Page] Save Report Success');
-export const saveReportError = createAction('[Reports Page] Save Report Error', props<{ error: any }>());
+export const saveReportError = createAction('[Reports Page] Save Report Error', props<{ error: string }>());
 
 export const changeReportStatus = createAction(
   '[Reports Page] Change Report Status',
@@ -28,7 +28,7 @@ export const changeReportStatusSuccess = createAction(
 );
 export const changeReportStatusError = createAction(
   '[Reports Page] Change Report Status Error',
-  props<{ error: any }>()
+  props<{ error: string }>()
 );
 
 export const ChangeReportTypeFilterValue = createAction(

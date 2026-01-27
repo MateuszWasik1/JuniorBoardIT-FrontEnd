@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { PaginationDataModel } from 'src/app/models/general-models';
 import { FormErrorsService } from 'src/app/services/form-error.service';
 import { TranslationService } from 'src/app/services/translate.service';
 
@@ -34,7 +35,7 @@ import {
   selectFiltersBugNotes,
   selectUserRoles
 } from '../bugs-page-state/bugs-page-state.selectors';
-import { BugNoteTranslations, BugTranslations } from '../bugs-page.models';
+import { Bug, BugNote, BugNoteTranslations, BugStatus, BugTranslations } from '../bugs-page.models';
 
 interface FormBugModel {
   BGID: FormControl<string>;
@@ -80,7 +81,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
   public bgid = '';
   public count = 0;
   public isNewBugView = true;
-  public selectedBugStatus: any;
+  public selectedBugStatus: string;
   public bugStatusAdmin = [
     { id: '0', name: 'Nowy' },
     { id: '1', name: 'W weryfikacji' },
@@ -102,6 +103,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
     this.form = this.InitBugForm();
     this.formBugNote = this.InitBugNoteForm();
+    this.selectedBugStatus = '';
   }
   ngOnInit(): void {
     this.bgid = this.route.snapshot.paramMap.get('bgid') ?? '';
@@ -155,11 +157,11 @@ export class BugPageComponent implements OnInit, OnDestroy {
       return this.formErrorsService.getAllInvalidControls(this.form, '', BugTranslations);
     }
 
-    this.store.dispatch(saveBug({ bug: this.form.value }));
+    this.store.dispatch(saveBug({ bug: this.form.value as Bug }));
   };
 
   public AddBugNote = (): void => {
-    const model = {
+    const model: BugNote = {
       BNBGID: this.form.controls.BGID?.value,
       BNText: this.formBugNote.controls.BugNote?.value
     };
@@ -171,10 +173,10 @@ export class BugPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(saveBugNote({ BugNote: model }));
   };
 
-  public ChangeBugStatus = (event: any): void => {
-    const model = {
+  public ChangeBugStatus = (event: BugStatusEnum): void => {
+    const model: BugStatus = {
       BGID: this.form.controls.BGID?.value,
-      Status: event.value
+      Status: event
     };
 
     this.store.dispatch(changeBugStatus({ model: model }));
@@ -182,7 +184,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
 
   public Cancel = (): Promise<boolean> => this.router.navigate(['/bugs']);
 
-  public UpdatePaginationData = (PaginationData: any): void =>
+  public UpdatePaginationData = (PaginationData: PaginationDataModel): void =>
     this.store.dispatch(updateBugNotesPaginationData({ PaginationData: PaginationData }));
 
   private InitBugForm = (): FormGroup<FormBugModel> => {

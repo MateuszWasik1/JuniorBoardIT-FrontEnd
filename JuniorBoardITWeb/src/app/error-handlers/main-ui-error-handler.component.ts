@@ -9,7 +9,7 @@ import { UIErrorHandler } from './ui-error-handler/ui-error-handler.component';
 export class MainUIErrorHandler {
   private dialog = inject(MatDialog);
 
-  public HandleException(error: any) {
+  public HandleException(error: string) {
     if (error) {
       this.dialog.open(UIErrorHandler, {
         minWidth: '658px',

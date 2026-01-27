@@ -12,6 +12,11 @@ export interface Bugs {
   BStatus: BugStatusEnum;
 }
 
+export interface BugsModel {
+  List: Bugs[];
+  Count: number;
+}
+
 export interface Bug {
   BGID: string;
   BTitle: string;
@@ -26,6 +31,21 @@ export interface BugNotes {
   BNIsNewVerifier: boolean;
   BNIsStatusChange: boolean;
   BNChangedStatus: BugStatusEnum;
+}
+
+export interface BugNotesModel {
+  List: BugNotes[];
+  Count: number;
+}
+
+export interface BugNote {
+  BNBGID: string;
+  BNText: string;
+}
+
+export interface BugStatus {
+  BGID: string;
+  Status: BugStatusEnum;
 }
 
 export interface BugFilters {

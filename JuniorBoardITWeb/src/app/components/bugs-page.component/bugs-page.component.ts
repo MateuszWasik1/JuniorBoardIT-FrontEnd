@@ -6,13 +6,14 @@ import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { SelectChangeEvent, SelectModule } from 'primeng/select';
+import { SelectModule } from 'primeng/select';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subscription } from 'rxjs';
 
 import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 import { BugTypeEnum } from 'src/app/enums/Bugs/BugTypeEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { PaginationDataModel } from 'src/app/models/general-models';
 import { TranslationService } from 'src/app/services/translate.service';
 
 import {
@@ -87,6 +88,7 @@ export class BugsPageComponent implements OnInit, OnDestroy {
     { id: '5', name: 'Naprawiony' }
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private debounceTimer: any;
 
   constructor() {
@@ -141,8 +143,7 @@ export class BugsPageComponent implements OnInit, OnDestroy {
 
   public ModifyBug = (bgid: string) => this.router.navigate([`bug/${bgid}`]);
 
-  public ChangeBugsType = (BugType: SelectChangeEvent) =>
-    this.store.dispatch(changeBugsType({ BugType: BugType.value }));
+  public ChangeBugsType = (BugType: BugTypeEnum) => this.store.dispatch(changeBugsType({ BugType: BugType }));
 
   public ChangeMessageFilterValue = (event: Event) => {
     const message = (event.target as HTMLInputElement).value;
@@ -154,7 +155,7 @@ export class BugsPageComponent implements OnInit, OnDestroy {
     }, 1000);
   };
 
-  public UpdatePaginationData = (PaginationData: any) =>
+  public UpdatePaginationData = (PaginationData: PaginationDataModel) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));
 
   ngOnDestroy() {
