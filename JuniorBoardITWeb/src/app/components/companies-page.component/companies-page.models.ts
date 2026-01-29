@@ -1,7 +1,12 @@
 import { CompanyEmpNoEnum } from 'src/app/enums/Companies/CompanyEmpNoEnum';
 import { IndustryEnum } from 'src/app/enums/Companies/IndustryEnum';
 
-export interface Company {
+export interface CompaniesModel {
+  List: CompanyModel[];
+  Count: number;
+}
+
+export interface CompanyModel {
   CGID: string;
   CName: string;
   CIndustry: IndustryEnum;

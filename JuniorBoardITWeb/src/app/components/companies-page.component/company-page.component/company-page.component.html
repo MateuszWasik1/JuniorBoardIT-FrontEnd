@@ -206,7 +206,7 @@
           <span class="data-input-text"> {{ translations.Get('Companies_Company_PostalCode') }}: </span>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 row-inputs">
-          <p-inputMask formControlName="CPostalCode" required minlength="10" maxlength="10" mask="99-999"></p-inputMask>
+          <p-inputMask formControlName="CPostalCode" required minlength="5" maxlength="10" mask="99-999"></p-inputMask>
           @if (form.controls.CPostalCode.errors?.['required']) {
             <div class="error-row">
               {{ translations.Get('Companies_Company_PostalCode_Required') }}
@@ -435,3 +435,8 @@
     </div>
   </div>
 </section>
+
+{{ form.invalid }}
+<pre>{{ form.status }}</pre>
+<pre>{{ form.errors | json }}</pre>
+<pre>{{ form.value | json }}</pre>
