@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -63,8 +63,7 @@ interface FormModel {
     SelectModule,
     TextareaModule,
     InputNumberModule,
-    InputMaskModule,
-    JsonPipe
+    InputMaskModule
   ]
 })
 export class CompanyPageComponent implements OnInit, OnDestroy {
