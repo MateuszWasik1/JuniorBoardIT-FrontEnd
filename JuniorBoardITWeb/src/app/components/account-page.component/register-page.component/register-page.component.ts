@@ -13,6 +13,7 @@ import { PasswordConsistency, PatternValidator } from 'src/app/validators/forms.
 import { AppState } from '../../../app.state';
 import { RegisterUser } from '../account-page-state/account-page-state.actions';
 import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
+import { RegisterUserModel } from '../account-page.models';
 
 interface FormModel {
   UUserName: FormControl<string>;
@@ -70,7 +71,7 @@ export class RegisterComponent implements OnInit {
       return this.formErrorsService.getAllInvalidControls(this.form, '', this.RegisterTranslations);
     }
 
-    this.store.dispatch(RegisterUser({ user: this.form.value }));
+    this.store.dispatch(RegisterUser({ User: this.form.value as RegisterUserModel }));
   };
 
   private InitRegisterForm = (): FormGroup<FormModel> => {
