@@ -157,7 +157,7 @@ export class ReportPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.store.dispatch(loadReport({ RGID: this.route.snapshot.paramMap.get('rgid') }));
+    this.store.dispatch(loadReport({ RGID: this.route.snapshot.paramMap.get('rgid') as string }));
 
     this.subscriptions.push(
       this.Report$.subscribe((report) => {

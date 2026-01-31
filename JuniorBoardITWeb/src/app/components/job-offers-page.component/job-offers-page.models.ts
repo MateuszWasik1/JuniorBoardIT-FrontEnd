@@ -9,7 +9,7 @@ import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 import { StatusEnum } from 'src/app/enums/JobOffers/StatusEnum';
 
-export interface JobOffer {
+export interface JobOfferModel {
   JOGID: string;
   JOCGID: string;
   JOTitle: string;
@@ -35,7 +35,7 @@ export interface JobOffer {
   JOFavorite?: string;
 }
 
-export interface Filters {
+export interface FiltersModel {
   Skip: number;
   Take: number;
   Expirence: ExpirenceEnum;
@@ -47,7 +47,7 @@ export interface Filters {
   Favorite: boolean;
 }
 
-export interface User {
+export interface UserModel {
   UFirstName: string;
   ULastName: string;
   UEmail: string;
@@ -55,7 +55,7 @@ export interface User {
   UCompanyGID: string;
 }
 
-export interface Company {
+export interface CompanyModel {
   CGID: string;
   CName: string;
   CIndustry: IndustryEnum;
@@ -74,7 +74,7 @@ export interface Company {
   CEmployeesNo: CompanyEmpNoEnum;
 }
 
-export interface Roles {
+export interface RolesModel {
   IsAdmin: boolean;
   IsPremium: boolean;
   IsRecruiter: boolean;

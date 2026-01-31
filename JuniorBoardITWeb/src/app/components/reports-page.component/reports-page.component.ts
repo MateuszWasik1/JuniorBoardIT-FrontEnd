@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { SelectObjectModel } from 'src/app/models/general-models';
+import { PaginationDataModel, SelectObjectModel } from 'src/app/models/general-models';
 import { TranslationService } from 'src/app/services/translate.service';
 
 import { AppState } from '../../app.state';
@@ -82,6 +82,7 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
   public Reports$ = this.store.select(selectReports);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private debounceTimer: any;
 
   constructor() {
@@ -119,10 +120,10 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
     }
   };
 
-  public CheckReport = (RGID: any) => this.router.navigate([`report/${RGID}`]);
+  public CheckReport = (RGID: string) => this.router.navigate([`report/${RGID}`]);
 
-  public ChangeReportTypeFilterValue = (event: any) =>
-    this.store.dispatch(ChangeReportTypeFilterValue({ ReportType: event.value as ReportsTypeEnum }));
+  public ChangeReportTypeFilterValue = (ReportType: ReportsTypeEnum) =>
+    this.store.dispatch(ChangeReportTypeFilterValue({ ReportType: ReportType }));
 
   public ChangeMessageFilterValue = (event: Event) => {
     const message = (event.target as HTMLInputElement).value;
@@ -134,7 +135,7 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
     }, 1000);
   };
 
-  public UpdatePaginationData = (PaginationData: any) =>
+  public UpdatePaginationData = (PaginationData: PaginationDataModel) =>
     this.store.dispatch(updatePaginationDataReports({ PaginationData: PaginationData }));
 
   private InitReportForm = (): FormGroup<FormFilterModel> => {

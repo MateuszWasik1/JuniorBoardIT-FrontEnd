@@ -55,6 +55,7 @@ import {
 } from './job-offers-page-state/job-offers-page-state.selectors';
 import { cleanState as cleanStateReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
 import { saveReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
+import { AddReportModel } from '../reports-page.component/reports-page.models';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 
 interface FormReportModel {
@@ -246,7 +247,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public ReportJobOffer = () => {
     this.reportModalVisible = false;
-    this.store.dispatch(saveReport({ Report: this.reportForm.value }));
+    this.store.dispatch(saveReport({ Report: this.reportForm.value as AddReportModel }));
   };
 
   public ApplicationModalOpen = (JOGID: string) => {

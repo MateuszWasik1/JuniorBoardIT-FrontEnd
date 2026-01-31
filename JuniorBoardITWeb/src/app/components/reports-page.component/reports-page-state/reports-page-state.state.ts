@@ -1,14 +1,14 @@
-import { Company, JobOffer } from '../../job-offers-page.component/job-offers-page.models';
-import { Filters, Report, Reports } from '../reports-page.models';
+import { CompanyModel, JobOfferModel } from '../../job-offers-page.component/job-offers-page.models';
+import { FiltersModel, ReportModel, ReportsModel } from '../reports-page.models';
 
 export const featureKeyReportsState = 'reports-page-state';
 
 export interface ReportsState {
-  Reports: Reports[];
-  Report: Report;
-  JobOffer: JobOffer;
-  Company: Company;
-  Filters: Filters;
+  Reports: ReportsModel[];
+  Report: ReportModel;
+  JobOffer: JobOfferModel;
+  Company: CompanyModel;
+  Filters: FiltersModel;
   ReportsCount: number;
   ErrorMessage: string;
 }

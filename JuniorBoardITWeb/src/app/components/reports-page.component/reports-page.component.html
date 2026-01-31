@@ -21,7 +21,7 @@
           [placeholder]="translations.Get('Reports_ChooseStatus')"
           aria-describedby="offer-status"
           formControlName="ReportType"
-          (onChange)="ChangeReportTypeFilterValue($event)"
+          (onChange)="ChangeReportTypeFilterValue($event.value)"
         />
       </div>
       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" [pTooltip]="translations.Get('Reports_Search_Tooltip')">
