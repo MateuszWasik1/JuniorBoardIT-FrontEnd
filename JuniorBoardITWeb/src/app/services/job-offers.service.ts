@@ -5,6 +5,11 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import {
+  JobOfferModel,
+  JobOffersModel,
+  LoadJobOffer
+} from '../components/job-offers-page.component/job-offers-page.models';
 import { CategoryEnum } from '../enums/JobOffers/CategoryEnum';
 import { EducationEnum } from '../enums/JobOffers/EducationEnum';
 import { EmploymentTypeEnum } from '../enums/JobOffers/EmploymentTypeEnum';
@@ -22,10 +27,10 @@ export class JobOffersService {
   private http = inject(HttpClient);
   private cookiesService = inject(CookieService);
 
-  public GetJobOffer(JOGID: any): Observable<any> {
+  public GetJobOffer(JOGID: string): Observable<LoadJobOffer> {
     const params = new HttpParams().set('jogid', JOGID);
 
-    return this.http.get<any>(this.apiUrl + 'api/JobOffers/GetJobOffer', {
+    return this.http.get<LoadJobOffer>(this.apiUrl + 'api/JobOffers/GetJobOffer', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
@@ -41,7 +46,7 @@ export class JobOffersService {
     EmploymentType: EmploymentTypeEnum,
     Salary: SalaryEnum,
     Favorite: boolean
-  ): Observable<any> {
+  ): Observable<JobOffersModel> {
     const params = new HttpParams()
       .set('skip', Skip)
       .set('take', Take)
@@ -53,26 +58,26 @@ export class JobOffersService {
       .set('salary', Salary)
       .set('favorites', Favorite);
 
-    return this.http.get<any>(this.apiUrl + 'api/JobOffers/GetAllJobOffers', {
+    return this.http.get<JobOffersModel>(this.apiUrl + 'api/JobOffers/GetAllJobOffers', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public AddJobOffer(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/JobOffers/AddJobOffer', model, {
+  public AddJobOffer(model: JobOfferModel): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/JobOffers/AddJobOffer', model, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public UpdateJobOffer(model: any): Observable<any> {
-    return this.http.put<any>(this.apiUrl + 'api/JobOffers/UpdateJobOffer', model, {
+  public UpdateJobOffer(model: JobOfferModel): Observable<void> {
+    return this.http.put<void>(this.apiUrl + 'api/JobOffers/UpdateJobOffer', model, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public DeleteJobOffer(JOGID: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}api/JobOffers/Delete/${JOGID}`, {
+  public DeleteJobOffer(JOGID: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}api/JobOffers/Delete/${JOGID}`, {
       headers: GetToken(this.cookiesService)
     });
   }

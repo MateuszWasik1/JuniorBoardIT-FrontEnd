@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import { UserModel as JobOfferUserModel } from '../components/job-offers-page.component/job-offers-page.models';
+import { UserModel } from '../components/user-page.component/user-page.models';
+import { UsersModel } from '../components/users-page.component/users-page.models';
 import { GetToken } from '../helpers/request.service';
 
 @Injectable({
@@ -16,7 +19,13 @@ export class UserService {
   private http = inject(HttpClient);
   private cookiesService = inject(CookieService);
 
-  GetAllUsers(Skip: number, Take: number, Name: string, HasCompany: boolean, Role: number): Observable<any> {
+  public GetAllUsers(
+    Skip: number,
+    Take: number,
+    Name: string,
+    HasCompany: boolean,
+    Role: number
+  ): Observable<UsersModel> {
     const params = new HttpParams()
       .set('skip', Skip)
       .set('take', Take)
@@ -24,42 +33,42 @@ export class UserService {
       .set('hasCompany', HasCompany)
       .set('role', Role);
 
-    return this.http.get<any>(this.apiUrl + 'api/User/GetAllUsers', {
+    return this.http.get<UsersModel>(this.apiUrl + 'api/User/GetAllUsers', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  GetUserByAdmin(ugid: any): Observable<any> {
+  public GetUserByAdmin(ugid: string): Observable<UserModel> {
     const params = new HttpParams();
 
-    return this.http.get<any>(this.apiUrl + 'api/User/GetUserByAdmin/' + ugid, {
+    return this.http.get<UserModel>(this.apiUrl + 'api/User/GetUserByAdmin/' + ugid, {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  GetUser(): Observable<any> {
+  public GetUser(): Observable<UserModel | JobOfferUserModel> {
     const params = new HttpParams();
 
-    return this.http.get<any>(this.apiUrl + 'api/User/GetUser', {
+    return this.http.get<UserModel | JobOfferUserModel>(this.apiUrl + 'api/User/GetUser', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  SaveUser(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/User/SaveUser', model, { headers: GetToken(this.cookiesService) });
+  public SaveUser(model: UserModel): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/User/SaveUser', model, { headers: GetToken(this.cookiesService) });
   }
 
-  SaveUserByAdmin(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/User/SaveUserByAdmin', model, {
+  public SaveUserByAdmin(model: UserModel): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/User/SaveUserByAdmin', model, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  DeleteUser(ugid: any): Observable<any> {
-    return this.http.delete<any>(this.apiUrl + 'api/User/DeleteUser/' + ugid, {
+  public DeleteUser(ugid: string): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + 'api/User/DeleteUser/' + ugid, {
       headers: GetToken(this.cookiesService)
     });
   }
