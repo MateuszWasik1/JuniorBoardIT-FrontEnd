@@ -9,6 +9,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { Subscription } from 'rxjs';
 
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { PaginationDataModel } from 'src/app/models/general-models';
 import { TranslationService } from 'src/app/services/translate.service';
 
 import { AppState } from '../../app.state';
@@ -48,6 +49,7 @@ export class CompaniesPageComponent implements OnInit, OnDestroy {
   public Count$ = this.store.select(selectCompaniesCount);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private debounceTimer: any;
 
   constructor() {
@@ -77,11 +79,11 @@ export class CompaniesPageComponent implements OnInit, OnDestroy {
     clearTimeout(this.debounceTimer);
 
     this.debounceTimer = setTimeout(() => {
-      this.store.dispatch(changeNameFilterValue({ name: name }));
+      this.store.dispatch(changeNameFilterValue({ Name: name }));
     }, 1000);
   };
 
-  public UpdatePaginationData = (PaginationData: any) =>
+  public UpdatePaginationData = (PaginationData: PaginationDataModel) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));
 
   ngOnDestroy() {

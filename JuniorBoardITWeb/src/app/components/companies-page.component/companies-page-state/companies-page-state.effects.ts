@@ -30,7 +30,7 @@ export class CompaniesEffects {
         return this.companiesService.GetCompanies(params[1].Skip, params[1].Take, params[1].Name).pipe(
           map((result) => CompaniesActions.loadCompaniesSuccess({ Companies: result })),
           catchError((error) =>
-            of(CompaniesActions.loadCompaniesError({ error: this.errorHandler.handleAPIError(error) }))
+            of(CompaniesActions.loadCompaniesError({ Error: this.errorHandler.handleAPIError(error) }))
           )
         );
       })
@@ -44,7 +44,7 @@ export class CompaniesEffects {
         return this.companiesService.GetCompany(params.CGID).pipe(
           map((result) => CompaniesActions.loadCompanySuccess({ Company: result })),
           catchError((error) =>
-            of(CompaniesActions.loadCompanyError({ error: this.errorHandler.handleAPIError(error) }))
+            of(CompaniesActions.loadCompanyError({ Error: this.errorHandler.handleAPIError(error) }))
           )
         );
       })
@@ -63,7 +63,7 @@ export class CompaniesEffects {
           tap(() => this.router.navigate(['/companies'])),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Firma nie została dodana!');
-            return of(CompaniesActions.addCompanyError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(CompaniesActions.addCompanyError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -82,7 +82,7 @@ export class CompaniesEffects {
           tap(() => this.router.navigate(['/companies'])),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Firma nie została nadpisana!');
-            return of(CompaniesActions.updateCompanyError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(CompaniesActions.updateCompanyError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -100,7 +100,7 @@ export class CompaniesEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Firma nie została usunięta!');
-            return of(CompaniesActions.deleteCompanyError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(CompaniesActions.deleteCompanyError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })

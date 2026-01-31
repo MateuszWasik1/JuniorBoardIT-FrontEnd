@@ -12,6 +12,7 @@ import { TranslationService } from 'src/app/services/translate.service';
 import { AppState } from '../../../app.state';
 import { Login } from '../account-page-state/account-page-state.actions';
 import { selectErrorMessage } from '../account-page-state/account-page-state.selectors';
+import { LoginUserModel } from '../account-page.models';
 
 interface FormModel {
   UUserName: FormControl<string>;
@@ -63,7 +64,7 @@ export class LoginComponent implements OnInit {
       return this.formErrorsService.getAllInvalidControls(this.form, '', this.LoginTranslations);
     }
 
-    this.store.dispatch(Login({ user: this.form.value }));
+    this.store.dispatch(Login({ User: this.form.value as LoginUserModel }));
   };
 
   private InitLoginForm = (): FormGroup<FormModel> => {

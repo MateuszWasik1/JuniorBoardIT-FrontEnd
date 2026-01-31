@@ -16,18 +16,18 @@ export class FavoriteJobOffersService {
   private http = inject(HttpClient);
   private cookiesService = inject(CookieService);
 
-  public AddFavoriteJobOffer(jogid: any): Observable<any> {
-    return this.http.post<any>(
+  public AddFavoriteJobOffer(JOGID: string): Observable<void> {
+    return this.http.post<void>(
       this.apiUrl + 'api/FavoriteJobOffers/AddFavoriteJobOffer',
-      { jogid: jogid },
+      { jogid: JOGID },
       {
         headers: GetToken(this.cookiesService)
       }
     );
   }
 
-  public DeleteFavoriteJobOffer(FJOGID: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}api/FavoriteJobOffers/DeleteFavoriteJobOffer/${FJOGID}`, {
+  public DeleteFavoriteJobOffer(FJOGID: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}api/FavoriteJobOffers/DeleteFavoriteJobOffer/${FJOGID}`, {
       headers: GetToken(this.cookiesService)
     });
   }

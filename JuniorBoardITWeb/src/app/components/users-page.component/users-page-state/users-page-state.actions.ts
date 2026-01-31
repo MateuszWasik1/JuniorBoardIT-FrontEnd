@@ -1,28 +1,32 @@
 import { createAction, props } from '@ngrx/store';
 
-export const loadUsers = createAction('[Users Page] Load Users');
-export const loadUsersSuccess = createAction('[Users Page] Load Users Success', props<{ Users: any }>());
-export const loadUsersError = createAction('[Users Page] Load Users Error', props<{ error: any }>());
+import { PaginationDataModel } from 'src/app/models/general-models';
 
-export const deleteUser = createAction('[Users Page] Delete User', props<{ ugid: string }>());
-export const deleteUserSuccess = createAction('[Users Page] Delete User Success', props<{ ugid: string }>());
-export const deleteUserError = createAction('[Users Page] Delete User Error', props<{ error: any }>());
+import { UsersModel } from '../users-page.models';
+
+export const loadUsers = createAction('[Users Page] Load Users');
+export const loadUsersSuccess = createAction('[Users Page] Load Users Success', props<{ Users: UsersModel }>());
+export const loadUsersError = createAction('[Users Page] Load Users Error', props<{ Error: string }>());
+
+export const deleteUser = createAction('[Users Page] Delete User', props<{ UGID: string }>());
+export const deleteUserSuccess = createAction('[Users Page] Delete User Success', props<{ UGID: string }>());
+export const deleteUserError = createAction('[Users Page] Delete User Error', props<{ Error: string }>());
 
 export const changeUserRoleFilterValue = createAction(
   '[Users Page] Change User Filter Value',
-  props<{ userRole: number }>()
+  props<{ UserRole: number }>()
 );
 
 export const changeHasCompanyFilterValue = createAction(
   '[Users Page] Change Has Company Filter Value',
-  props<{ hasCompany: boolean }>()
+  props<{ HasCompany: boolean }>()
 );
 
-export const changeNameFilterValue = createAction('[Users Page] Change Name Filter Value', props<{ name: string }>());
+export const changeNameFilterValue = createAction('[Users Page] Change Name Filter Value', props<{ Name: string }>());
 
 export const updatePaginationData = createAction(
   '[Users Page] Update Pagination Data',
-  props<{ PaginationData: any }>()
+  props<{ PaginationData: PaginationDataModel }>()
 );
 
 export const cleanState = createAction('[Users Page] Clean State');

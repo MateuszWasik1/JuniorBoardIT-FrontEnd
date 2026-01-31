@@ -1,9 +1,9 @@
-import { Companies, User } from '../user-page.models';
+import { CompanyModel, UserModel } from '../user-page.models';
 
 export const featureKeyUserState = 'user-page-state';
 
 export interface UserState {
-  User: User;
-  Companies: Companies[];
+  User: UserModel;
+  Companies: CompanyModel[];
   ErrorMessage: string;
 }

@@ -24,7 +24,7 @@ import { LocationEnum } from 'src/app/enums/JobOffers/LocationEnum';
 import { SalaryEnum } from 'src/app/enums/JobOffers/SalaryEnum';
 import { ReportsReasonsEnum } from 'src/app/enums/Reports/ReportsReasonsEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
+import { PaginationDataModel, ReportReasonsModel, SelectObjectModel } from 'src/app/models/general-models';
 import { TranslationService } from 'src/app/services/translate.service';
 
 import { AppState } from '../../app.state';
@@ -53,13 +53,15 @@ import {
   selectRoles,
   selectUserData
 } from './job-offers-page-state/job-offers-page-state.selectors';
+import { ApplyForJobOfferModel } from './job-offers-page.models';
 import { cleanState as cleanStateReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
 import { saveReport } from '../reports-page.component/reports-page-state/reports-page-state.actions';
+import { AddReportModel } from '../reports-page.component/reports-page.models';
 import { PaginatorComponent } from '../shared/paginator.component/paginator.component';
 
 interface FormReportModel {
   RJOGID: FormControl<string>;
-  RReasons: FormControl<object>;
+  RReasons: FormControl<string[]>;
   RText: FormControl<string>;
 }
 
@@ -228,7 +230,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   public ChangeFavoriteFilterValue = (checked: boolean) =>
     this.store.dispatch(changeFavoriteFilterValue({ checked: checked }));
 
-  public UpdatePaginationData = (PaginationData: any) =>
+  public UpdatePaginationData = (PaginationData: PaginationDataModel) =>
     this.store.dispatch(updatePaginationDataJobOffers({ PaginationData: PaginationData }));
 
   public AddJobOffer = () => this.router.navigate(['job-offer/0']);
@@ -246,7 +248,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public ReportJobOffer = () => {
     this.reportModalVisible = false;
-    this.store.dispatch(saveReport({ Report: this.reportForm.value }));
+    this.store.dispatch(saveReport({ Report: this.reportForm.value as AddReportModel }));
   };
 
   public ApplicationModalOpen = (JOGID: string) => {
@@ -261,11 +263,10 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
 
   public ApplicationForJobOffer = () => {
     this.applicationModalVisible = false;
-    this.store.dispatch(applyForJobOffer({ ApplyData: this.userDataForm.value }));
+    this.store.dispatch(applyForJobOffer({ ApplyData: this.userDataForm.value as ApplyForJobOfferModel }));
   };
 
-  public OnFileUpload = (event: any) => {
-    const file: File = event.files[0];
+  public OnFileUpload = (file: File) => {
     this.convertToBase64(file).then((base64) => {
       this.userDataForm.patchValue({ UCV: base64?.toString() });
     });
@@ -290,7 +291,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   private InitReportForm = (): FormGroup<FormReportModel> => {
     return new FormGroup<FormReportModel>({
       RJOGID: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-      RReasons: new FormControl<object>([], { validators: [], nonNullable: true }),
+      RReasons: new FormControl<string[]>([], { validators: [], nonNullable: true }),
       RText: new FormControl<string>('', {
         validators: [Validators.required, Validators.maxLength(4000)],
         nonNullable: true

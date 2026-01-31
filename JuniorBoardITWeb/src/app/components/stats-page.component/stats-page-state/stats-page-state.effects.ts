@@ -27,7 +27,7 @@ export class StatsEffects {
       switchMap((params) => {
         return this.statsService.GetNumberOfRecruiterPublishedOfferts(params[1].StartDate, params[1].EndDate).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
-          catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(StatsActions.loadStatsError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -42,7 +42,7 @@ export class StatsEffects {
           .GetNumberOfCompanyPublishedOfferts(params[1].StartDate, params[1].EndDate, params[1].CGID)
           .pipe(
             map((result) => StatsActions.loadStatsSuccess({ Result: result })),
-            catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
+            catchError((error) => of(StatsActions.loadStatsError({ Error: this.errorHandler.handleAPIError(error) })))
           );
       })
     );
@@ -55,7 +55,7 @@ export class StatsEffects {
       switchMap((params) => {
         return this.statsService.GetNumberOfCompaniesPublishedOfferts(params[1].StartDate, params[1].EndDate).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
-          catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(StatsActions.loadStatsError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -68,7 +68,7 @@ export class StatsEffects {
       switchMap((params) => {
         return this.statsService.GetNumberOfActiveCompaniesOfferts(params[1].Date, params[1].CGID).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
-          catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(StatsActions.loadStatsError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -81,7 +81,7 @@ export class StatsEffects {
       switchMap((params) => {
         return this.statsService.GetNumberOfCompanyRecruiters(params[1].CGID).pipe(
           map((result) => StatsActions.loadStatsSuccess({ Result: result })),
-          catchError((error) => of(StatsActions.loadStatsError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(StatsActions.loadStatsError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -93,7 +93,7 @@ export class StatsEffects {
       switchMap(() => {
         return this.companiesService.GetCompaniesForUser().pipe(
           map((result) => StatsActions.loadCompaniesSuccess({ Companies: result })),
-          catchError((error) => of(StatsActions.loadCompaniesError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(StatsActions.loadCompaniesError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );

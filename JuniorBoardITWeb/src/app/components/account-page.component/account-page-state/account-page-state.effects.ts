@@ -24,7 +24,7 @@ export class AccountEffects {
     return this.actions.pipe(
       ofType(AccountActions.RegisterUser),
       switchMap((params) => {
-        return this.accountService.Register(params.user).pipe(
+        return this.accountService.Register(params.User).pipe(
           map(() => {
             this.snackbarService.success('Sukces', 'Rejestracja przebiegła pomyślnie!');
             return AccountActions.RegisterUserSuccess();
@@ -32,7 +32,7 @@ export class AccountEffects {
           tap(() => this.router.navigate(['/login'])),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Podczas rejestracji wystąpił błąd!');
-            return of(AccountActions.RegisterUserError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(AccountActions.RegisterUserError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -43,12 +43,12 @@ export class AccountEffects {
     return this.actions.pipe(
       ofType(AccountActions.Login),
       switchMap((params) => {
-        return this.accountService.Login(params.user).pipe(
-          map((result) => AccountActions.LoginSuccess({ token: result.toString() })),
-          tap((result) => this.cookieService.set('token', result.token)),
+        return this.accountService.Login(params.User).pipe(
+          map((result) => AccountActions.LoginSuccess({ Token: result.toString() })),
+          tap((result) => this.cookieService.set('token', result.Token)),
           tap(() => this.router.navigate(['/job-offers'])),
           tap(() => setTimeout(() => window.location.reload(), 500)),
-          catchError((error) => of(AccountActions.LoginError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(AccountActions.LoginError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );

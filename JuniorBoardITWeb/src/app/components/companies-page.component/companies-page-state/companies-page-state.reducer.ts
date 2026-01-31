@@ -45,9 +45,9 @@ export const CompaniesReducer = createReducer<CompaniesState>(
     Company: Company
   })),
 
-  on(Actions.loadCompanyError, (state, { error }) => ({
+  on(Actions.loadCompanyError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   on(Actions.loadCompaniesSuccess, (state, { Companies }) => ({
@@ -56,19 +56,19 @@ export const CompaniesReducer = createReducer<CompaniesState>(
     CompaniesCount: Companies.Count
   })),
 
-  on(Actions.loadCompaniesError, (state, { error }) => ({
+  on(Actions.loadCompaniesError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
-  on(Actions.addCompanyError, (state, { error }) => ({
+  on(Actions.addCompanyError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
-  on(Actions.updateCompanyError, (state, { error }) => ({
+  on(Actions.updateCompanyError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   on(Actions.deleteCompanySuccess, (state, { CGID }) => {
@@ -79,17 +79,17 @@ export const CompaniesReducer = createReducer<CompaniesState>(
     return { ...state, Companies: companiesWithoutDeletedCompany };
   }),
 
-  on(Actions.deleteCompanyError, (state, { error }) => ({
+  on(Actions.deleteCompanyError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Filters
-  on(Actions.changeNameFilterValue, (state, { name }) => ({
+  on(Actions.changeNameFilterValue, (state, { Name }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      Name: name
+      Name: Name
     }
   })),
 

@@ -93,9 +93,9 @@ export const ReportsReducer = createReducer<ReportsState>(
     Company: CompanyModel
   })),
 
-  on(Actions.loadReportError, (state, { error }) => ({
+  on(Actions.loadReportError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Load Reports
@@ -105,9 +105,9 @@ export const ReportsReducer = createReducer<ReportsState>(
     ReportsCount: Reports.Count
   })),
 
-  on(Actions.loadReportsError, (state, { error }) => ({
+  on(Actions.loadReportsError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Save Report
@@ -115,9 +115,9 @@ export const ReportsReducer = createReducer<ReportsState>(
     ...state
   })),
 
-  on(Actions.saveReportError, (state, { error }) => ({
+  on(Actions.saveReportError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Change Report Status
@@ -130,9 +130,9 @@ export const ReportsReducer = createReducer<ReportsState>(
     }
   })),
 
-  on(Actions.changeReportStatusError, (state, { error }) => ({
+  on(Actions.changeReportStatusError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Filters

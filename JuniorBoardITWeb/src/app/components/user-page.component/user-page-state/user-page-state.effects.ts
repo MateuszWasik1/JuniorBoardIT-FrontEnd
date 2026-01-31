@@ -9,6 +9,7 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 
 import * as UserActions from './user-page-state.actions';
+import { UserModel } from '../user-page.models';
 
 @Injectable()
 export class UserEffects {
@@ -23,8 +24,8 @@ export class UserEffects {
       ofType(UserActions.loadUser),
       switchMap(() => {
         return this.userService.GetUser().pipe(
-          map((result) => UserActions.loadUserSuccess({ User: result })),
-          catchError((error) => of(UserActions.loadUserError({ error: this.errorHandler.handleAPIError(error) })))
+          map((result) => UserActions.loadUserSuccess({ User: result as UserModel })),
+          catchError((error) => of(UserActions.loadUserError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -34,10 +35,10 @@ export class UserEffects {
     return this.actions.pipe(
       ofType(UserActions.loadUserByAdmin),
       switchMap((params) => {
-        return this.userService.GetUserByAdmin(params.ugid).pipe(
+        return this.userService.GetUserByAdmin(params.UGID).pipe(
           map((result) => UserActions.loadUserByAdminSuccess({ User: result })),
           catchError((error) =>
-            of(UserActions.loadUserByAdminError({ error: this.errorHandler.handleAPIError(error) }))
+            of(UserActions.loadUserByAdminError({ Error: this.errorHandler.handleAPIError(error) }))
           )
         );
       })
@@ -50,7 +51,7 @@ export class UserEffects {
       switchMap(() => {
         return this.companiesService.GetCompaniesForUser().pipe(
           map((result) => UserActions.loadCompaniesSuccess({ Companies: result })),
-          catchError((error) => of(UserActions.loadCompaniesError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(UserActions.loadCompaniesError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -67,7 +68,7 @@ export class UserEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Użytkownik nie został zapisany!');
-            return of(UserActions.saveUserError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(UserActions.saveUserError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -85,7 +86,7 @@ export class UserEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Użytkownik nie został zapisany!');
-            return of(UserActions.saveUserByAdminError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(UserActions.saveUserByAdminError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })

@@ -26,7 +26,7 @@ import {
   updateCompany
 } from '../companies-page-state/companies-page-state.actions';
 import { selectCompany, selectErrorMessage } from '../companies-page-state/companies-page-state.selectors';
-import { CompanyTranslations } from '../companies-page.models';
+import { CompanyModel, CompanyTranslations } from '../companies-page.models';
 
 interface FormModel {
   CGID: FormControl<string>;
@@ -131,7 +131,7 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
       return this.formErrorsService.getAllInvalidControls(this.form, '', CompanyTranslations);
     }
 
-    this.store.dispatch(addCompany({ Company: this.form.value }));
+    this.store.dispatch(addCompany({ Company: this.form.value as CompanyModel }));
   };
 
   public UpdateCompany = (): void => {
@@ -139,7 +139,7 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
       return this.formErrorsService.getAllInvalidControls(this.form, '', CompanyTranslations);
     }
 
-    this.store.dispatch(updateCompany({ Company: this.form.value }));
+    this.store.dispatch(updateCompany({ Company: this.form.value as CompanyModel }));
   };
 
   public Cancel = (): Promise<boolean> => this.router.navigate(['/companies']);
@@ -207,8 +207,8 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.maxLength(200)],
         nonNullable: true
       }),
-      CCreatedAt: new FormControl<Date | null>(null, { validators: [Validators.required], nonNullable: false }),
-      CUpdatedAt: new FormControl<Date | null>(null, { validators: [Validators.required], nonNullable: false })
+      CCreatedAt: new FormControl<Date | null>(null, { validators: [], nonNullable: false }),
+      CUpdatedAt: new FormControl<Date | null>(null, { validators: [], nonNullable: false })
     });
   };
 

@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 
 import { RolesEnum } from 'src/app/enums/RolesEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { PaginationDataModel, SelectObjectModel } from 'src/app/models/general-models';
 import { TranslationService } from 'src/app/services/translate.service';
 
 import { AppState } from '../../app.state';
@@ -55,13 +56,13 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   public errorHandler = inject(MainUIErrorHandler);
 
   public subscriptions: Subscription[];
-  public roles: any = [
-    { id: '0', name: 'Wszyscy' },
-    { id: '1', name: RolesEnum.User },
-    { id: '2', name: RolesEnum.Premium },
-    { id: '3', name: RolesEnum.Recruiter },
-    { id: '4', name: RolesEnum.Support },
-    { id: '5', name: RolesEnum.Admin }
+  public roles: SelectObjectModel[] = [
+    { id: 0, name: 'Wszyscy' },
+    { id: 1, name: RolesEnum.User },
+    { id: 2, name: RolesEnum.Premium },
+    { id: 3, name: RolesEnum.Recruiter },
+    { id: 4, name: RolesEnum.Support },
+    { id: 5, name: RolesEnum.Admin }
   ];
 
   public count = 0;
@@ -73,6 +74,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   public Count$ = this.store.select(selectCount);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private debounceTimer: any;
 
   constructor() {
@@ -98,13 +100,13 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   public DisplayRoles = (role: number) => this.roles[role].name;
 
-  public DeleteUser = (ugid: string) => this.store.dispatch(deleteUser({ ugid: ugid }));
+  public DeleteUser = (ugid: string) => this.store.dispatch(deleteUser({ UGID: ugid }));
 
   public ChangeUserRoleFilterValue = (role: number) =>
-    this.store.dispatch(changeUserRoleFilterValue({ userRole: role }));
+    this.store.dispatch(changeUserRoleFilterValue({ UserRole: role }));
 
   public ChangeHasCompanyFilterValue = (hasCompany: boolean) =>
-    this.store.dispatch(changeHasCompanyFilterValue({ hasCompany: hasCompany }));
+    this.store.dispatch(changeHasCompanyFilterValue({ HasCompany: hasCompany }));
 
   public ChangeNameFilterValue = (event: Event) => {
     const name = (event.target as HTMLInputElement).value;
@@ -112,11 +114,11 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     clearTimeout(this.debounceTimer);
 
     this.debounceTimer = setTimeout(() => {
-      this.store.dispatch(changeNameFilterValue({ name: name }));
+      this.store.dispatch(changeNameFilterValue({ Name: name }));
     }, 1000);
   };
 
-  public UpdatePaginationData = (PaginationData: any) =>
+  public UpdatePaginationData = (PaginationData: PaginationDataModel) =>
     this.store.dispatch(updatePaginationData({ PaginationData: PaginationData }));
 
   ngOnDestroy() {

@@ -5,7 +5,6 @@ import { UserState } from './user-page-state.state';
 
 const initialStateOfUserPage: UserState = {
   User: {
-    UID: 0,
     UGID: '',
     URID: 1,
     UFirstName: '',
@@ -27,7 +26,6 @@ export const UserReducer = createReducer<UserState>(
   on(Actions.loadUserSuccess, (state, { User }) => ({
     ...state,
     User: {
-      UID: 0,
       UGID: '',
       URID: 1,
       UFirstName: User.UFirstName,
@@ -40,9 +38,9 @@ export const UserReducer = createReducer<UserState>(
     }
   })),
 
-  on(Actions.loadUserError, (state, { error }) => ({
+  on(Actions.loadUserError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   on(Actions.loadUserByAdminSuccess, (state, { User }) => ({
@@ -50,9 +48,9 @@ export const UserReducer = createReducer<UserState>(
     User: User
   })),
 
-  on(Actions.loadUserByAdminError, (state, { error }) => ({
+  on(Actions.loadUserByAdminError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Load Companies
@@ -61,27 +59,26 @@ export const UserReducer = createReducer<UserState>(
     Companies: Companies.List
   })),
 
-  on(Actions.loadCompaniesError, (state, { error }) => ({
+  on(Actions.loadCompaniesError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Save User
-  on(Actions.saveUserError, (state, { error }) => ({
+  on(Actions.saveUserError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
-  on(Actions.saveUserByAdminError, (state, { error }) => ({
+  on(Actions.saveUserByAdminError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Others
   on(Actions.cleanState, (state) => ({
     ...state,
     User: {
-      UID: 0,
       UGID: '',
       URID: 1,
       UFirstName: '',

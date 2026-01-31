@@ -1,7 +1,14 @@
 import { ReportsStatusEnum } from 'src/app/enums/Reports/ReportsStatusEnum';
 import { ReportsTypeEnum } from 'src/app/enums/Reports/ReportsTypeEnum';
 
-export interface Reports {
+import { CompanyModel, JobOfferModel } from '../job-offers-page.component/job-offers-page.models';
+
+export interface ReportsListModel {
+  List: ReportsModel[];
+  Count: number;
+}
+
+export interface ReportsModel {
   RID: number;
   RGID: string;
   RJOGID: string;
@@ -15,7 +22,7 @@ export interface Reports {
   RSupportName: string;
 }
 
-export interface Report {
+export interface ReportModel {
   RID: number;
   RGID: string;
   RJOGID: string;
@@ -27,7 +34,24 @@ export interface Report {
   RStatus: ReportsStatusEnum;
 }
 
-export interface Filters {
+export interface AddReportModel {
+  RJOGID: string;
+  RReasons: string[];
+  RText: string;
+}
+
+export interface ChangeReportStatusModel {
+  RGID: string;
+  Status: ReportsStatusEnum;
+}
+
+export interface LoadReportType {
+  ReportModel: ReportModel;
+  JobOfferModel: JobOfferModel;
+  CompanyModel: CompanyModel;
+}
+
+export interface FiltersModel {
   Skip: number;
   Take: number;
   ReportType: ReportsTypeEnum;

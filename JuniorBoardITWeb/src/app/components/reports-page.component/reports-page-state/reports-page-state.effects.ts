@@ -11,6 +11,7 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 
 import * as ReportsActions from './reports-page-state.actions';
 import { selectFilters } from './reports-page-state.selectors';
+import { ChangeReportStatusModel } from '../reports-page.models';
 
 @Injectable()
 export class ReportsEffects {
@@ -32,7 +33,7 @@ export class ReportsEffects {
               CompanyModel: result.CompanyModel
             })
           ),
-          catchError((error) => of(ReportsActions.loadReportError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(ReportsActions.loadReportError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -48,7 +49,7 @@ export class ReportsEffects {
           .pipe(
             map((result) => ReportsActions.loadReportsSuccess({ Reports: result })),
             catchError((error) =>
-              of(ReportsActions.loadReportsError({ error: this.errorHandler.handleAPIError(error) }))
+              of(ReportsActions.loadReportsError({ Error: this.errorHandler.handleAPIError(error) }))
             )
           );
       })
@@ -66,7 +67,7 @@ export class ReportsEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Raport nie został zapisany!');
-            return of(ReportsActions.saveReportError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(ReportsActions.saveReportError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -77,7 +78,7 @@ export class ReportsEffects {
     return this.actions.pipe(
       ofType(ReportsActions.changeReportStatus),
       switchMap((params) => {
-        const model = {
+        const model: ChangeReportStatusModel = {
           RGID: params.RGID,
           Status: params.RStatus
         };
@@ -88,7 +89,7 @@ export class ReportsEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Raport nie został nadpisany!');
-            return of(ReportsActions.changeReportStatusError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(ReportsActions.changeReportStatusError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })

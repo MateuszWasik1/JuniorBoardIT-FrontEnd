@@ -13,12 +13,12 @@ export const AccountReducer = createReducer<AccountState>(
   on(Actions.LoginSuccess, (state) => {
     return { ...state };
   }),
-  on(Actions.LoginError, (state, { error }) => ({
+  on(Actions.LoginError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
-  on(Actions.RegisterUserError, (state, { error }) => ({
+  on(Actions.RegisterUserError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   }))
 );

@@ -60,6 +60,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
 
   public subscriptions: Subscription[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public basicData: any;
 
   public barChartOptions: ChartOptions = {
@@ -149,12 +150,13 @@ export class StatsPageComponent implements OnInit, OnDestroy {
 
   public ChangeDate = (Date: Date) => this.store.dispatch(changeDateFilter({ Date: Date }));
 
-  public ChangeDataType = (DataType: any) => this.store.dispatch(changeDataTypeFilter({ DataType: DataType.value }));
+  public ChangeDataType = (DataType: StatsTypeEnum) =>
+    this.store.dispatch(changeDataTypeFilter({ DataType: DataType }));
 
-  public ChangeChartType = (ChartType: any) =>
-    this.store.dispatch(changeChartTypeFilter({ ChartType: ChartType.value }));
+  public ChangeChartType = (ChartType: StatsChartTypeEnum) =>
+    this.store.dispatch(changeChartTypeFilter({ ChartType: ChartType }));
 
-  public ChangeCGID = (CGID: any) => this.store.dispatch(changeCGIDFilter({ CGID: CGID.value }));
+  public ChangeCGID = (CGID: string) => this.store.dispatch(changeCGIDFilter({ CGID: CGID }));
 
   private InitJobOfferForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({

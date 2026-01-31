@@ -1,5 +1,4 @@
-export interface Users {
-  UID: number;
+export interface UserModel {
   UGID: string;
   URID: number;
   UFirstName: string;
@@ -11,7 +10,12 @@ export interface Users {
   UCompanyGID?: string;
 }
 
-export interface Filters {
+export interface UsersModel {
+  List: UserModel[];
+  Count: number;
+}
+
+export interface FiltersModel {
   Skip: number;
   Take: number;
   Name: string;

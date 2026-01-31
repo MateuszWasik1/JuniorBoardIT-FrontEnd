@@ -5,6 +5,12 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import {
+  AddReportModel,
+  ChangeReportStatusModel,
+  LoadReportType,
+  ReportsListModel
+} from '../components/reports-page.component/reports-page.models';
 import { ReportsTypeEnum } from '../enums/Reports/ReportsTypeEnum';
 import { GetToken } from '../helpers/request.service';
 
@@ -17,41 +23,46 @@ export class ReportsService {
   private http = inject(HttpClient);
   private cookiesService = inject(CookieService);
 
-  public GetReport(RGID: any): Observable<any> {
+  public GetReport(RGID: string): Observable<LoadReportType> {
     const params = new HttpParams().set('rgid', RGID);
 
-    return this.http.get<any>(this.apiUrl + 'api/Reports/GetReport', {
+    return this.http.get<LoadReportType>(this.apiUrl + 'api/Reports/GetReport', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public GetReports(Skip: number, Take: number, ReportType: ReportsTypeEnum, Message: string): Observable<any> {
+  public GetReports(
+    Skip: number,
+    Take: number,
+    ReportType: ReportsTypeEnum,
+    Message: string
+  ): Observable<ReportsListModel> {
     const params = new HttpParams()
       .set('skip', Skip)
       .set('take', Take)
       .set('reportType', ReportType)
       .set('message', Message);
 
-    return this.http.get<any>(this.apiUrl + 'api/Reports/GetReports', {
+    return this.http.get<ReportsListModel>(this.apiUrl + 'api/Reports/GetReports', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public SaveReport(model: any): Observable<any> {
+  public SaveReport(model: AddReportModel): Observable<void> {
     const modelToSend = {
       ...model,
       RReasons: model.RReasons.join(',')
     };
 
-    return this.http.post<any>(this.apiUrl + 'api/Reports/SaveReport', modelToSend, {
+    return this.http.post<void>(this.apiUrl + 'api/Reports/SaveReport', modelToSend, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public ChangeReportStatus(model: any): Observable<any> {
-    return this.http.put<any>(this.apiUrl + 'api/Reports/ChangeReportStatus', model, {
+  public ChangeReportStatus(model: ChangeReportStatusModel): Observable<void> {
+    return this.http.put<void>(this.apiUrl + 'api/Reports/ChangeReportStatus', model, {
       headers: GetToken(this.cookiesService)
     });
   }

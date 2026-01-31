@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+import { PaginationDataModel } from 'src/app/models/general-models';
 import { TranslationService } from 'src/app/services/translate.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { TranslationService } from 'src/app/services/translate.service';
 })
 export class PaginatorComponent {
   @Input() length = 50;
-  @Output() paginationData = new EventEmitter<object>();
+  @Output() paginationData = new EventEmitter<PaginationDataModel>();
 
   public translations = inject(TranslationService);
 

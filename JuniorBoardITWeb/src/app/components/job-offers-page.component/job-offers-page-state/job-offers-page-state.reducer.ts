@@ -97,9 +97,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     Company: JobOffer.Company
   })),
 
-  on(Actions.loadJobOfferError, (state, { error }) => ({
+  on(Actions.loadJobOfferError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Load JobOffers
@@ -109,9 +109,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     JobOffersCount: JobOffers.Count
   })),
 
-  on(Actions.loadJobOffersError, (state, { error }) => ({
+  on(Actions.loadJobOffersError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Load UserData
@@ -120,9 +120,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     User: User
   })),
 
-  on(Actions.loadUserDataError, (state, { error }) => ({
+  on(Actions.loadUserDataError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Load Company
@@ -131,9 +131,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     Company: Company
   })),
 
-  on(Actions.loadCompanyError, (state, { error }) => ({
+  on(Actions.loadCompanyError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Load Roles
@@ -142,9 +142,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     Roles: Roles
   })),
 
-  on(Actions.loadRolesError, (state, { error }) => ({
+  on(Actions.loadRolesError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Save JobOffer
@@ -152,9 +152,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     ...state
   })),
 
-  on(Actions.addJobOfferError, (state, { error }) => ({
+  on(Actions.addJobOfferError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Apply for JobOffer
@@ -162,9 +162,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     ...state
   })),
 
-  on(Actions.applyForJobOfferError, (state, { error }) => ({
+  on(Actions.applyForJobOfferError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Add To favorite
@@ -172,9 +172,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     ...state
   })),
 
-  on(Actions.addToFavoriteError, (state, { error }) => ({
+  on(Actions.addToFavoriteError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Update JobOffer
@@ -182,9 +182,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     ...state
   })),
 
-  on(Actions.updateJobOfferError, (state, { error }) => ({
+  on(Actions.updateJobOfferError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Delete Task
@@ -196,9 +196,9 @@ export const JobOfferReducer = createReducer<JobOffersState>(
     return { ...state, JobOffers: jobOffersWithoutDeletedTask };
   }),
 
-  on(Actions.deleteJobOfferError, (state, { error }) => ({
+  on(Actions.deleteJobOfferError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Filters

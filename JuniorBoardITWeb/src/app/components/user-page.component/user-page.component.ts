@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { RolesEnum } from 'src/app/enums/RolesEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
+import { SelectObjectModel } from 'src/app/models/general-models';
 import { FormErrorsService } from 'src/app/services/form-error.service';
 import { TranslationService } from 'src/app/services/translate.service';
 
@@ -23,11 +24,10 @@ import {
   saveUserByAdmin
 } from './user-page-state/user-page-state.actions';
 import { selectCompanies, selectErrorMessage, selectUser } from './user-page-state/user-page-state.selectors';
-import { UserTranslations } from './user-page.models';
+import { UserModel, UserTranslations } from './user-page.models';
 import { AppState } from '../../app.state';
 
 interface FormModel {
-  UID: FormControl<number>;
   UGID: FormControl<string>;
   URID: FormControl<number>;
   UFirstName: FormControl<string>;
@@ -55,9 +55,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
   private formErrorsService = inject(FormErrorsService);
 
   public IsAdminView = false;
-  public roles: any;
-  public selectedRole: any;
-  public selectedFilterRole: any;
+  public roles: SelectObjectModel[];
+  public selectedRole: number;
   public subscriptions: Subscription[];
 
   public form: FormGroup<FormModel>;
@@ -68,19 +67,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.subscriptions = [];
-    this.form = this.InitUserForm();
-  }
-
-  ngOnInit(): void {
-    this.IsAdminView = this.route.snapshot.paramMap.get('ugid') != null;
-
-    if (this.IsAdminView) {
-      this.store.dispatch(loadUserByAdmin({ ugid: this.route.snapshot.paramMap.get('ugid') }));
-      this.store.dispatch(loadCompanies());
-    } else {
-      this.store.dispatch(loadUser());
-    }
-
+    this.selectedRole = 0;
     this.roles = [
       { id: 1, name: RolesEnum.User },
       { id: 2, name: RolesEnum.Premium },
@@ -88,6 +75,18 @@ export class UserPageComponent implements OnInit, OnDestroy {
       { id: 4, name: RolesEnum.Support },
       { id: 5, name: RolesEnum.Admin }
     ];
+    this.form = this.InitUserForm();
+  }
+
+  ngOnInit(): void {
+    this.IsAdminView = this.route.snapshot.paramMap.get('ugid') != null;
+
+    if (this.IsAdminView) {
+      this.store.dispatch(loadUserByAdmin({ UGID: this.route.snapshot.paramMap.get('ugid') as string }));
+      this.store.dispatch(loadCompanies());
+    } else {
+      this.store.dispatch(loadUser());
+    }
 
     this.subscriptions.push(
       this.User$.subscribe((User) => {
@@ -105,9 +104,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
   }
 
   public Save = () => {
-    const model = {
+    const model: UserModel = {
       UGID: '',
-      URID: '',
+      URID: 0,
       UFirstName: this.form.controls.UFirstName.value,
       ULastName: this.form.controls.ULastName.value,
       UUserName: this.form.controls.UUserName.value,
@@ -135,7 +134,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   private InitUserForm = (): FormGroup<FormModel> => {
     return new FormGroup<FormModel>({
-      UID: new FormControl<number>({ value: 0, disabled: true }, { validators: [], nonNullable: true }),
       UGID: new FormControl<string>({ value: '', disabled: true }, { validators: [], nonNullable: true }),
       URID: new FormControl<number>(1, { validators: [], nonNullable: true }),
       UFirstName: new FormControl<string>('', { validators: [Validators.maxLength(50)], nonNullable: true }),

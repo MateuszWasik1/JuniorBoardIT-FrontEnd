@@ -333,7 +333,7 @@
             optionValue="value"
             [multiple]="true"
           />
-
+          {{ reportForm.controls.RReasons.value }}
           <p>{{ translations.Get('JobOffers_Report_ReportAdditionalReason') }}</p>
           <textarea
             formControlName="RText"
@@ -478,7 +478,7 @@
                     chooseIcon="pi pi-upload"
                     accept=".pdf,.jpg,.docx"
                     maxFileSize="1000000"
-                    (onSelect)="OnFileUpload($event)"
+                    (onSelect)="OnFileUpload($event.files[0])"
                     [auto]="false"
                     [chooseLabel]="translations.Get('User_Search')"
                   />
