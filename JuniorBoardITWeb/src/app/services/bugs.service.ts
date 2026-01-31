@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import { Bug, BugNote, BugNotesModel, BugsModel, BugStatus } from '../components/bugs-page.component/bugs-page.models';
 import { BugTypeEnum } from '../enums/Bugs/BugTypeEnum';
 import { GetToken } from '../helpers/request.service';
 
@@ -17,45 +18,45 @@ export class BugsService {
   private http = inject(HttpClient);
   private cookiesService = inject(CookieService);
 
-  public GetBugs(BugType: BugTypeEnum, Skip: number, Take: number, Message: string): Observable<any> {
+  public GetBugs(BugType: BugTypeEnum, Skip: number, Take: number, Message: string): Observable<BugsModel> {
     const params = new HttpParams().set('bugType', BugType).set('skip', Skip).set('take', Take).set('message', Message);
 
-    return this.http.get<any>(this.apiUrl + 'api/Bugs/GetBugs', {
+    return this.http.get<BugsModel>(this.apiUrl + 'api/Bugs/GetBugs', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public GetBug(bgid: any): Observable<any> {
-    const params = new HttpParams().set('bgid', bgid);
+  public GetBug(BGID: string): Observable<Bug> {
+    const params = new HttpParams().set('bgid', BGID);
 
-    return this.http.get<any>(this.apiUrl + 'api/Bugs/GetBug', {
+    return this.http.get<Bug>(this.apiUrl + 'api/Bugs/GetBug', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public GetBugNotes(bgid: any, Skip: number, Take: number): Observable<any> {
-    const params = new HttpParams().set('bgid', bgid).set('skip', Skip).set('take', Take);
+  public GetBugNotes(BGID: string, Skip: number, Take: number): Observable<BugNotesModel> {
+    const params = new HttpParams().set('bgid', BGID).set('skip', Skip).set('take', Take);
 
-    return this.http.get<any>(this.apiUrl + 'api/BugsNotes/GetBugNotes', {
+    return this.http.get<BugNotesModel>(this.apiUrl + 'api/BugsNotes/GetBugNotes', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public SaveBug(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/Bugs/SaveBug', model, { headers: GetToken(this.cookiesService) });
+  public SaveBug(model: Bug): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/Bugs/SaveBug', model, { headers: GetToken(this.cookiesService) });
   }
 
-  public SaveBugNote(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/BugsNotes/SaveBugNote', model, {
+  public SaveBugNote(model: BugNote): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/BugsNotes/SaveBugNote', model, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  public ChangeBugStatus(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/Bugs/ChangeBugStatus', model, {
+  public ChangeBugStatus(model: BugStatus): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/Bugs/ChangeBugStatus', model, {
       headers: GetToken(this.cookiesService)
     });
   }

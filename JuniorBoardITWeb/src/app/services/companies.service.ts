@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import { CompaniesModel, CompanyModel } from '../components/companies-page.component/companies-page.models';
+import { CompaniesModel as UserCompaniesModel } from '../components/user-page.component/user-page.models';
 import { GetToken } from '../helpers/request.service';
 
 @Injectable({
@@ -16,44 +18,44 @@ export class CompaniesService {
   private http = inject(HttpClient);
   private cookiesService = inject(CookieService);
 
-  GetCompany(CGID: any): Observable<any> {
+  GetCompany(CGID: string): Observable<CompanyModel> {
     const params = new HttpParams().set('cgid', CGID);
 
-    return this.http.get<any>(this.apiUrl + 'api/Companies/GetCompany', {
+    return this.http.get<CompanyModel>(this.apiUrl + 'api/Companies/GetCompany', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  GetCompanies(Skip: number, Take: number, Name: string): Observable<any> {
+  GetCompanies(Skip: number, Take: number, Name: string): Observable<CompaniesModel> {
     const params = new HttpParams().set('skip', Skip).set('take', Take).set('name', Name);
 
-    return this.http.get<any>(this.apiUrl + 'api/Companies/GetCompanies', {
+    return this.http.get<CompaniesModel>(this.apiUrl + 'api/Companies/GetCompanies', {
       params: params,
       headers: GetToken(this.cookiesService)
     });
   }
 
-  GetCompaniesForUser(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + 'api/Companies/GetCompaniesForUser', {
+  GetCompaniesForUser(): Observable<UserCompaniesModel> {
+    return this.http.get<UserCompaniesModel>(this.apiUrl + 'api/Companies/GetCompaniesForUser', {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  AddCompany(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/Companies/AddCompany', model, {
+  AddCompany(model: CompanyModel): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/Companies/AddCompany', model, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  UpdateCompany(model: any): Observable<any> {
-    return this.http.put<any>(this.apiUrl + 'api/Companies/UpdateCompany', model, {
+  UpdateCompany(model: CompanyModel): Observable<void> {
+    return this.http.put<void>(this.apiUrl + 'api/Companies/UpdateCompany', model, {
       headers: GetToken(this.cookiesService)
     });
   }
 
-  DeleteCompany(CGID: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}api/Companies/DeleteCompany/${CGID}`, {
+  DeleteCompany(CGID: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}api/Companies/DeleteCompany/${CGID}`, {
       headers: GetToken(this.cookiesService)
     });
   }

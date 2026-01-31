@@ -24,7 +24,7 @@ import {
   saveUserByAdmin
 } from './user-page-state/user-page-state.actions';
 import { selectCompanies, selectErrorMessage, selectUser } from './user-page-state/user-page-state.selectors';
-import { UserTranslations } from './user-page.models';
+import { UserModel, UserTranslations } from './user-page.models';
 import { AppState } from '../../app.state';
 
 interface FormModel {
@@ -104,7 +104,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   }
 
   public Save = () => {
-    const model = {
+    const model: UserModel = {
       UGID: '',
       URID: 0,
       UFirstName: this.form.controls.UFirstName.value,

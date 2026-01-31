@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import { LoginUserModel, RegisterUserModel } from '../components/account-page.component/account-page.models';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,13 +14,13 @@ export class AccountsService {
 
   private http = inject(HttpClient);
 
-  public Register(model: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/Accounts/Register', model);
+  public Register(model: RegisterUserModel): Observable<void> {
+    return this.http.post<void>(this.apiUrl + 'api/Accounts/Register', model);
   }
 
-  public Login(model: any): Observable<any> {
+  public Login(model: LoginUserModel): Observable<string> {
     const params = new HttpParams().set('username', model.UUserName).set('password', model.UPassword);
 
-    return this.http.get<any>(this.apiUrl + 'api/Accounts/Login', { params: params });
+    return this.http.get<string>(this.apiUrl + 'api/Accounts/Login', { params: params });
   }
 }

@@ -17,6 +17,7 @@ import { UserService } from 'src/app/services/user.service';
 
 import * as JobOffersActions from './job-offers-page-state.actions';
 import { selectFilters } from './job-offers-page-state.selectors';
+import { UserModel } from '../job-offers-page.models';
 
 @Injectable()
 export class JobOffersEffects {
@@ -79,7 +80,7 @@ export class JobOffersEffects {
       withLatestFrom(this.store.select(selectFilters)),
       switchMap(() => {
         return this.userService.GetUser().pipe(
-          map((result) => JobOffersActions.loadUserDataSuccess({ User: result })),
+          map((result) => JobOffersActions.loadUserDataSuccess({ User: result as UserModel })),
           catchError((error) =>
             of(JobOffersActions.loadUserDataError({ Error: this.errorHandler.handleAPIError(error) }))
           )

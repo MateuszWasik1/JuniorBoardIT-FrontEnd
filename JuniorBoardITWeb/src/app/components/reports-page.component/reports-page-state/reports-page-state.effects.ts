@@ -11,6 +11,7 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 
 import * as ReportsActions from './reports-page-state.actions';
 import { selectFilters } from './reports-page-state.selectors';
+import { ChangeReportStatusModel } from '../reports-page.models';
 
 @Injectable()
 export class ReportsEffects {
@@ -77,7 +78,7 @@ export class ReportsEffects {
     return this.actions.pipe(
       ofType(ReportsActions.changeReportStatus),
       switchMap((params) => {
-        const model = {
+        const model: ChangeReportStatusModel = {
           RGID: params.RGID,
           Status: params.RStatus
         };

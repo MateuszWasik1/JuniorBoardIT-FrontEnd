@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
@@ -16,17 +16,17 @@ export class ApplyService {
   private http = inject(HttpClient);
   private cookiesService = inject(CookieService);
 
-  public GetApplications(Skip: number, Take: number, UGID: string): Observable<any> {
-    const params = new HttpParams().set('skip', Skip).set('take', Take).set('ugid', UGID);
+  // public GetApplications(Skip: number, Take: number, UGID: string): Observable<any> {
+  //   const params = new HttpParams().set('skip', Skip).set('take', Take).set('ugid', UGID);
 
-    return this.http.get<any>(this.apiUrl + 'api/Applications/GetApplications', {
-      params: params,
-      headers: GetToken(this.cookiesService)
-    });
-  }
+  //   return this.http.get<any>(this.apiUrl + 'api/Applications/GetApplications', {
+  //     params: params,
+  //     headers: GetToken(this.cookiesService)
+  //   });
+  // }
 
-  public AddApplication(AJOGID: string): Observable<any> {
-    return this.http.post<any>(
+  public AddApplication(AJOGID: string): Observable<void> {
+    return this.http.post<void>(
       this.apiUrl + 'api/Applications/AddApplication',
       { AJOGID: AJOGID },
       {
@@ -35,8 +35,8 @@ export class ApplyService {
     );
   }
 
-  public DeleteApplication(agid: any): Observable<any> {
-    return this.http.delete<any>(this.apiUrl + 'api/Applications/DeleteApplication/' + agid, {
+  public DeleteApplication(AGID: string): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + 'api/Applications/DeleteApplication/' + AGID, {
       headers: GetToken(this.cookiesService)
     });
   }

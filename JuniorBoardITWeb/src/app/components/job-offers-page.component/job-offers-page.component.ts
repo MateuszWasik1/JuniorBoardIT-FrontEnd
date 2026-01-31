@@ -61,7 +61,7 @@ import { PaginatorComponent } from '../shared/paginator.component/paginator.comp
 
 interface FormReportModel {
   RJOGID: FormControl<string>;
-  RReasons: FormControl<object>;
+  RReasons: FormControl<string[]>;
   RText: FormControl<string>;
 }
 
@@ -291,7 +291,7 @@ export class JobOffersPageComponent implements OnInit, OnDestroy {
   private InitReportForm = (): FormGroup<FormReportModel> => {
     return new FormGroup<FormReportModel>({
       RJOGID: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-      RReasons: new FormControl<object>([], { validators: [], nonNullable: true }),
+      RReasons: new FormControl<string[]>([], { validators: [], nonNullable: true }),
       RText: new FormControl<string>('', {
         validators: [Validators.required, Validators.maxLength(4000)],
         nonNullable: true

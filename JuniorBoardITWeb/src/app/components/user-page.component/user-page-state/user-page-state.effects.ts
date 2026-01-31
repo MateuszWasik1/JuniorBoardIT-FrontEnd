@@ -9,6 +9,7 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 
 import * as UserActions from './user-page-state.actions';
+import { UserModel } from '../user-page.models';
 
 @Injectable()
 export class UserEffects {
@@ -23,7 +24,7 @@ export class UserEffects {
       ofType(UserActions.loadUser),
       switchMap(() => {
         return this.userService.GetUser().pipe(
-          map((result) => UserActions.loadUserSuccess({ User: result })),
+          map((result) => UserActions.loadUserSuccess({ User: result as UserModel })),
           catchError((error) => of(UserActions.loadUserError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
