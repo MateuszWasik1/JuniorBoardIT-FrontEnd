@@ -29,7 +29,7 @@ export class UsersEffects {
           .GetAllUsers(params[1].Skip, params[1].Take, params[1].Name, params[1].HasCompany, params[1].Role)
           .pipe(
             map((result) => UsersActions.loadUsersSuccess({ Users: result })),
-            catchError((error) => of(UsersActions.loadUsersError({ error: this.errorHandler.handleAPIError(error) })))
+            catchError((error) => of(UsersActions.loadUsersError({ Error: this.errorHandler.handleAPIError(error) })))
           );
       })
     );
@@ -39,14 +39,14 @@ export class UsersEffects {
     return this.actions.pipe(
       ofType(UsersActions.deleteUser),
       switchMap((params) => {
-        return this.userService.DeleteUser(params.ugid).pipe(
+        return this.userService.DeleteUser(params.UGID).pipe(
           map(() => {
             this.snackbarService.success('Sukces', 'Użytkownik został pomyślnie usunięty!');
-            return UsersActions.deleteUserSuccess({ ugid: params.ugid });
+            return UsersActions.deleteUserSuccess({ UGID: params.UGID });
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Użytkownik nie został usunięty!');
-            return of(UsersActions.deleteUserError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(UsersActions.deleteUserError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })

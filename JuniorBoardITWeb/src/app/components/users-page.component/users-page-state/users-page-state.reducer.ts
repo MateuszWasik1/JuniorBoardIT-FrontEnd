@@ -25,48 +25,48 @@ export const UsersReducer = createReducer<UsersState>(
     UsersCount: Users.Count
   })),
 
-  on(Actions.loadUsersError, (state, { error }) => ({
+  on(Actions.loadUsersError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
-  on(Actions.deleteUserSuccess, (state, { ugid }) => {
+  on(Actions.deleteUserSuccess, (state, { UGID }) => {
     const users = [...state.Users];
 
-    const deletedUserIndex = users.findIndex((x) => x.UGID == ugid);
+    const deletedUserIndex = users.findIndex((x) => x.UGID == UGID);
 
     users.splice(deletedUserIndex, 1);
 
     return { ...state, Users: users };
   }),
 
-  on(Actions.deleteUserError, (state, { error }) => ({
+  on(Actions.deleteUserError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Filters
-  on(Actions.changeUserRoleFilterValue, (state, { userRole }) => ({
+  on(Actions.changeUserRoleFilterValue, (state, { UserRole }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      Role: userRole
+      Role: UserRole
     }
   })),
 
-  on(Actions.changeHasCompanyFilterValue, (state, { hasCompany }) => ({
+  on(Actions.changeHasCompanyFilterValue, (state, { HasCompany }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      HasCompany: hasCompany
+      HasCompany: HasCompany
     }
   })),
 
-  on(Actions.changeNameFilterValue, (state, { name }) => ({
+  on(Actions.changeNameFilterValue, (state, { Name }) => ({
     ...state,
     Filters: {
       ...state.Filters,
-      Name: name
+      Name: Name
     }
   })),
 

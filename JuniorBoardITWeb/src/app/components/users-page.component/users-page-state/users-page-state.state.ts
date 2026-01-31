@@ -1,10 +1,10 @@
-import { Filters, Users } from '../users-page.models';
+import { FiltersModel, UserModel } from '../users-page.models';
 
 export const featureKeyUsersState = 'users-page-state';
 
 export interface UsersState {
-  Users: Users[];
-  Filters: Filters;
+  Users: UserModel[];
+  Filters: FiltersModel;
   UsersCount: number;
   ErrorMessage: string;
 }
