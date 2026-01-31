@@ -42,7 +42,7 @@ import {
   selectJobOffer,
   selectUserData
 } from '../job-offers-page-state/job-offers-page-state.selectors';
-import { Company, JobOfferTranslations } from '../job-offers-page.models';
+import { CompanyModel, JobOfferModel, JobOfferTranslations } from '../job-offers-page.models';
 
 interface FormModel {
   JOGID: FormControl<string>;
@@ -214,13 +214,13 @@ export class JobOfferPageComponent implements OnInit, OnDestroy {
 
     if (this.jogid == '0' || this.jogid == '') {
       this.form.patchValue({ JOGID: Guid.create().toString() });
-      this.store.dispatch(addJobOffer({ JobOffer: this.form.value }));
+      this.store.dispatch(addJobOffer({ JobOffer: this.form.value as JobOfferModel }));
     } else {
-      this.store.dispatch(updateJobOffer({ JobOffer: this.form.value }));
+      this.store.dispatch(updateJobOffer({ JobOffer: this.form.value as JobOfferModel }));
     }
   };
 
-  public ChangeOfferForCompany = (Company: Company): void => {
+  public ChangeOfferForCompany = (Company: CompanyModel): void => {
     this.offerForCompany = !this.offerForCompany;
 
     this.form.patchValue({

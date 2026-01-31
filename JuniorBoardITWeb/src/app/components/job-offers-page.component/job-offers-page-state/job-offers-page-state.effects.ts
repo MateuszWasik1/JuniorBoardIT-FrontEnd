@@ -39,7 +39,7 @@ export class JobOffersEffects {
         return this.jobOffersService.GetJobOffer(params.JOGID).pipe(
           map((result) => JobOffersActions.loadJobOfferSuccess({ JobOffer: result })),
           catchError((error) =>
-            of(JobOffersActions.loadJobOfferError({ error: this.errorHandler.handleAPIError(error) }))
+            of(JobOffersActions.loadJobOfferError({ Error: this.errorHandler.handleAPIError(error) }))
           )
         );
       })
@@ -66,7 +66,7 @@ export class JobOffersEffects {
           .pipe(
             map((result) => JobOffersActions.loadJobOffersSuccess({ JobOffers: result })),
             catchError((error) =>
-              of(JobOffersActions.loadJobOffersError({ error: this.errorHandler.handleAPIError(error) }))
+              of(JobOffersActions.loadJobOffersError({ Error: this.errorHandler.handleAPIError(error) }))
             )
           );
       })
@@ -81,7 +81,7 @@ export class JobOffersEffects {
         return this.userService.GetUser().pipe(
           map((result) => JobOffersActions.loadUserDataSuccess({ User: result })),
           catchError((error) =>
-            of(JobOffersActions.loadUserDataError({ error: this.errorHandler.handleAPIError(error) }))
+            of(JobOffersActions.loadUserDataError({ Error: this.errorHandler.handleAPIError(error) }))
           )
         );
       })
@@ -95,7 +95,7 @@ export class JobOffersEffects {
         return this.companiesService.GetCompany(params.CGID).pipe(
           map((result) => JobOffersActions.loadCompanySuccess({ Company: result })),
           catchError((error) =>
-            of(JobOffersActions.loadCompanyError({ error: this.errorHandler.handleAPIError(error) }))
+            of(JobOffersActions.loadCompanyError({ Error: this.errorHandler.handleAPIError(error) }))
           )
         );
       })
@@ -108,7 +108,7 @@ export class JobOffersEffects {
       switchMap(() => {
         return this.rolesService.GetUserRoles().pipe(
           map((result) => JobOffersActions.loadRolesSuccess({ Roles: result })),
-          catchError((error) => of(JobOffersActions.loadRolesError({ error: this.errorHandler.handleAPIError(error) })))
+          catchError((error) => of(JobOffersActions.loadRolesError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );
@@ -126,7 +126,7 @@ export class JobOffersEffects {
           tap(() => this.router.navigate(['/job-offers'])),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Oferta pracy nie została dodana!');
-            return of(JobOffersActions.addJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(JobOffersActions.addJobOfferError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -144,7 +144,7 @@ export class JobOffersEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Nie udało się zaaplikować na ofertę pracy!');
-            return of(JobOffersActions.applyForJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(JobOffersActions.applyForJobOfferError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -162,7 +162,7 @@ export class JobOffersEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Nie udało się dodać do ulubionych!');
-            return of(JobOffersActions.addToFavoriteError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(JobOffersActions.addToFavoriteError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -181,7 +181,7 @@ export class JobOffersEffects {
           tap(() => this.router.navigate(['/job-offers'])),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Oferta pracy nie została nadpisana!');
-            return of(JobOffersActions.updateJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(JobOffersActions.updateJobOfferError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })
@@ -199,7 +199,7 @@ export class JobOffersEffects {
           }),
           catchError((error) => {
             this.snackbarService.error('Błąd', 'Oferta pracy nie została usunięta!');
-            return of(JobOffersActions.deleteJobOfferError({ error: this.errorHandler.handleAPIError(error) }));
+            return of(JobOffersActions.deleteJobOfferError({ Error: this.errorHandler.handleAPIError(error) }));
           })
         );
       })

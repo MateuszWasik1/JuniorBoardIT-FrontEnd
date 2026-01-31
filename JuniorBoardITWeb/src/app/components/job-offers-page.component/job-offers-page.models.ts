@@ -35,6 +35,25 @@ export interface JobOfferModel {
   JOFavorite?: string;
 }
 
+export interface JobOffersModel {
+  List: JobOfferModel[];
+  Count: number;
+}
+
+export interface ApplyForJobOfferModel {
+  UFirstName: string;
+  ULastName: string;
+  UEmail: string;
+  UPhone: string;
+  UCV: string;
+  JOGID: string;
+}
+
+export interface LoadJobOffer {
+  JobOffer: JobOfferModel;
+  Company: CompanyModel;
+}
+
 export interface FiltersModel {
   Skip: number;
   Take: number;
