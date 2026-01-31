@@ -1,5 +1,4 @@
 export interface UserModel {
-  UID: number;
   UGID: string;
   URID: number;
   UFirstName: string;

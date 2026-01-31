@@ -1,5 +1,4 @@
-export interface User {
-  UID: number;
+export interface UserModel {
   UGID: string;
   URID: number;
   UFirstName: string;
@@ -11,7 +10,12 @@ export interface User {
   UCompanyGID?: string;
 }
 
-export interface Companies {
+export interface CompaniesModel {
+  List: CompanyModel[];
+  Count: number;
+}
+
+export interface CompanyModel {
   CGID: string;
   CName: string;
 }
