@@ -20,7 +20,7 @@
                 optionValue="id"
                 [placeholder]="translations.Get('Stats_DataType')"
                 formControlName="DataType"
-                (onChange)="ChangeDataType($event)"
+                (onChange)="ChangeDataType($event.value)"
               />
             </div>
             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_ChartType') }}:</div>
@@ -34,7 +34,7 @@
                 optionValue="name"
                 [placeholder]="translations.Get('Stats_ChartType')"
                 formControlName="ChartType"
-                (onChange)="ChangeChartType($event)"
+                (onChange)="ChangeChartType($event.value)"
               />
             </div>
           </div>
@@ -54,7 +54,7 @@
                     inputId="companies"
                     aria-describedby="companies"
                     formControlName="CGID"
-                    (onChange)="ChangeCGID($event)"
+                    (onChange)="ChangeCGID($event.value)"
                   />
                 }
               </div>

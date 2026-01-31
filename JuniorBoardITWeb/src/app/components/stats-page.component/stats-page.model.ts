@@ -1,7 +1,7 @@
 import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
 import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
 
-export interface Filters {
+export interface FiltersModel {
   StartDate: Date;
   EndDate: Date;
   Date: Date;
@@ -10,7 +10,7 @@ export interface Filters {
   CGID: string;
 }
 
-export interface Companies {
+export interface CompaniesModel {
   CGID: string;
   CName: string;
 }

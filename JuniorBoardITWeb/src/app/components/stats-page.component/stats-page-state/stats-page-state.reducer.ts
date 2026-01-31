@@ -42,9 +42,9 @@ export const StatsReducer = createReducer<StatsState>(
     };
   }),
 
-  on(Actions.loadStatsError, (state, { error }) => ({
+  on(Actions.loadStatsError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Load Companies
@@ -53,9 +53,9 @@ export const StatsReducer = createReducer<StatsState>(
     Companies: Companies.List
   })),
 
-  on(Actions.loadCompaniesError, (state, { error }) => ({
+  on(Actions.loadCompaniesError, (state, { Error }) => ({
     ...state,
-    ErrorMessage: error
+    ErrorMessage: Error
   })),
 
   //Change filters
