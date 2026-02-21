@@ -1,11 +1,5 @@
-::ng-deep .mat-mdc-paginator-outer-container {
-  margin-top: 15px;
-
-  .mat-mdc-paginator-container {
-    justify-content: center;
+::ng-deep .p-paginator {
+  .p-select {
+    width: inherit;
   }
-}
-
-::ng-deep .mat-mdc-paginator-page-size-label {
-  display: none !important;
 }

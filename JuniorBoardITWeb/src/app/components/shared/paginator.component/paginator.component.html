@@ -1,11 +1,10 @@
-<mat-paginator
-  #paginator
-  (page)="HandlePageEvent($event)"
-  [length]="length"
-  [pageSize]="pageSize"
-  [pageSizeOptions]="pageSizeOptions"
-  [pageIndex]="pageIndex"
-  [showFirstLastButtons]="true"
+<p-paginator
+  (onPageChange)="HandlePageEvent($event)"
+  [totalRecords]="length"
+  [rows]="pageSize"
+  [rowsPerPageOptions]="pageSizeOptions"
+  [first]="pageIndex * pageSize"
+  [showFirstLastIcon]="true"
   aria-label="Wybierz stronę"
 >
-</mat-paginator>
+</p-paginator>

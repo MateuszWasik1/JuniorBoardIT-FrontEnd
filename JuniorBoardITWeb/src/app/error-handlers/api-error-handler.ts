@@ -6,12 +6,17 @@ import { Injectable } from '@angular/core';
 })
 export class APIErrorHandler {
   public handleAPIError(error: HttpErrorResponse) {
-    if (error.status === 401) return 'Użytkownik nie zautoryzowany!';
+    if (error.status === 401) {
+      return 'Użytkownik nie zautoryzowany!';
+    }
 
     let errorMessage;
 
-    if (error.error instanceof ErrorEvent) errorMessage = error.error.error;
-    else errorMessage = error.error;
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.error;
+    } else {
+      errorMessage = error.error;
+    }
 
     errorMessage = errorMessage.split('System.Exception: ').pop();
 

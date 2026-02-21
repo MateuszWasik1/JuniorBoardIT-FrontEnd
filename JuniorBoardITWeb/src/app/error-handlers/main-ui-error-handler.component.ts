@@ -1,23 +1,18 @@
 import { inject, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-
-import { UIErrorHandler } from './ui-error-handler/ui-error-handler.component';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainUIErrorHandler {
-  private dialog = inject(MatDialog);
+  private messageService = inject(MessageService);
 
   public HandleException(error: string) {
     if (error) {
-      this.dialog.open(UIErrorHandler, {
-        minWidth: '658px',
-        minHeight: '140px',
-        data: {
-          error: error
-        },
-        panelClass: 'ui-error-handler-modal'
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: error
       });
     }
   }

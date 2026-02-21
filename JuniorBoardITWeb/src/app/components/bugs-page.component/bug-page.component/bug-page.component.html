@@ -36,24 +36,34 @@
           @if (UserRoles$ | async; as userRoles) {
             @if (userRoles.IsSupport || userRoles.IsAdmin) {
               <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
-                <mat-form-field class="margin-left-30">
-                  <mat-select [value]="selectedBugStatus" (selectionChange)="ChangeBugStatus($event.value)">
-                    <mat-option *ngFor="let status of bugStatusAdmin" [value]="status['id']">
-                      {{ status['name'] }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+                <p-select
+                  [options]="bugStatusAdmin"
+                  [showClear]="false"
+                  [filter]="true"
+                  filterBy="name"
+                  optionLabel="name"
+                  optionValue="id"
+                  [placeholder]="translations.Get('Bugs_Status')"
+                  formControlName="BStatus"
+                  (onChange)="ChangeBugStatus($event.value)"
+                  class="margin-left-15"
+                />
               </div>
             }
             @if (!userRoles.IsSupport && !userRoles.IsAdmin) {
               <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 row-inputs">
-                <mat-form-field class="margin-left-30">
-                  <mat-select [value]="selectedBugStatus" (selectionChange)="ChangeBugStatus($event.value)">
-                    <mat-option *ngFor="let status of bugStatusUser" [value]="status['id']">
-                      {{ status['name'] }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+                <p-select
+                  [options]="bugStatusUser"
+                  [showClear]="false"
+                  [filter]="true"
+                  filterBy="name"
+                  optionLabel="name"
+                  optionValue="id"
+                  [placeholder]="translations.Get('Bugs_Status')"
+                  formControlName="BStatus"
+                  (onChange)="ChangeBugStatus($event.value)"
+                  class="margin-left-15"
+                />
               </div>
             }
           }

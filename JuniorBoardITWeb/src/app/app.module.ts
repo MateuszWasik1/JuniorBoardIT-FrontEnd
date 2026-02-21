@@ -1,14 +1,8 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule, isDevMode } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -58,12 +52,6 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatTooltipModule,
     ToastModule,
     MessageModule,
     BrowserAnimationsModule,
@@ -101,7 +89,6 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     provideAnimationsAsync(),
     providePrimeNG({
@@ -110,6 +97,7 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
       }
     }),
     provideCharts(withDefaultRegisterables()),
+    provideAnimations(),
     MessageService
   ],
   bootstrap: [AppComponent]

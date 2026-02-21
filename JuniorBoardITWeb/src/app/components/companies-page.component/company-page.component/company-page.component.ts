@@ -119,11 +119,12 @@ export class CompanyPageComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.subscriptions.push(
-      this.ErrorMessage$.subscribe((error) => {
-        this.errorHandler.HandleException(error);
-      })
-    );
+    // this.subscriptions.push(
+    //   this.ErrorMessage$.subscribe((error) => {
+    //     this.errorHandler.HandleException(error);
+    //   })
+    // );
+    this.errorHandler.HandleException('błłłąddd');
   }
 
   public AddCompany = (): void => {

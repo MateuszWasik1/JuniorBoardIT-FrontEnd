@@ -1,5 +1,5 @@
 {
-  "name": "juniorboardit-web", 
+  "name": "juniorboardit-web",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -18,7 +18,6 @@
     "@angular/compiler": "18.2.13",
     "@angular/core": "18.2.13",
     "@angular/forms": "18.2.13",
-    "@angular/material": "18.2.13",
     "@angular/platform-browser": "18.2.13",
     "@angular/platform-browser-dynamic": "18.2.13",
     "@angular/router": "18.2.13",

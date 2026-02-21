@@ -1,17 +1,16 @@
-import { AsyncPipe, DatePipe, NgClass, NgFor } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormField } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { Subscription } from 'rxjs';
 
 import { BugStatusEnum } from 'src/app/enums/Bugs/BugStatusEnum';
 import { MainUIErrorHandler } from 'src/app/error-handlers/main-ui-error-handler.component';
-import { PaginationDataModel } from 'src/app/models/general-models';
+import { PaginationDataModel, SelectObjectModel } from 'src/app/models/general-models';
 import { FormErrorsService } from 'src/app/services/form-error.service';
 import { TranslationService } from 'src/app/services/translate.service';
 
@@ -59,12 +58,9 @@ interface FormBugNoteModel {
     AsyncPipe,
     DatePipe,
     NgClass,
-    MatFormField,
-    MatSelect,
-    MatOption,
-    NgFor,
     ButtonModule,
-    TextareaModule
+    TextareaModule,
+    SelectModule
   ]
 })
 export class BugPageComponent implements OnInit, OnDestroy {
@@ -81,16 +77,15 @@ export class BugPageComponent implements OnInit, OnDestroy {
   public bgid = '';
   public count = 0;
   public isNewBugView = true;
-  public selectedBugStatus: string;
-  public bugStatusAdmin = [
-    { id: '0', name: 'Nowy' },
-    { id: '1', name: 'W weryfikacji' },
-    { id: '2', name: 'Odrzucony' },
-    { id: '3', name: 'Zaakceptowany' },
-    { id: '4', name: 'W naprawie' },
-    { id: '5', name: 'Naprawiony' }
+  public bugStatusAdmin: SelectObjectModel[] = [
+    { id: 0, name: 'Nowy' },
+    { id: 1, name: 'W weryfikacji' },
+    { id: 2, name: 'Odrzucony' },
+    { id: 3, name: 'Zaakceptowany' },
+    { id: 4, name: 'W naprawie' },
+    { id: 5, name: 'Naprawiony' }
   ];
-  public bugStatusUser = [{ id: '0', name: 'Nowy' }];
+  public bugStatusUser: SelectObjectModel[] = [{ id: 0, name: 'Nowy' }];
 
   public Bug$ = this.store.select(selectBug);
   public BugNotes$ = this.store.select(selectBugNotes);
@@ -103,7 +98,6 @@ export class BugPageComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
     this.form = this.InitBugForm();
     this.formBugNote = this.InitBugNoteForm();
-    this.selectedBugStatus = '';
   }
   ngOnInit(): void {
     this.bgid = this.route.snapshot.paramMap.get('bgid') ?? '';
@@ -116,13 +110,7 @@ export class BugPageComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(loadUserRoles());
 
-    this.subscriptions.push(
-      this.Bug$.subscribe((bug) => {
-        this.form.patchValue(bug);
-
-        this.selectedBugStatus = this.bugStatusAdmin[bug.BStatus].id;
-      })
-    );
+    this.subscriptions.push(this.Bug$.subscribe((bug) => this.form.patchValue(bug)));
 
     this.subscriptions.push(
       this.ErrorMessage$.subscribe((error) => {
