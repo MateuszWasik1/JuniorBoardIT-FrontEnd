@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { PaginatorModule } from 'primeng/paginator';
+import { PaginatorState } from 'primeng/paginator';
 
 import { PaginationDataModel } from 'src/app/models/general-models';
 import { TranslationService } from 'src/app/services/translate.service';
@@ -10,7 +10,7 @@ import { TranslationService } from 'src/app/services/translate.service';
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss'],
   standalone: true,
-  imports: [MatPaginatorModule]
+  imports: [PaginatorModule]
 })
 export class PaginatorComponent {
   @Input() length = 50;
@@ -22,9 +22,9 @@ export class PaginatorComponent {
   public pageSize = 10;
   public pageIndex = 0;
 
-  HandlePageEvent(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
+  HandlePageEvent(e: PaginatorState) {
+    this.pageSize = e.rows ?? this.pageSize;
+    this.pageIndex = Math.floor((e.first ?? 0) / this.pageSize);
 
     this.paginationData.emit({
       Skip: this.pageIndex * this.pageSize,
