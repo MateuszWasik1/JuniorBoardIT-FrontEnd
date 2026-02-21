@@ -7,6 +7,7 @@ import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { APIErrorHandler } from 'src/app/error-handlers/api-error-handler';
 import { CompaniesService } from 'src/app/services/companies.service';
+import { RolesService } from 'src/app/services/roles.service';
 import { StatsService } from 'src/app/services/stats.service';
 
 import * as StatsActions from './stats-page-state.actions';
@@ -18,6 +19,7 @@ export class StatsEffects {
   private store = inject(Store<AppState>);
   private statsService = inject(StatsService);
   private errorHandler = inject(APIErrorHandler);
+  public rolesService = inject(RolesService);
   private companiesService = inject(CompaniesService);
 
   loadNumberOfRecruiterPublishedOfferts = createEffect(() => {
@@ -94,6 +96,18 @@ export class StatsEffects {
         return this.companiesService.GetCompaniesForUser().pipe(
           map((result) => StatsActions.loadCompaniesSuccess({ Companies: result })),
           catchError((error) => of(StatsActions.loadCompaniesError({ Error: this.errorHandler.handleAPIError(error) })))
+        );
+      })
+    );
+  });
+
+  loadUserRoles = createEffect(() => {
+    return this.actions.pipe(
+      ofType(StatsActions.loadUserRoles),
+      switchMap(() => {
+        return this.rolesService.GetUserRoles().pipe(
+          map((result) => StatsActions.loadUserRolesSuccess({ UserRoles: result })),
+          catchError((error) => of(StatsActions.loadUserRolesError({ Error: this.errorHandler.handleAPIError(error) })))
         );
       })
     );

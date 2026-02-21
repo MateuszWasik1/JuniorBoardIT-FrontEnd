@@ -20,6 +20,13 @@ const initialStateOfStatsPage: StatsState = {
     CGID: ''
   },
   Companies: [],
+  UserRoles: {
+    IsUser: false,
+    IsPremium: false,
+    IsRecruiter: false,
+    IsSupport: false,
+    IsAdmin: false
+  },
   ErrorMessage: ''
 };
 
@@ -54,6 +61,17 @@ export const StatsReducer = createReducer<StatsState>(
   })),
 
   on(Actions.loadCompaniesError, (state, { Error }) => ({
+    ...state,
+    ErrorMessage: Error
+  })),
+
+  //Load UserRoles
+  on(Actions.loadUserRolesSuccess, (state, { UserRoles }) => ({
+    ...state,
+    UserRoles: UserRoles
+  })),
+
+  on(Actions.loadUserRolesError, (state, { Error }) => ({
     ...state,
     ErrorMessage: Error
   })),
@@ -123,6 +141,13 @@ export const StatsReducer = createReducer<StatsState>(
       CGID: ''
     },
     Companies: [],
+    UserRoles: {
+      IsUser: false,
+      IsPremium: false,
+      IsRecruiter: false,
+      IsSupport: false,
+      IsAdmin: false
+    },
     ErrorMessage: ''
   }))
 );
