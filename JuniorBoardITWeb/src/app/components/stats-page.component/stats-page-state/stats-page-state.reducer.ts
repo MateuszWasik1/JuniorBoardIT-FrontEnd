@@ -16,7 +16,7 @@ const initialStateOfStatsPage: StatsState = {
     EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
     Date: new Date(),
     ChartType: StatsChartTypeEnum.Bar,
-    DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts,
+    DataType: StatsTypeEnum.NumberOfCompaniesPublishedOfferts,
     CGID: ''
   },
   Companies: [],
@@ -137,7 +137,7 @@ export const StatsReducer = createReducer<StatsState>(
       EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
       Date: new Date(),
       ChartType: StatsChartTypeEnum.Bar,
-      DataType: StatsTypeEnum.NumberOfRecruiterPublishedOfferts,
+      DataType: StatsTypeEnum.NumberOfCompaniesPublishedOfferts,
       CGID: ''
     },
     Companies: [],

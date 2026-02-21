@@ -104,7 +104,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     this.filterForm = this.InitJobOfferForm();
   }
   public ngOnInit() {
-    this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
+    this.store.dispatch(loadNumberOfCompaniesPublishedOfferts());
     this.store.dispatch(loadCompanies());
     this.store.dispatch(loadUserRoles());
 
@@ -186,7 +186,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
       EndDate: new FormControl<Date>(new Date(), { nonNullable: true }),
       Date: new FormControl<Date>(new Date(), { nonNullable: true }),
       ChartType: new FormControl<StatsChartTypeEnum>(StatsChartTypeEnum.Bar, { nonNullable: true }),
-      DataType: new FormControl<StatsTypeEnum>(StatsTypeEnum.NumberOfRecruiterPublishedOfferts, { nonNullable: true }),
+      DataType: new FormControl<StatsTypeEnum>(StatsTypeEnum.NumberOfCompaniesPublishedOfferts, { nonNullable: true }),
       CGID: new FormControl<string>('', { nonNullable: true })
     });
   };
