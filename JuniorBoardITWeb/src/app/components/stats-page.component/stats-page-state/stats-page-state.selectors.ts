@@ -10,4 +10,6 @@ export const selectFilters = createSelector(selectStatsState, (state: StatsState
 
 export const selectCompanies = createSelector(selectStatsState, (state: StatsState) => state.Companies);
 
+export const selectUserRoles = createSelector(selectStatsState, (state: StatsState) => state.UserRoles);
+
 export const selectErrorMessage = createSelector(selectStatsState, (state: StatsState) => state.ErrorMessage);

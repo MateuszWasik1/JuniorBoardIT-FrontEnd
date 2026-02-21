@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { StatsChartTypeEnum } from 'src/app/enums/Stats/StatsChartTypeEnum';
 import { StatsTypeEnum } from 'src/app/enums/Stats/StatsTypeEnum';
+import { UserRolesModel } from 'src/app/models/general-models';
 
 import { CompaniesModel as UserCompaniesModel } from '../../user-page.component/user-page.models';
 
@@ -27,6 +28,13 @@ export const loadCompaniesSuccess = createAction(
   props<{ Companies: UserCompaniesModel }>()
 );
 export const loadCompaniesError = createAction('[Stats Page] Load Companies Error', props<{ Error: string }>());
+
+export const loadUserRoles = createAction('[Stats Page] Load UserRoles');
+export const loadUserRolesSuccess = createAction(
+  '[Stats Page] Load UserRoles Success',
+  props<{ UserRoles: UserRolesModel }>()
+);
+export const loadUserRolesError = createAction('[Stats Page] Load UserRoles Error', props<{ Error: string }>());
 
 export const changeStartDateFilter = createAction(
   '[Stats Page] Change Start Date Filter',

@@ -28,13 +28,15 @@ import {
   loadNumberOfCompaniesPublishedOfferts,
   loadNumberOfCompanyPublishedOfferts,
   loadNumberOfCompanyRecruiters,
-  loadNumberOfRecruiterPublishedOfferts
+  loadNumberOfRecruiterPublishedOfferts,
+  loadUserRoles
 } from './stats-page-state/stats-page-state.actions';
 import {
   selectCompanies,
   selectErrorMessage,
   selectFilters,
-  selectStats
+  selectStats,
+  selectUserRoles
 } from './stats-page-state/stats-page-state.selectors';
 
 interface FormModel {
@@ -84,11 +86,8 @@ export class StatsPageComponent implements OnInit, OnDestroy {
   public filterForm: FormGroup<FormModel>;
 
   public dataTypes: SelectObjectModel[] = [
-    { id: StatsTypeEnum.NumberOfRecruiterPublishedOfferts, name: 'Oferty opublikowane przez rekrutera' },
-    { id: StatsTypeEnum.NumberOfCompanyPublishedOfferts, name: 'Oferty opublikowane przez firmę' },
     { id: StatsTypeEnum.NumberOfCompaniesPublishedOfferts, name: 'Oferty opublikowane przez wszystkie firmy' },
-    { id: StatsTypeEnum.NumberOfActiveCompaniesOfferts, name: 'Aktywne oferty firmy' },
-    { id: StatsTypeEnum.NumberOfCompanyRecruiters, name: 'Aktywni rekruterzy firmy' }
+    { id: StatsTypeEnum.NumberOfActiveCompaniesOfferts, name: 'Aktywne oferty firmy' }
   ];
 
   public chartTypes: SelectObjectModel[] = [{ id: 0, name: StatsChartTypeEnum.Bar }];
@@ -96,6 +95,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
   public Stats$ = this.store.select(selectStats);
   public Filters$ = this.store.select(selectFilters);
   public Companies$ = this.store.select(selectCompanies);
+  public UserRoles$ = this.store.select(selectUserRoles);
   public ErrorMessage$ = this.store.select(selectErrorMessage);
 
   constructor() {
@@ -103,9 +103,31 @@ export class StatsPageComponent implements OnInit, OnDestroy {
 
     this.filterForm = this.InitJobOfferForm();
   }
-  ngOnInit() {
+  public ngOnInit() {
     this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
     this.store.dispatch(loadCompanies());
+    this.store.dispatch(loadUserRoles());
+
+    this.subscriptions.push(
+      this.UserRoles$.subscribe((roles) => {
+        if (roles.IsAdmin || roles.IsSupport) {
+          this.dataTypes = [
+            { id: StatsTypeEnum.NumberOfRecruiterPublishedOfferts, name: 'Oferty opublikowane przez rekrutera' },
+            { id: StatsTypeEnum.NumberOfCompanyPublishedOfferts, name: 'Oferty opublikowane przez firmę' },
+            { id: StatsTypeEnum.NumberOfCompaniesPublishedOfferts, name: 'Oferty opublikowane przez wszystkie firmy' },
+            { id: StatsTypeEnum.NumberOfActiveCompaniesOfferts, name: 'Aktywne oferty firmy' },
+            { id: StatsTypeEnum.NumberOfCompanyRecruiters, name: 'Aktywni rekruterzy firmy' }
+          ];
+        } else if (roles.IsRecruiter) {
+          this.dataTypes = [
+            { id: StatsTypeEnum.NumberOfRecruiterPublishedOfferts, name: 'Oferty opublikowane przez rekrutera' },
+            { id: StatsTypeEnum.NumberOfCompanyPublishedOfferts, name: 'Oferty opublikowane przez firmę' },
+            { id: StatsTypeEnum.NumberOfCompaniesPublishedOfferts, name: 'Oferty opublikowane przez wszystkie firmy' },
+            { id: StatsTypeEnum.NumberOfActiveCompaniesOfferts, name: 'Aktywne oferty firmy' }
+          ];
+        }
+      })
+    );
 
     this.subscriptions.push(
       this.Filters$.subscribe((filters) => {
@@ -169,7 +191,7 @@ export class StatsPageComponent implements OnInit, OnDestroy {
     });
   };
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.store.dispatch(cleanState());
   }
