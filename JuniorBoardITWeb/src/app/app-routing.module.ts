@@ -14,6 +14,7 @@ import { ReportsPageComponent } from './components/reports-page.component/report
 import { StatsPageComponent } from './components/stats-page.component/stats-page.component';
 import { UserPageComponent } from './components/user-page.component/user-page.component';
 import { UsersPageComponent } from './components/users-page.component/users-page.component';
+import { FileGeneratorPageComponent } from './components/file-generator-page.component/file-generator-page.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,11 @@ const routes: Routes = [
     path: 'stats',
     component: StatsPageComponent,
     title: 'Statystyki'
+  },
+  {
+    path: 'file-generator',
+    component: FileGeneratorPageComponent,
+    title: 'Generator plików'
   },
   {
     path: '**',
