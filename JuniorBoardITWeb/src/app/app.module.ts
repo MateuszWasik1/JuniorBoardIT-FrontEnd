@@ -44,6 +44,9 @@ import { UsersEffects } from './components/users-page.component/users-page-state
 import { UsersReducer } from './components/users-page.component/users-page-state/users-page-state.reducer';
 import { featureKeyUsersState } from './components/users-page.component/users-page-state/users-page-state.state';
 import { GlobalErrorHandler } from './error-handlers/global-error-handler';
+import { featureKeyFileGeneratorState } from './components/file-generator-page.component/file-generator-state/file-generator-page-state.state';
+import { FileGeneratorReducer } from './components/file-generator-page.component/file-generator-state/file-generator-page-state.reducer';
+import { FileGeneratorEffects } from './components/file-generator-page.component/file-generator-state/file-generator-page-state.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -75,6 +78,7 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
     StoreModule.forFeature(featureKeyBugsState, BugsReducer),
     StoreModule.forFeature(featureKeyCompaniesState, CompaniesReducer),
     StoreModule.forFeature(featureKeyStatsState, StatsReducer),
+    StoreModule.forFeature(featureKeyFileGeneratorState, FileGeneratorReducer),
 
     EffectsModule.forRoot([
       AccountEffects,
@@ -84,7 +88,8 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
       ReportsEffects,
       BugsEffects,
       CompaniesEffects,
-      StatsEffects
+      StatsEffects,
+      FileGeneratorEffects
     ]),
     BrowserAnimationsModule
   ],
