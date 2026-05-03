@@ -1,25 +1,38 @@
 import { createAction, props } from '@ngrx/store';
 
 import { CompaniesModel as UserCompaniesModel } from '../../user-page.component/user-page.models';
+import { FileTypeEnum } from 'src/app/enums/FileGenerator/FileTypeEnum';
 
-// export const loadNumberOfRecruiterPublishedOfferts = createAction(
-//   '[Stats Page] Load Number Of Recruiter Published Offerts'
-// );
-//ToDo change to actual action
+export const loadFileSuccess = createAction('[File Generator Page] Load File Success');
+export const loadFileError = createAction('[File Generator Page] Load File Error', props<{ Error: string }>());
 
-export const loadCompanies = createAction('[Stats Page] Load Companies');
+export const downloadApplicationsFile = createAction('[File Generator Page] Download Applications File');
+
+export const loadCompanies = createAction('[File Generator Page] Load Companies');
 export const loadCompaniesSuccess = createAction(
-  '[Stats Page] Load Companies Success',
+  '[File Generator Page] Load Companies Success',
   props<{ Companies: UserCompaniesModel }>()
 );
-export const loadCompaniesError = createAction('[Stats Page] Load Companies Error', props<{ Error: string }>());
+export const loadCompaniesError = createAction(
+  '[File Generator Page] Load Companies Error',
+  props<{ Error: string }>()
+);
 
 export const changeStartDateFilter = createAction(
-  '[Stats Page] Change Start Date Filter',
+  '[File Generator Page] Change Start Date Filter',
   props<{ StartDate: Date }>()
 );
-export const changeEndDateFilter = createAction('[Stats Page] Change End Date Filter', props<{ EndDate: Date }>());
 
-export const changeCGIDFilter = createAction('[Stats Page] Change CGID Filter', props<{ CGID: string }>());
+export const changeEndDateFilter = createAction(
+  '[File Generator Page] Change End Date Filter',
+  props<{ EndDate: Date }>()
+);
 
-export const cleanState = createAction('[Stats Page] Clean State');
+export const changeDataTypeFilter = createAction(
+  '[File Generator Page] Change Data Type Filter',
+  props<{ DataType: FileTypeEnum }>()
+);
+
+export const changeCGIDFilter = createAction('[File Generator Page] Change CGID Filter', props<{ CGID: string }>());
+
+export const cleanState = createAction('[File Generator Page] Clean State');

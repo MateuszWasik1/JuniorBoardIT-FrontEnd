@@ -15,16 +15,20 @@ import {
   selectFilters
 } from './file-generator-state/file-generator-page-state.selectors';
 import { Subscription } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   changeCGIDFilter,
+  changeDataTypeFilter,
   changeEndDateFilter,
   changeStartDateFilter,
   cleanState,
+  downloadApplicationsFile,
   loadCompanies
 } from './file-generator-state/file-generator-page-state.actions';
 import { AsyncPipe } from '@angular/common';
 import { DatePicker } from 'primeng/datepicker';
+import { FileTypeEnum } from 'src/app/enums/FileGenerator/FileTypeEnum';
+import { SelectObjectModel } from 'src/app/models/general-models';
 
 interface FormModel {
   StartDate: FormControl<Date>;
@@ -36,9 +40,9 @@ interface FormModel {
   selector: 'app-file-generator-page',
   templateUrl: './file-generator-page.component.html',
   standalone: true,
-  imports: [AsyncPipe, DatePicker, ButtonModule, SelectModule, InputTextModule, TooltipModule]
+  imports: [AsyncPipe, DatePicker, ButtonModule, SelectModule, InputTextModule, TooltipModule, ReactiveFormsModule]
 })
-export class FileGeneratorPageComponent implements OnInit {
+export class FileGeneratorPageComponent implements OnInit, OnDestroy {
   public translations = inject(TranslationService);
   private store = inject(Store<AppState>);
   public router = inject(Router);
@@ -47,6 +51,8 @@ export class FileGeneratorPageComponent implements OnInit {
   public subscriptions: Subscription[];
 
   public filterForm: FormGroup<FormModel>;
+
+  public dataTypes: SelectObjectModel[] = [{ id: FileTypeEnum.Applications, name: 'Aplikacje użytkowników' }];
 
   public Filters$ = this.store.select(selectFilters);
   public Companies$ = this.store.select(selectCompanies);
@@ -68,17 +74,9 @@ export class FileGeneratorPageComponent implements OnInit {
           CGID: filters.CGID
         });
 
-        // if (filters.DataType === StatsTypeEnum.NumberOfRecruiterPublishedOfferts) {
-        //   this.store.dispatch(loadNumberOfRecruiterPublishedOfferts());
-        // } else if (filters.DataType === StatsTypeEnum.NumberOfCompanyPublishedOfferts) {
-        //   this.store.dispatch(loadNumberOfCompanyPublishedOfferts());
-        // } else if (filters.DataType === StatsTypeEnum.NumberOfCompaniesPublishedOfferts) {
-        //   this.store.dispatch(loadNumberOfCompaniesPublishedOfferts());
-        // } else if (filters.DataType === StatsTypeEnum.NumberOfActiveCompaniesOfferts) {
-        //   this.store.dispatch(loadNumberOfActiveCompaniesOfferts());
-        // } else if (filters.DataType === StatsTypeEnum.NumberOfCompanyRecruiters) {
-        //   this.store.dispatch(loadNumberOfCompanyRecruiters());
-        // }
+        if (filters.DataType === FileTypeEnum.Applications) {
+          this.store.dispatch(downloadApplicationsFile());
+        }
       })
     );
   }
@@ -86,6 +84,8 @@ export class FileGeneratorPageComponent implements OnInit {
   public ChangeStartDate = (StartDate: Date) => this.store.dispatch(changeStartDateFilter({ StartDate: StartDate }));
 
   public ChangeEndDate = (EndDate: Date) => this.store.dispatch(changeEndDateFilter({ EndDate: EndDate }));
+
+  public ChangeDataType = (DataType: FileTypeEnum) => this.store.dispatch(changeDataTypeFilter({ DataType: DataType }));
 
   public ChangeCGID = (CGID: string) => this.store.dispatch(changeCGIDFilter({ CGID: CGID }));
 
