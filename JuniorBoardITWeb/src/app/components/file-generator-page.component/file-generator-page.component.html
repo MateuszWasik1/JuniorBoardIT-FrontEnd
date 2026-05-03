@@ -1,4 +1,4 @@
-<!-- @if (Filters$ | async; as filter) {
+@if (Filters$ | async; as filter) {
   <section class="body">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -25,7 +25,7 @@
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
         </div>
 
-        @if (filter.DataType == 1 || filter.DataType == 3 || filter.DataType == 4) {
+        <!-- @if (filter.DataType == 1 || filter.DataType == 3 || filter.DataType == 4) {
           <div class="row margin-top-15">
             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_Company') }}:</div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -46,9 +46,9 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
           </div>
-        }
+        } -->
 
-        @if (filter.DataType <= 2) {
+        @if (filter.DataType == 0) {
           <div class="row margin-top-15">
             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">{{ translations.Get('Stats_StartDate') }}:</div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -77,4 +77,4 @@
       </div>
     </div>
   </section>
-} -->
+}
