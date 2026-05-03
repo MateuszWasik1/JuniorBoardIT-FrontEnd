@@ -2,11 +2,13 @@ import { createReducer, on } from '@ngrx/store';
 
 import * as Actions from './file-generator-page-state.actions';
 import { FileGeneratorState } from './file-generator-page-state.state';
+import { FileTypeEnum } from 'src/app/enums/FileGenerator/FileTypeEnum';
 
 const initialStateOfFileGeneratorPage: FileGeneratorState = {
   Filters: {
     StartDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-    EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+    EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+    DataType: FileTypeEnum.Applications,
     CGID: ''
   },
   Companies: [],
@@ -58,6 +60,7 @@ export const FileGeneratorReducer = createReducer<FileGeneratorState>(
     Filters: {
       StartDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
       EndDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+      DataType: FileTypeEnum.Applications,
       CGID: ''
     },
     Companies: [],
